@@ -8,8 +8,8 @@ using Abp.Domain.Uow;
 using Abp.Extensions;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
-using Azmoon.EntityFrameworkCore;
-using Azmoon.EntityFrameworkCore.Seed;
+using Azmoon.Persistence.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore.Seed;
 using Azmoon.MultiTenancy;
 
 namespace Azmoon.Migrator

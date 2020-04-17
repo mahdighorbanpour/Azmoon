@@ -11,7 +11,7 @@ using Abp.Reflection.Extensions;
 using Abp.Zero.Configuration;
 using Azmoon.Authentication.JwtBearer;
 using Azmoon.Configuration;
-using Azmoon.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
 namespace Azmoon

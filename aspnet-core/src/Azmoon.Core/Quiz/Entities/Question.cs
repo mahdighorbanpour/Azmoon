@@ -1,7 +1,7 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
-using Azmoon.Core.Enums;
-using Azmoon.Core.Exceptions;
+using Azmoon.Core.Quiz.Enums;
+using Azmoon.Core.Quiz.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 

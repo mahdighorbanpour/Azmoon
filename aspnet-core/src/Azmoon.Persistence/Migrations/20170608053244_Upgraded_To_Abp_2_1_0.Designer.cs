@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Azmoon.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore;
 
-namespace Azmoon.Migrations
+namespace Azmoon.Persistence.Migrations
 {
     [DbContext(typeof(AzmoonDbContext))]
     [Migration("20170608053244_Upgraded_To_Abp_2_1_0")]

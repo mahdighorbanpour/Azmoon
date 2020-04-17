@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <RootNamespace>Azmoon</RootNamespace>
+    <RootNamespace>Azmoon.Persistence</RootNamespace>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>

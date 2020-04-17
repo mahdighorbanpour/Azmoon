@@ -5,10 +5,10 @@ using Abp.Dependency;
 using Abp.Domain.Uow;
 using Abp.EntityFrameworkCore.Uow;
 using Abp.MultiTenancy;
-using Azmoon.EntityFrameworkCore.Seed.Host;
-using Azmoon.EntityFrameworkCore.Seed.Tenants;
+using Azmoon.Persistence.EntityFrameworkCore.Seed.Host;
+using Azmoon.Persistence.EntityFrameworkCore.Seed.Tenants;
 
-namespace Azmoon.EntityFrameworkCore.Seed
+namespace Azmoon.Persistence.EntityFrameworkCore.Seed
 {
     public static class SeedHelper
     {

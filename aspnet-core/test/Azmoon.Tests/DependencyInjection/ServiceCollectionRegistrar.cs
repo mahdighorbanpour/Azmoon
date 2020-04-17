@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor.MsDependencyInjection;
 using Abp.Dependency;
-using Azmoon.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore;
 using Azmoon.Identity;
 
 namespace Azmoon.Tests.DependencyInjection

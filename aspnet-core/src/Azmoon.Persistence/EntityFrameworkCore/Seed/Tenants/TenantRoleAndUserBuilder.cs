@@ -10,7 +10,7 @@ using Azmoon.Authorization;
 using Azmoon.Authorization.Roles;
 using Azmoon.Authorization.Users;
 
-namespace Azmoon.EntityFrameworkCore.Seed.Tenants
+namespace Azmoon.Persistence.EntityFrameworkCore.Seed.Tenants
 {
     public class TenantRoleAndUserBuilder
     {

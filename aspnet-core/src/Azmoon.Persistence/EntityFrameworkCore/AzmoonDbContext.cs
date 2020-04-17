@@ -5,8 +5,7 @@ using Azmoon.Authorization.Users;
 using Azmoon.MultiTenancy;
 using Azmoon.Core.Quiz.Entities;
 
-namespace Azmoon.EntityFrameworkCore
-{
+namespace Azmoon.Persistence.EntityFrameworkCore{
     public class AzmoonDbContext : AbpZeroDbContext<Tenant, Role, User, AzmoonDbContext>
     {
         /* Define a DbSet for each entity of the application */

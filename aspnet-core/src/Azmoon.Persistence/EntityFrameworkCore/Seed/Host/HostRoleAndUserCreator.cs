@@ -10,7 +10,7 @@ using Azmoon.Authorization.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
-namespace Azmoon.EntityFrameworkCore.Seed.Host
+namespace Azmoon.Persistence.EntityFrameworkCore.Seed.Host
 {
     public class HostRoleAndUserCreator
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Azmoon.Migrations
+namespace Azmoon.Persistence.Migrations
 {
     public partial class Added_Description_And_IsActive_To_Role : Migration
     {

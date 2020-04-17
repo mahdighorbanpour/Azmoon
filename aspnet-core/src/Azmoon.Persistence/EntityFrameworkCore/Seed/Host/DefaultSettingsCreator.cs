@@ -5,7 +5,7 @@ using Abp.Localization;
 using Abp.MultiTenancy;
 using Abp.Net.Mail;
 
-namespace Azmoon.EntityFrameworkCore.Seed.Host
+namespace Azmoon.Persistence.EntityFrameworkCore.Seed.Host
 {
     public class DefaultSettingsCreator
     {

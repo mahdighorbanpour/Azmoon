@@ -1,4 +1,4 @@
-﻿namespace Azmoon.EntityFrameworkCore.Seed.Host
+﻿namespace Azmoon.Persistence.EntityFrameworkCore.Seed.Host
 {
     public class InitialHostDbBuilder
     {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Abp.Localization;
 using Abp.MultiTenancy;
 
-namespace Azmoon.EntityFrameworkCore.Seed.Host
+namespace Azmoon.Persistence.EntityFrameworkCore.Seed.Host
 {
     public class DefaultLanguagesCreator
     {

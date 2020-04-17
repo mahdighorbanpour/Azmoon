@@ -4,7 +4,7 @@ using Abp.MultiTenancy;
 using Azmoon.Editions;
 using Azmoon.MultiTenancy;
 
-namespace Azmoon.EntityFrameworkCore.Seed.Tenants
+namespace Azmoon.Persistence.EntityFrameworkCore.Seed.Tenants
 {
     public class DefaultTenantBuilder
     {

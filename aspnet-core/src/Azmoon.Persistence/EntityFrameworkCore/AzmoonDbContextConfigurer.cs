@@ -1,7 +1,7 @@
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace Azmoon.EntityFrameworkCore
+namespace Azmoon.Persistence.EntityFrameworkCore
 {
     public static class AzmoonDbContextConfigurer
     {

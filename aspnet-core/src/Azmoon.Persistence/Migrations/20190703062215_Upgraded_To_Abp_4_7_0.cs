@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Azmoon.Migrations
+namespace Azmoon.Persistence.Migrations
 {
     public partial class Upgraded_To_Abp_4_7_0 : Migration
     {

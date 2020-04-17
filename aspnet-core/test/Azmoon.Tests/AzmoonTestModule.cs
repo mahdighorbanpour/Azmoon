@@ -9,7 +9,7 @@ using Abp.Net.Mail;
 using Abp.TestBase;
 using Abp.Zero.Configuration;
 using Abp.Zero.EntityFrameworkCore;
-using Azmoon.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore;
 using Azmoon.Tests.DependencyInjection;
 
 namespace Azmoon.Tests

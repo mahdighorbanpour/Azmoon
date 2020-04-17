@@ -2,9 +2,9 @@
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.EntityFrameworkCore;
-using Azmoon.EntityFrameworkCore.Seed;
+using Azmoon.Persistence.EntityFrameworkCore.Seed;
 
-namespace Azmoon.EntityFrameworkCore
+namespace Azmoon.Persistence.EntityFrameworkCore
 {
     [DependsOn(
         typeof(AzmoonCoreModule), 

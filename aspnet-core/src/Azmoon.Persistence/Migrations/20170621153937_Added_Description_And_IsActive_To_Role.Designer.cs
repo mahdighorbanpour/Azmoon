@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Azmoon.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore;
 
-namespace Azmoon.Migrations
+namespace Azmoon.Persistence.Migrations
 {
     [DbContext(typeof(AzmoonDbContext))]
     [Migration("20170621153937_Added_Description_And_IsActive_To_Role")]

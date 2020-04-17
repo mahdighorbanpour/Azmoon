@@ -3,7 +3,7 @@ using Abp.Authorization;
 using Abp.BackgroundJobs;
 using Abp.Events.Bus.Entities;
 using Abp.Notifications;
-using Azmoon.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 
-namespace Azmoon.Migrations
+namespace Azmoon.Persistence.Migrations
 {
     [DbContext(typeof(AzmoonDbContext))]
     [Migration("20180320131229_Upgraded_To_Abp_v3_5_0")]

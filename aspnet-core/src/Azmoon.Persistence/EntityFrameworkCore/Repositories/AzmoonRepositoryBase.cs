@@ -3,7 +3,7 @@ using Abp.Domain.Repositories;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Repositories;
 
-namespace Azmoon.EntityFrameworkCore.Repositories
+namespace Azmoon.Persistence.EntityFrameworkCore.Repositories
 {
     /// <summary>
     /// Base class for custom repositories of the application.

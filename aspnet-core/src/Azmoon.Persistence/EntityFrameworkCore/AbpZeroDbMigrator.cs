@@ -3,7 +3,7 @@ using Abp.EntityFrameworkCore;
 using Abp.MultiTenancy;
 using Abp.Zero.EntityFrameworkCore;
 
-namespace Azmoon.EntityFrameworkCore
+namespace Azmoon.Persistence.EntityFrameworkCore
 {
     public class AbpZeroDbMigrator : AbpZeroDbMigrator<AzmoonDbContext>
     {

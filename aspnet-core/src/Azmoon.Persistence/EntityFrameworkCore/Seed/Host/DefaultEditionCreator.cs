@@ -4,7 +4,7 @@ using Abp.Application.Editions;
 using Abp.Application.Features;
 using Azmoon.Editions;
 
-namespace Azmoon.EntityFrameworkCore.Seed.Host
+namespace Azmoon.Persistence.EntityFrameworkCore.Seed.Host
 {
     public class DefaultEditionCreator
     {
