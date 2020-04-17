@@ -4,7 +4,7 @@ using Abp.Events.Bus;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Azmoon.Configuration;
-using Azmoon.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore;
 using Azmoon.Migrator.DependencyInjection;
 
 namespace Azmoon.Migrator

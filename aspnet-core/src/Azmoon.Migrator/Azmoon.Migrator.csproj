@@ -19,6 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Azmoon.Core\Azmoon.Core.csproj" />
-    <ProjectReference Include="..\Azmoon.EntityFrameworkCore\Azmoon.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Azmoon.Persistence\Azmoon.Persistence.csproj" />
   </ItemGroup>
 </Project>

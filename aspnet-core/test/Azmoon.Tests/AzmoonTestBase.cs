@@ -10,9 +10,9 @@ using Abp.MultiTenancy;
 using Abp.Runtime.Session;
 using Abp.TestBase;
 using Azmoon.Authorization.Users;
-using Azmoon.EntityFrameworkCore;
-using Azmoon.EntityFrameworkCore.Seed.Host;
-using Azmoon.EntityFrameworkCore.Seed.Tenants;
+using Azmoon.Persistence.EntityFrameworkCore;
+using Azmoon.Persistence.EntityFrameworkCore.Seed.Host;
+using Azmoon.Persistence.EntityFrameworkCore.Seed.Tenants;
 using Azmoon.MultiTenancy;
 
 namespace Azmoon.Tests
