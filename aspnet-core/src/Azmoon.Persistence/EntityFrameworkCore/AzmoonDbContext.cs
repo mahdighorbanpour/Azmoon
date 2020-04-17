@@ -4,6 +4,7 @@ using Azmoon.Authorization.Roles;
 using Azmoon.Authorization.Users;
 using Azmoon.MultiTenancy;
 using Azmoon.Core.Quiz.Entities;
+using System.Reflection;
 
 namespace Azmoon.Persistence.EntityFrameworkCore{
     public class AzmoonDbContext : AbpZeroDbContext<Tenant, Role, User, AzmoonDbContext>
@@ -17,6 +18,12 @@ namespace Azmoon.Persistence.EntityFrameworkCore{
         public AzmoonDbContext(DbContextOptions<AzmoonDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

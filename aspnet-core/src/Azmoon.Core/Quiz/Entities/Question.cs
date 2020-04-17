@@ -2,12 +2,13 @@
 using Abp.Domain.Entities.Auditing;
 using Azmoon.Core.Quiz.Enums;
 using Azmoon.Core.Quiz.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Azmoon.Core.Quiz.Entities
 {
-    public class Question: FullAuditedEntity, IMayHaveTenant
+    public class Question: FullAuditedEntity<Guid>, IMayHaveTenant
     {
         public Question()
         {

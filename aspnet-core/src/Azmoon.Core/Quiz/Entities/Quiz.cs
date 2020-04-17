@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Azmoon.Core.Quiz.Entities
 {
-    public class Quiz: FullAuditedEntity, IMayHaveTenant
+    public class Quiz: FullAuditedEntity<Guid>, IMayHaveTenant
     {
         public Quiz()
         {
