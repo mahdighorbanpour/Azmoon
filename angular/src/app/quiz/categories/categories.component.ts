@@ -53,7 +53,7 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
 
     delete(entity: CategoryDto): void {
         abp.message.confirm(
-            this.l('TenantDeleteWarningMessage', entity.title),
+            this.l('CategoryDeleteWarningMessage', entity.title),
             undefined,
             (result: boolean) => {
                 if (result) {
