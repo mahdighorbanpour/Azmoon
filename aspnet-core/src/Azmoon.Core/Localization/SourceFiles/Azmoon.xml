@@ -105,5 +105,13 @@
     <text name="RoleDeleteWarningMessage">Role {0} will be deleted and unassigned from all assigned users.</text>
     <text name="TenantDeleteWarningMessage">Tenant {0} will be deleted.</text>
     <text name="SearchWithThreeDot">Search...</text>
+    <text name="Categories">Categories</text>
+    <text name="Title">Title</text>
+    <text name="ShortDescription">Short Description</text>
+    <text name="LongDescription">Long Description</text>
+    <text name="ImageUri">ImageUri</text>
+    <text name="CreateNewCategory">New Category</text>
+    <text name="EditCategory">Edit Category</text>
+    <text name="CategoryDeleteWarningMessage">Category {0} will be deleted.</text>
   </texts>
 </localizationDictionary>
