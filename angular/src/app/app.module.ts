@@ -23,23 +23,6 @@ import { SideBarUserAreaComponent } from '@app/layout/sidebar-user-area.componen
 import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
 import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
-// tenants
-import { TenantsComponent } from '@app/tenants/tenants.component';
-import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
-import { EditTenantDialogComponent } from './tenants/edit-tenant/edit-tenant-dialog.component';
-// roles
-import { RolesComponent } from '@app/roles/roles.component';
-import { CreateRoleDialogComponent } from './roles/create-role/create-role-dialog.component';
-import { EditRoleDialogComponent } from './roles/edit-role/edit-role-dialog.component';
-// users
-import { UsersComponent } from '@app/users/users.component';
-import { CreateUserDialogComponent } from '@app/users/create-user/create-user-dialog.component';
-import { EditUserDialogComponent } from '@app/users/edit-user/edit-user-dialog.component';
-import { ChangePasswordComponent } from './users/change-password/change-password.component';
-import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
-// categories
-import { CategoriesComponent } from './quiz/categories/categories.component';
-import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-update/create-update-category-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,23 +35,6 @@ import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-
     SideBarNavComponent,
     SideBarFooterComponent,
     RightSideBarComponent,
-    // tenants
-    TenantsComponent,
-    CreateTenantDialogComponent,
-    EditTenantDialogComponent,
-    // roles
-    RolesComponent,
-    CreateRoleDialogComponent,
-    EditRoleDialogComponent,
-    // users
-    UsersComponent,
-    CreateUserDialogComponent,
-    EditUserDialogComponent,
-    ChangePasswordComponent,
-    ResetPasswordDialogComponent,
-    // categories
-    CategoriesComponent,
-    CreateOrUpdateCategoryDialogComponent
   ],
   imports: [
     CommonModule,
@@ -85,19 +51,6 @@ import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-
   ],
   providers: [],
   entryComponents: [
-    // tenants
-    CreateTenantDialogComponent,
-    EditTenantDialogComponent,
-    // roles
-    CreateRoleDialogComponent,
-    EditRoleDialogComponent,
-    // users
-    CreateUserDialogComponent,
-    EditUserDialogComponent,
-    ResetPasswordDialogComponent,
-    // categories
-    CreateOrUpdateCategoryDialogComponent
-
   ]
 })
 export class AppModule {}
