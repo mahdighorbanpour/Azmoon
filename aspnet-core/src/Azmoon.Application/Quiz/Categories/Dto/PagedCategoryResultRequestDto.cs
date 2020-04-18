@@ -7,6 +7,6 @@ namespace Azmoon.Application.Quiz.Categories.Dto
 {
     public class PagedCategoryResultRequestDto : PagedResultRequestDto
     {
-        public string Keyword { get; set; }
+        public string filter { get; set; }
     }
 }

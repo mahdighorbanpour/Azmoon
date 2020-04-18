@@ -208,17 +208,17 @@ export class CategoryServiceProxy {
     }
 
     /**
-     * @param keyword (optional) 
+     * @param filter (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CategoryDtoPagedResultDto> {
+    getAll(filter: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CategoryDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Category/GetAll?";
-        if (keyword === null)
-            throw new Error("The parameter 'keyword' cannot be null.");
-        else if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "filter=" + encodeURIComponent("" + filter) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -277,7 +277,7 @@ export class CategoryServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    create(body: CreateCategoryDto | undefined): Observable<CategoryDto> {
+    create(body: CategoryDto | undefined): Observable<CategoryDto> {
         let url_ = this.baseUrl + "/api/services/app/Category/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2340,61 +2340,6 @@ export class CategoryDtoPagedResultDto implements ICategoryDtoPagedResultDto {
 export interface ICategoryDtoPagedResultDto {
     totalCount: number;
     items: CategoryDto[] | undefined;
-}
-
-export class CreateCategoryDto implements ICreateCategoryDto {
-    title: string | undefined;
-    shortDescription: string | undefined;
-    longDescription: string | undefined;
-    imageUri: string | undefined;
-
-    constructor(data?: ICreateCategoryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.title = _data["title"];
-            this.shortDescription = _data["shortDescription"];
-            this.longDescription = _data["longDescription"];
-            this.imageUri = _data["imageUri"];
-        }
-    }
-
-    static fromJS(data: any): CreateCategoryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateCategoryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["title"] = this.title;
-        data["shortDescription"] = this.shortDescription;
-        data["longDescription"] = this.longDescription;
-        data["imageUri"] = this.imageUri;
-        return data; 
-    }
-
-    clone(): CreateCategoryDto {
-        const json = this.toJSON();
-        let result = new CreateCategoryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICreateCategoryDto {
-    title: string | undefined;
-    shortDescription: string | undefined;
-    longDescription: string | undefined;
-    imageUri: string | undefined;
 }
 
 export class ChangeUiThemeInput implements IChangeUiThemeInput {

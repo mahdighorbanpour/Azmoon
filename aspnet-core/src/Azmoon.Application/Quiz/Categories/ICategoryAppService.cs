@@ -3,7 +3,7 @@ using Azmoon.Application.Quiz.Categories.Dto;
 
 namespace Azmoon.Application.Quiz.Categories
 {
-    public interface ICategoryAppService : IAsyncCrudAppService<CategoryDto, int, PagedCategoryResultRequestDto, CreateCategoryDto, CategoryDto>
+    public interface ICategoryAppService : IAsyncCrudAppService<CategoryDto, int, PagedCategoryResultRequestDto, CategoryDto, CategoryDto>
     {
     }
 }

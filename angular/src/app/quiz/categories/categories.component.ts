@@ -10,7 +10,7 @@ import { CategoryDto, CategoryServiceProxy, CategoryDtoPagedResultDto } from '@s
 import { CreateOrUpdateCategoryDialogComponent } from './create-update/create-update-category-dialog.component';
 
 class PagedCategoriesRequestDto extends PagedRequestDto {
-    keyword: string;
+    filter: string;
 }
 
 @Component({
@@ -20,7 +20,7 @@ class PagedCategoriesRequestDto extends PagedRequestDto {
 export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> {
 
     entityList: CategoryDto[] = [];
-    keyword = '';
+    filter = '';
 
     constructor(injector: Injector,
         private _service: CategoryServiceProxy,
@@ -35,10 +35,10 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
         finishedCallback: Function
     ): void {
 
-        request.keyword = this.keyword;
+        request.filter = this.filter;
 
         this._service
-            .getAll(request.keyword, request.skipCount, request.maxResultCount)
+            .getAll(request.filter, request.skipCount, request.maxResultCount)
             .pipe(
                 finalize(() => {
                     finishedCallback();
