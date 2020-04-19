@@ -1,5 +1,5 @@
 ﻿using Abp.Application.Services;
-using Azmoon.Application.Quiz.Categories.Dto;
+using Azmoon.Application.Shared.Quiz.Categories.Dto;
 
 namespace Azmoon.Application.Quiz.Categories
 {

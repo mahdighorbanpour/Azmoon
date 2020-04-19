@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Azmoon.Application.Shared\Azmoon.Application.Shared.csproj" />
+    <ProjectReference Include="..\src\Azmoon.Core\Azmoon.Core.csproj" />
+  </ItemGroup>
+
+</Project>

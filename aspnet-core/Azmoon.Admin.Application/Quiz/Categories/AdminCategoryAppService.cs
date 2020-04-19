@@ -6,11 +6,11 @@ using Abp.Collections.Extensions;
 using System.Linq;
 using Abp.Linq.Extensions;
 
-namespace Azmoon.Application.Quiz.Categories
+namespace Azmoon.Admin.Application.Quiz.Categories
 {
-    public class CategoryAppService : AsyncCrudAppService<Category, CategoryDto, int, PagedCategoryResultRequestDto, CategoryDto, CategoryDto>, ICategoryAppService
+    public class AdminCategoryAppService : AsyncCrudAppService<Category, CategoryDto, int, PagedCategoryResultRequestDto, CategoryDto, CategoryDto>, IAdminCategoryAppService
     {
-        public CategoryAppService(IRepository<Category, int> repository): base(repository)
+        public AdminCategoryAppService(IRepository<Category, int> repository): base(repository)
         {
         }
 
