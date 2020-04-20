@@ -6,7 +6,7 @@ import {
     PagedListingComponentBase,
     PagedRequestDto
 } from 'shared/paged-listing-component-base';
-import { CategoryDto, CategoryServiceProxy, CategoryDtoPagedResultDto } from '@shared/service-proxies/service-proxies';
+import { CategoryDto, AdminCategoryServiceProxy, CategoryDtoPagedResultDto } from '@shared/service-proxies/service-proxies';
 import { CreateOrUpdateCategoryDialogComponent } from './create-update/create-update-category-dialog.component';
 
 class PagedCategoriesRequestDto extends PagedRequestDto {
@@ -23,7 +23,7 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
     filter = '';
 
     constructor(injector: Injector,
-        private _service: CategoryServiceProxy,
+        private _service: AdminCategoryServiceProxy,
         private _dialog: MatDialog
     ) {
         super(injector);

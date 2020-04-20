@@ -5,12 +5,15 @@ using Azmoon.Application.Shared.Quiz.Categories.Dto;
 using Abp.Collections.Extensions;
 using System.Linq;
 using Abp.Linq.Extensions;
+using Abp.Authorization;
+using Azmoon.Authorization;
 
-namespace Azmoon.Application.Quiz.Categories
+namespace Azmoon.Admin.Application.Quiz.Categories
 {
-    public class CategoryAppService : AsyncCrudAppService<Category, CategoryDto, int, PagedCategoryResultRequestDto, CategoryDto, CategoryDto>, ICategoryAppService
+    [AbpAuthorize(PermissionNames.Pages_Categories)]
+    public class AdminCategoryAppService : AsyncCrudAppService<Category, CategoryDto, int, PagedCategoryResultRequestDto, CategoryDto, CategoryDto>, IAdminCategoryAppService
     {
-        public CategoryAppService(IRepository<Category, int> repository): base(repository)
+        public AdminCategoryAppService(IRepository<Category, int> repository): base(repository)
         {
         }
 

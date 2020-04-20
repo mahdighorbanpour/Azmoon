@@ -2,7 +2,7 @@
 using Abp.AutoMapper;
 using Azmoon.Core.Quiz.Entities;
 
-namespace Azmoon.Application.Quiz.Categories.Dto
+namespace Azmoon.Application.Shared.Quiz.Categories.Dto
 {
     [AutoMapFrom(typeof(Category))]
     [AutoMapTo(typeof(Category))]

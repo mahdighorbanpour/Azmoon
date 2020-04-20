@@ -9,16 +9,16 @@ namespace Azmoon
         typeof(AzmoonCoreModule), 
         typeof(AzmoonApplicationSharedModule), 
         typeof(AbpAutoMapperModule))]
-    public class AzmoonApplicationModule : AbpModule
+    public class AzmoonAdminApplicationModule : AbpModule
     {
         public override void PreInitialize()
         {
-            Configuration.Authorization.Providers.Add<AzmoonAuthorizationProvider>();
+            //Configuration.Authorization.Providers.Add<AzmoonAuthorizationProvider>();
         }
 
         public override void Initialize()
         {
-            var thisAssembly = typeof(AzmoonApplicationModule).GetAssembly();
+            var thisAssembly = typeof(AzmoonAdminApplicationModule).GetAssembly();
 
             IocManager.RegisterAssemblyByConvention(thisAssembly);
 
