@@ -18,6 +18,7 @@ namespace Azmoon
 {
     [DependsOn(
          typeof(AzmoonApplicationModule),
+         typeof(AzmoonAdminApplicationModule),
          typeof(AzmoonEntityFrameworkModule),
          typeof(AbpAspNetCoreModule)
         ,typeof(AbpAspNetCoreSignalRModule)
@@ -46,6 +47,11 @@ namespace Azmoon
                  .CreateControllersForAppServices(
                      typeof(AzmoonApplicationModule).GetAssembly()
                  );
+
+            Configuration.Modules.AbpAspNetCore()
+                .CreateControllersForAppServices(
+                    typeof(AzmoonAdminApplicationModule).GetAssembly(), "admin", true
+                );
 
             ConfigureTokenAuth();
         }

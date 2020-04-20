@@ -113,5 +113,6 @@
     <text name="CreateNewCategory">New Category</text>
     <text name="EditCategory">Edit Category</text>
     <text name="CategoryDeleteWarningMessage">Category {0} will be deleted.</text>
+    <text name="AdminPage">Administration</text>
   </texts>
 </localizationDictionary>

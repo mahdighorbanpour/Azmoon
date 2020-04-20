@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
 import {
-  CategoryServiceProxy,
+  AdminCategoryServiceProxy,
   CategoryDto
 } from '@shared/service-proxies/service-proxies';
 
@@ -28,7 +28,7 @@ export class CreateOrUpdateCategoryDialogComponent extends AppComponentBase
 
   constructor(
     injector: Injector,
-    public _service: CategoryServiceProxy,
+    public _service: AdminCategoryServiceProxy,
     private _dialogRef: MatDialogRef<CreateOrUpdateCategoryDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) private _id: number
   ) {

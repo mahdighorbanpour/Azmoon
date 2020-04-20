@@ -16,12 +16,12 @@ import { RolesComponent } from './roles/roles.component';
                 path: '',
                 component: AdminComponent,
                 children: [
-                    { path: 'home', component: AdminHomeComponent,  canActivate: [AppRouteGuard] },
+                    { path: 'home', component: AdminHomeComponent, data: { permission: 'Pages.Admin' },  canActivate: [AppRouteGuard] },
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent },
-                    { path: 'categories', component: CategoriesComponent }
+                    { path: 'categories', component: CategoriesComponent , data: { permission: 'Pages.Categories' },  canActivate: [AppRouteGuard]}
                 ]
             }
         ])

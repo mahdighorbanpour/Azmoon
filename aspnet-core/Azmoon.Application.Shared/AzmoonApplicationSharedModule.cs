@@ -7,18 +7,17 @@ namespace Azmoon
 {
     [DependsOn(
         typeof(AzmoonCoreModule), 
-        typeof(AzmoonApplicationSharedModule), 
         typeof(AbpAutoMapperModule))]
-    public class AzmoonApplicationModule : AbpModule
+    public class AzmoonApplicationSharedModule : AbpModule
     {
         public override void PreInitialize()
         {
-            Configuration.Authorization.Providers.Add<AzmoonAuthorizationProvider>();
+            //Configuration.Authorization.Providers.Add<AzmoonAuthorizationProvider>();
         }
 
         public override void Initialize()
         {
-            var thisAssembly = typeof(AzmoonApplicationModule).GetAssembly();
+            var thisAssembly = typeof(AzmoonApplicationSharedModule).GetAssembly();
 
             IocManager.RegisterAssemblyByConvention(thisAssembly);
 
