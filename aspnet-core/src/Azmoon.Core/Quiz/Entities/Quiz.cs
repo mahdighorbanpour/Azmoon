@@ -18,6 +18,7 @@ namespace Azmoon.Core.Quiz.Entities
         public string Description { get; set; }
         public TimeSpan? Duration { get; set; }
         public List<QuizQuestion> Questions { get; set; }
+        public bool IsActive { get; set; }
 
         public int TotalQuestion { get { return Questions.Count; } }
         public int TotalMarks { get { return Questions.Sum(q => q.Marks); } }
