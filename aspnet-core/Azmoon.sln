@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azmoon.Web.Core", "src\Azmo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azmoon.Persistence", "src\Azmoon.Persistence\Azmoon.Persistence.csproj", "{E0580562-F8F2-4EBB-B07A-ABFC6F2C314F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmoon.Admin.Application", "Azmoon.Admin.Application\Azmoon.Admin.Application.csproj", "{C7498EA1-E18E-48D4-BA7E-DB308BCB8D1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmoon.Admin.Application", "src\Azmoon.Admin.Application\Azmoon.Admin.Application.csproj", "{C7498EA1-E18E-48D4-BA7E-DB308BCB8D1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmoon.Application.Shared", "Azmoon.Application.Shared\Azmoon.Application.Shared.csproj", "{9450A430-6004-4E44-B9B3-0082BBE37AFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmoon.Application.Shared", "src\Azmoon.Application.Shared\Azmoon.Application.Shared.csproj", "{9450A430-6004-4E44-B9B3-0082BBE37AFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

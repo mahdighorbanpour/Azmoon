@@ -18,7 +18,7 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Azmoon.Admin.Application\Azmoon.Admin.Application.csproj" />
+    <ProjectReference Include="..\Azmoon.Admin.Application\Azmoon.Admin.Application.csproj" />
     <ProjectReference Include="..\Azmoon.Application\Azmoon.Application.csproj" />
     <ProjectReference Include="..\Azmoon.Persistence\Azmoon.Persistence.csproj" />
   </ItemGroup>
