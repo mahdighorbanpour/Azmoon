@@ -35,6 +35,8 @@ import { ResetPasswordDialogComponent } from './users/reset-password/reset-passw
 // categories
 import { CategoriesComponent } from './quiz/categories/categories.component';
 import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-update/create-update-category-dialog.component';
+import { AdminQuizzesComponent } from './quiz/quiz/quiz.component';
+import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/create-update-quiz-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,10 @@ import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-
     ResetPasswordDialogComponent,
     // categories
     CategoriesComponent,
-    CreateOrUpdateCategoryDialogComponent
+    CreateOrUpdateCategoryDialogComponent,
+    // quizzes
+    AdminQuizzesComponent,
+    CreateOrUpdateQuizDialogComponent
   ],
   imports: [
     CommonModule,
@@ -98,8 +103,9 @@ import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-
     EditUserDialogComponent,
     ResetPasswordDialogComponent,
     // categories
-    CreateOrUpdateCategoryDialogComponent
-
+    CreateOrUpdateCategoryDialogComponent,
+    // quizzes
+    CreateOrUpdateQuizDialogComponent
   ]
 })
 export class AdminModule {}

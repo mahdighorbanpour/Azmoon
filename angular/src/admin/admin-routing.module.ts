@@ -8,6 +8,7 @@ import { CategoriesComponent } from './quiz/categories/categories.component';
 import { AdminHomeComponent } from './home/admin-home.component';
 import { AdminComponent } from './admin.component';
 import { RolesComponent } from './roles/roles.component';
+import { AdminQuizzesComponent } from './quiz/quiz/quiz.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { RolesComponent } from './roles/roles.component';
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent },
-                    { path: 'categories', component: CategoriesComponent , data: { permission: 'Pages.Categories' },  canActivate: [AppRouteGuard]}
+                    { path: 'categories', component: CategoriesComponent , data: { permission: 'Pages.Categories' },  canActivate: [AppRouteGuard]},
+                    { path: 'quiz', component: AdminQuizzesComponent , data: { permission: 'Pages.Quiz' },  canActivate: [AppRouteGuard]},
                 ]
             }
         ])
