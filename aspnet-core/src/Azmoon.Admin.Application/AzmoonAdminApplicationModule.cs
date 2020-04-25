@@ -8,6 +8,7 @@ namespace Azmoon
     [DependsOn(
         typeof(AzmoonCoreModule), 
         typeof(AzmoonApplicationSharedModule), 
+        typeof(AzmoonApplicationModule), 
         typeof(AbpAutoMapperModule))]
     public class AzmoonAdminApplicationModule : AbpModule
     {

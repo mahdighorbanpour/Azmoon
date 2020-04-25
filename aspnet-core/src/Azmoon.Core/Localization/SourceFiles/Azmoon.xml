@@ -114,5 +114,10 @@
     <text name="EditCategory">Edit Category</text>
     <text name="CategoryDeleteWarningMessage">Category {0} will be deleted.</text>
     <text name="AdminPage">Administration</text>
+    <text name="Quizzes">Quizzes</text>
+    <text name="Description">Description</text>
+    <text name="Duration">Duration</text>
+    <text name="TotalQuestions">Total Questions</text>
+    <text name="TotalMarks">Total Marks</text>
   </texts>
 </localizationDictionary>

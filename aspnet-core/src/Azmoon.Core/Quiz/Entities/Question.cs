@@ -24,7 +24,7 @@ namespace Azmoon.Core.Quiz.Entities
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
-        public List<Quiz> Quizes { get; set; }
+        public List<QuizQuestion> Quizzes { get; set; }
 
         private readonly List<Choice> _choices = new List<Choice>();
         public IReadOnlyList<Choice> Choices => _choices.AsReadOnly();
