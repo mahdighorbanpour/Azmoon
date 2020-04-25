@@ -6,7 +6,7 @@ import {
     PagedListingComponentBase,
     PagedRequestDto
 } from 'shared/paged-listing-component-base';
-import { CategoryDto, AdminCategoryServiceProxy, CategoryDtoPagedResultDto } from '@shared/service-proxies/service-proxies';
+import { CategoryDto, AdminCategoryServiceProxy, CategoryDtoPagedResultDto, CreateUpdateCategoryDto } from '@shared/service-proxies/service-proxies';
 import { CreateOrUpdateCategoryDialogComponent } from './create-update/create-update-category-dialog.component';
 
 class PagedCategoriesRequestDto extends PagedRequestDto {
@@ -75,7 +75,7 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
         this.showCreateOrEditDialog();
     }
 
-    edit(entity: CategoryDto): void {
+    edit(entity: CreateUpdateCategoryDto): void {
         this.showCreateOrEditDialog(entity.id);
     }
 

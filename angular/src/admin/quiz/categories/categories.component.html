@@ -43,6 +43,9 @@
             <tr>
               <th>{{ "Title" | localize }}</th>
               <th>{{ "ShortDescription" | localize }}</th>
+              <th>
+                <div style="text-align:center">{{ "IsPublic" | localize }}</div>
+              </th>
               <th>{{ "Actions" | localize }}</th>
             </tr>
           </thead>
@@ -59,6 +62,20 @@
                 ">
               <td>{{ item.title }}</td>
               <td>{{ item.shortDescription }}</td>
+              <td align="center">
+                <i
+                  class="material-icons check_box"
+                  *ngIf="item.isPublic"
+                >
+                  check_box
+                </i>
+                <i
+                  class="material-icons check_box_outline_blank"
+                  *ngIf="!item.isPublic"
+                >
+                check_box_outline_blank
+                </i>
+              </td>
               <td>
                 <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
                   <mat-icon>menu</mat-icon>

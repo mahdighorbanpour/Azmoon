@@ -277,7 +277,7 @@ export class AdminCategoryServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    create(body: CategoryDto | undefined): Observable<CategoryDto> {
+    create(body: CreateUpdateCategoryDto | undefined): Observable<CategoryDto> {
         let url_ = this.baseUrl + "/api/services/admin/AdminCategory/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -333,7 +333,7 @@ export class AdminCategoryServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    update(body: CategoryDto | undefined): Observable<CategoryDto> {
+    update(body: CreateUpdateCategoryDto | undefined): Observable<CategoryDto> {
         let url_ = this.baseUrl + "/api/services/admin/AdminCategory/Update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2834,6 +2834,8 @@ export class CategoryDto implements ICategoryDto {
     shortDescription: string | undefined;
     longDescription: string | undefined;
     imageUri: string | undefined;
+    isPublic: boolean;
+    isApproved: boolean;
     id: number;
 
     constructor(data?: ICategoryDto) {
@@ -2851,6 +2853,8 @@ export class CategoryDto implements ICategoryDto {
             this.shortDescription = _data["shortDescription"];
             this.longDescription = _data["longDescription"];
             this.imageUri = _data["imageUri"];
+            this.isPublic = _data["isPublic"];
+            this.isApproved = _data["isApproved"];
             this.id = _data["id"];
         }
     }
@@ -2868,6 +2872,8 @@ export class CategoryDto implements ICategoryDto {
         data["shortDescription"] = this.shortDescription;
         data["longDescription"] = this.longDescription;
         data["imageUri"] = this.imageUri;
+        data["isPublic"] = this.isPublic;
+        data["isApproved"] = this.isApproved;
         data["id"] = this.id;
         return data; 
     }
@@ -2885,6 +2891,8 @@ export interface ICategoryDto {
     shortDescription: string | undefined;
     longDescription: string | undefined;
     imageUri: string | undefined;
+    isPublic: boolean;
+    isApproved: boolean;
     id: number;
 }
 
@@ -2941,6 +2949,69 @@ export class CategoryDtoPagedResultDto implements ICategoryDtoPagedResultDto {
 export interface ICategoryDtoPagedResultDto {
     totalCount: number;
     items: CategoryDto[] | undefined;
+}
+
+export class CreateUpdateCategoryDto implements ICreateUpdateCategoryDto {
+    title: string | undefined;
+    shortDescription: string | undefined;
+    longDescription: string | undefined;
+    imageUri: string | undefined;
+    isPublic: boolean;
+    id: number;
+
+    constructor(data?: ICreateUpdateCategoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.shortDescription = _data["shortDescription"];
+            this.longDescription = _data["longDescription"];
+            this.imageUri = _data["imageUri"];
+            this.isPublic = _data["isPublic"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateUpdateCategoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateUpdateCategoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["shortDescription"] = this.shortDescription;
+        data["longDescription"] = this.longDescription;
+        data["imageUri"] = this.imageUri;
+        data["isPublic"] = this.isPublic;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): CreateUpdateCategoryDto {
+        const json = this.toJSON();
+        let result = new CreateUpdateCategoryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateUpdateCategoryDto {
+    title: string | undefined;
+    shortDescription: string | undefined;
+    longDescription: string | undefined;
+    imageUri: string | undefined;
+    isPublic: boolean;
+    id: number;
 }
 
 export class QuizDto implements IQuizDto {
