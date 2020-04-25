@@ -85,7 +85,7 @@ namespace Azmoon.Persistence.EntityFrameworkCore{
                         // retrieve only records belonging to current tenant or the approved public records
                         (CurrentTenantId.HasValue &&
                             (((IMayHaveTenant)e).TenantId == CurrentTenantId ||
-                           (((IMayBePublic)e).IsPublic && ((INeedHostApproval)e).IsApproved))
+                           (((IMayBePublic)e).IsPublic && (((INeedHostApproval)e).IsApproved ?? false)))
                            ) ||
                         // retrieve only records belonging to host or marked as public records
                         (!CurrentTenantId.HasValue &&
@@ -134,6 +134,7 @@ namespace Azmoon.Persistence.EntityFrameworkCore{
         
         private void ApplyAzmoonConceptsForModifiedEntity(EntityEntry entry, long? userId, EntityChangeReport changeReport)
         {
+            CheckAndSetINeedHostApprovalProperty(entry.Entity);
         }
         private void ApplyAzmoonConceptsForDeletedEntity(EntityEntry entry, long? userId, EntityChangeReport changeReport)
         {
@@ -151,7 +152,7 @@ namespace Azmoon.Persistence.EntityFrameworkCore{
             //If it's not a host user, Set value to false
             if (CurrentTenantId.HasValue)
             {
-                entity.IsApproved = false;
+                entity.IsApproved = null;
             }
 
         }

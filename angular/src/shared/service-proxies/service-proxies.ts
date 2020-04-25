@@ -2835,7 +2835,7 @@ export class CategoryDto implements ICategoryDto {
     longDescription: string | undefined;
     imageUri: string | undefined;
     isPublic: boolean;
-    isApproved: boolean;
+    isApproved: boolean | undefined;
     id: number;
 
     constructor(data?: ICategoryDto) {
@@ -2892,7 +2892,7 @@ export interface ICategoryDto {
     longDescription: string | undefined;
     imageUri: string | undefined;
     isPublic: boolean;
-    isApproved: boolean;
+    isApproved: boolean | undefined;
     id: number;
 }
 

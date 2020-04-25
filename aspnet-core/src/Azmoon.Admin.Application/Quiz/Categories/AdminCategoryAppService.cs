@@ -28,11 +28,5 @@ namespace Azmoon.Admin.Application.Quiz.Categories
                );
         }
 
-        //public override Task<CategoryDto> CreateAsync(CategoryDto input)
-        //{
-        //    var category = MapToEntity(input);
-        //    if(AbpSession.)
-        //    return base.CreateAsync(input);
-        //}
     }
 }

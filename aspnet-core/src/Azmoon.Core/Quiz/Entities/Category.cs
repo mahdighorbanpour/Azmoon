@@ -13,7 +13,7 @@ namespace Azmoon.Core.Quiz.Entities
         public string LongDescription { get; set; }
         public string ImageUri { get; set; }
         public bool IsPublic { get; set; }
-        public bool IsApproved { get; set; }
+        public bool? IsApproved { get; set; }
 
         public List<Question> Questions { get; set; }
 

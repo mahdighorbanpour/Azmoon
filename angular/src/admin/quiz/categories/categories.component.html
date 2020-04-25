@@ -64,17 +64,13 @@
               <td>{{ item.shortDescription }}</td>
               <td align="center">
                 <i
-                  class="material-icons check_box"
-                  *ngIf="item.isPublic"
+                  class="material-icons" [ngClass]="(item.isPublic)?'check_box':'check_box_outline_blank'"
                 >
-                  check_box
+                  {{ (item.isPublic)?'check_box':'check_box_outline_blank' }}
                 </i>
-                <i
-                  class="material-icons check_box_outline_blank"
-                  *ngIf="!item.isPublic"
-                >
-                check_box_outline_blank
-                </i>
+                <span *ngIf = "item.isPublic" class="badge badge-pill" [ngClass]="item.isApproved? 'badge-success': item.isApproved == undefined ? 'badge-default' : 'badge-danger'">
+                  {{ item.isApproved? 'Approved': item.isApproved == undefined ? 'NotApproved' : 'Rejected' | localize}}
+                </span>
               </td>
               <td>
                 <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">

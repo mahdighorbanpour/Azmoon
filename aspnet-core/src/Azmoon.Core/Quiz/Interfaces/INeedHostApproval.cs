@@ -6,6 +6,6 @@ namespace Azmoon.Core.Quiz.Interfaces
 {
     public interface INeedHostApproval
     {
-        bool IsApproved { get; set; }
+        bool? IsApproved { get; set; }
     }
 }
