@@ -43,9 +43,7 @@
             <tr>
               <th>{{ "Title" | localize }}</th>
               <th>{{ "ShortDescription" | localize }}</th>
-              <th>
-                <div style="text-align:center">{{ "IsPublic" | localize }}</div>
-              </th>
+              <th>{{ "IsPublic" | localize }}</th>
               <th>{{ "Actions" | localize }}</th>
             </tr>
           </thead>
@@ -62,15 +60,17 @@
                 ">
               <td>{{ item.title }}</td>
               <td>{{ item.shortDescription }}</td>
-              <td align="center">
+              <td>
                 <i
                   class="material-icons" [ngClass]="(item.isPublic)?'check_box':'check_box_outline_blank'"
                 >
                   {{ (item.isPublic)?'check_box':'check_box_outline_blank' }}
                 </i>
-                <span *ngIf = "item.isPublic" class="badge badge-pill" [ngClass]="item.isApproved? 'badge-success': item.isApproved == undefined ? 'badge-default' : 'badge-danger'">
-                  {{ item.isApproved? 'Approved': item.isApproved == undefined ? 'NotApproved' : 'Rejected' | localize}}
-                </span>
+                <i *ngIf = "item.isPublic" class="material-icons" 
+                   [ngClass]="item.isApproved? 'col-green': item.isApproved == undefined ? 'col-grey' : 'col-red                   '"
+                   [title]="l(item.isApproved? 'Approved': item.isApproved == undefined ? 'NotApproved' : 'Rejected')">
+                   {{item.isApproved? 'check-circle': item.isApproved == undefined ? 'check_circle_outline' : 'check-circle'}}
+                </i>
               </td>
               <td>
                 <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">

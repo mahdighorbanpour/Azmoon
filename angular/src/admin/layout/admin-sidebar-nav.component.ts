@@ -10,9 +10,9 @@ import { MenuItem } from '@shared/layout/menu-item';
 export class AdminSideBarNavComponent extends AppComponentBase {
 
     menuItems: MenuItem[] = [
-        new MenuItem(this.l('AdminPage'), '', 'home', '/app/home'),
-        new MenuItem(this.l('Categories'), 'Pages.Categories', 'business', '/admin/categories'),
-        new MenuItem(this.l('Quizzes'), 'Pages.Quiz', 'business', '/admin/quiz'),
+        new MenuItem(this.l('AdminPage'), '', 'settings', '/app/home'),
+        new MenuItem(this.l('Categories'), 'Pages.Categories', 'view_list', '/admin/categories'),
+        new MenuItem(this.l('Quizzes'), 'Pages.Quiz', 'question_answer', '/admin/quiz'),
         new MenuItem(this.l('Tenants'), 'Pages.Tenants', 'business', '/admin/tenants'),
         new MenuItem(this.l('Users'), 'Pages.Users', 'people', '/admin/users'),
         new MenuItem(this.l('Roles'), 'Pages.Roles', 'local_offer', '/admin/roles'),
