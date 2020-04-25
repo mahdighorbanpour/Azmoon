@@ -4,14 +4,16 @@ using Azmoon.Persistence.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Azmoon.Persistence.Migrations
 {
     [DbContext(typeof(AzmoonDbContext))]
-    partial class AzmoonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200425071901_Added_Approval_Public")]
+    partial class Added_Approval_Public
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1537,7 +1539,7 @@ namespace Azmoon.Persistence.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
-                    b.Property<bool?>("IsApproved")
+                    b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")

@@ -45,6 +45,11 @@
             maxlength="250"
           />
         </mat-form-field>
+        <div class="checkbox-wrapper">
+          <mat-checkbox name="IsPublic" [(ngModel)]="entity.isPublic">
+            {{ "IsPublic" | localize }}
+          </mat-checkbox>
+        </div>
       </div>
     </div>
   </mat-dialog-content>

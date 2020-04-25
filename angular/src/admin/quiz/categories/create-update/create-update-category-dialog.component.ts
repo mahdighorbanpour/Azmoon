@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
 import {
   AdminCategoryServiceProxy,
-  CategoryDto
+  CreateUpdateCategoryDto
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
@@ -23,7 +23,7 @@ import {
 export class CreateOrUpdateCategoryDialogComponent extends AppComponentBase
   implements OnInit {
   saving = false;
-  entity: CategoryDto = new CategoryDto();
+  entity: CreateUpdateCategoryDto = new CreateUpdateCategoryDto();
   dialogTitle: string = '';
 
   constructor(
@@ -41,7 +41,7 @@ export class CreateOrUpdateCategoryDialogComponent extends AppComponentBase
     }
     else {
       this.dialogTitle = this.l("EditCategory");
-      this._service.get(this._id).subscribe((result: CategoryDto) => {
+      this._service.get(this._id).subscribe((result: CreateUpdateCategoryDto) => {
         this.entity = result;
       });
     }

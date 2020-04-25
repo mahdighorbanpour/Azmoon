@@ -7,11 +7,12 @@ using System.Linq;
 using Abp.Linq.Extensions;
 using Abp.Authorization;
 using Azmoon.Authorization;
+using System.Threading.Tasks;
 
 namespace Azmoon.Admin.Application.Quiz.Categories
 {
     [AbpAuthorize(PermissionNames.Pages_Categories)]
-    public class AdminCategoryAppService : AsyncCrudAppService<Category, CategoryDto, int, PagedCategoryResultRequestDto, CategoryDto, CategoryDto>, IAdminCategoryAppService
+    public class AdminCategoryAppService : AzmoonAdminBaseCrudService<Category, CategoryDto, int, PagedCategoryResultRequestDto, CreateUpdateCategoryDto, CreateUpdateCategoryDto>, IAdminCategoryAppService
     {
         public AdminCategoryAppService(IRepository<Category, int> repository): base(repository)
         {
@@ -26,5 +27,6 @@ namespace Azmoon.Admin.Application.Quiz.Categories
                  c.LongDescription.Contains(input.Filter)
                );
         }
+
     }
 }
