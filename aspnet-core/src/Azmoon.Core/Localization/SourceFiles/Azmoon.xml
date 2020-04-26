@@ -119,5 +119,17 @@
     <text name="Duration">Duration</text>
     <text name="TotalQuestions">Total Questions</text>
     <text name="TotalMarks">Total Marks</text>
+    <text name="IsPublic">Is Public</text>
+    <text name="ApproveIsPublic">Approve IsPublic</text>
+    <text name="Approve">Approve</text>
+    <text name="Reject">Reject</text>
+    <text name="Reset">Reset</text>
+    <text name="Approved">Approved</text>
+    <text name="Rejected">Rejected</text>
+    <text name="WaitingForApproval">Waiting for Host's approval</text>
+    <text name="SuccessfullyApproved">Successfully Approved</text>
+    <text name="SuccessfullyRejected">Successfully Rejected</text>
+    <text name="SuccessfullyReseted">Successfully Reseted</text>
+    <text name="EntityCannotBeApproved">This entity cannot be approved!</text>
   </texts>
 </localizationDictionary>

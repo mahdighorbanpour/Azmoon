@@ -13,6 +13,9 @@
         public const string Pages_Categories = "Pages.Categories";
         
         public const string Pages_Quiz = "Pages.Quiz";
+        
+        public const string ApproveIsPublic = "ApproveIsPublic";
+
 
     }
 }

@@ -13,7 +13,7 @@ namespace Azmoon.Localization
                 new DictionaryBasedLocalizationSource(AzmoonConsts.LocalizationSourceName,
                     new XmlEmbeddedFileLocalizationDictionaryProvider(
                         typeof(AzmoonLocalizationConfigurer).GetAssembly(),
-                        "Azmoon.Localization.SourceFiles"
+                        "Azmoon.Core.Localization.SourceFiles"
                     )
                 )
             );
