@@ -2,7 +2,7 @@
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card main-content">
       <div class="header">
-        <h2>{{ "Categories" | localize }}</h2>
+        <h2>{{ "Quizzes" | localize }}</h2>
         <ul class="header-dropdown m-r--5">
           <li>
             <button mat-icon-button [matMenuTriggerFor]="headerMenu" class="header-dropdown-mat-icon-button">
@@ -42,8 +42,7 @@
           <thead>
             <tr>
               <th>{{ "Title" | localize }}</th>
-              <th>{{ "ShortDescription" | localize }}</th>
-              <th>{{ "IsPublic" | localize }}</th>
+              <th>{{ "Description" | localize }}</th>
               <th>{{ "Actions" | localize }}</th>
             </tr>
           </thead>
@@ -59,19 +58,7 @@
                         })
                 ">
               <td>{{ item.title }}</td>
-              <td>{{ item.shortDescription }}</td>
-              <td>
-                <i
-                  class="material-icons" [ngClass]="(item.isPublic)?'check_box':'check_box_outline_blank'"
-                >
-                  {{ (item.isPublic)?'check_box':'check_box_outline_blank' }}
-                </i>
-                <i *ngIf = "item.isPublic" class="material-icons" 
-                   [ngClass]="item.isApproved? 'col-green': item.isApproved == undefined ? 'col-grey' : 'col-red                   '"
-                   [title]="l(item.isApproved? 'Approved': item.isApproved == undefined ? 'WaitingForApproval' : 'Rejected')">
-                   {{item.isApproved? 'check_circle': item.isApproved == undefined ? 'watch_later' : 'highlight_off'}}
-                </i>
-              </td>
+              <td>{{ item.description }}</td>
               <td>
                 <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
                   <mat-icon>menu</mat-icon>
@@ -84,18 +71,6 @@
                   <button mat-menu-item (click)="delete(item)">
                     <mat-icon>delete</mat-icon>
                     <span>{{ "Delete" | localize }}</span>
-                  </button>
-                  <button *ngIf="item.isPublic && isGranted('ApproveIsPublic')" mat-menu-item (click)="approveIsPublic(item.id)">
-                    <mat-icon>check_circle</mat-icon>
-                    <span>{{ "Approve" | localize }}</span>
-                  </button>
-                  <button *ngIf="item.isPublic && isGranted('ApproveIsPublic')" mat-menu-item (click)="rejectIsPublic(item.id)">
-                    <mat-icon>highlight_off</mat-icon>
-                    <span>{{ "Reject" | localize }}</span>
-                  </button>
-                  <button *ngIf="item.isPublic && isGranted('ApproveIsPublic')" mat-menu-item (click)="resetIsPublic(item.id)">
-                    <mat-icon>settings_backup_restore</mat-icon>
-                    <span>{{ "Reset" | localize }}</span>
                   </button>
                 </mat-menu>
               </td>

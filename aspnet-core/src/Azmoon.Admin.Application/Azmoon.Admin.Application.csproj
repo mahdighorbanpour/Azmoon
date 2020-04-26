@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Azmoon.Application.Shared\Azmoon.Application.Shared.csproj" />
+    <ProjectReference Include="..\Azmoon.Application\Azmoon.Application.csproj" />
     <ProjectReference Include="..\Azmoon.Core\Azmoon.Core.csproj" />
   </ItemGroup>
 

@@ -4,14 +4,16 @@ using Azmoon.Persistence.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Azmoon.Persistence.Migrations
 {
     [DbContext(typeof(AzmoonDbContext))]
-    partial class AzmoonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200421093649_add_IsActive_Quiz")]
+    partial class add_IsActive_Quiz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1537,13 +1539,7 @@ namespace Azmoon.Persistence.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
-                    b.Property<bool?>("IsApproved")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
@@ -1725,6 +1721,9 @@ namespace Azmoon.Persistence.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
@@ -1734,6 +1733,8 @@ namespace Azmoon.Persistence.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Quizzes");
                 });
@@ -2066,10 +2067,17 @@ namespace Azmoon.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Azmoon.Core.Quiz.Entities.Quiz", b =>
+                {
+                    b.HasOne("Azmoon.Core.Quiz.Entities.Question", null)
+                        .WithMany("Quizes")
+                        .HasForeignKey("QuestionId");
+                });
+
             modelBuilder.Entity("Azmoon.Core.Quiz.Entities.QuizQuestion", b =>
                 {
                     b.HasOne("Azmoon.Core.Quiz.Entities.Question", "Question")
-                        .WithMany("Quizzes")
+                        .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

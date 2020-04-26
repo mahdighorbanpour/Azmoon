@@ -15,21 +15,11 @@
           />
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            name="ShortDescription"
-            [placeholder]="'ShortDescription' | localize"
-            [(ngModel)]="entity.shortDescription"
-            required
-            maxlength="100"
-          />
-        </mat-form-field>
-        <mat-form-field>
           <textarea 
             matInput
-            name="LongDescription"
-            [placeholder]="'LongDescription' | localize"
-            [(ngModel)]="entity.longDescription"
+            name="Description"
+            [placeholder]="'Description' | localize"
+            [(ngModel)]="entity.description"
             required
             maxlength="1000"
             rows="4"
@@ -38,16 +28,15 @@
         <mat-form-field>
           <input
             matInput
-            name="ImageUri"
-            [placeholder]="'ImageUri' | localize"
-            [(ngModel)]="entity.imageUri"
-            type="email"
-            maxlength="250"
+            name="Duration"
+            [placeholder]="'Duration' | localize"
+            [(ngModel)]="entity.duration"
+            maxlength="8"
           />
         </mat-form-field>
         <div class="checkbox-wrapper">
-          <mat-checkbox name="IsPublic" [(ngModel)]="entity.isPublic">
-            {{ "IsPublic" | localize }}
+          <mat-checkbox name="IsActive" [(ngModel)]="entity.isActive">
+            {{ "IsActive" | localize }}
           </mat-checkbox>
         </div>
       </div>

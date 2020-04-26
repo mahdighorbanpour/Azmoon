@@ -3,12 +3,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
 import {
-  AdminCategoryServiceProxy,
-  CreateUpdateCategoryDto
+  AdminQuizServiceProxy,
+  QuizDto,
+  CreateUpdateQuizDto
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
-  templateUrl: 'create-update-category-dialog.component.html',
+  templateUrl: 'create-update-quiz-dialog.component.html',
   styles: [
     `
       mat-form-field {
@@ -20,28 +21,28 @@ import {
     `
   ]
 })
-export class CreateOrUpdateCategoryDialogComponent extends AppComponentBase
+export class CreateOrUpdateQuizDialogComponent extends AppComponentBase
   implements OnInit {
   saving = false;
-  entity: CreateUpdateCategoryDto = new CreateUpdateCategoryDto();
+  entity: CreateUpdateQuizDto = new CreateUpdateQuizDto();
   dialogTitle: string = '';
 
   constructor(
     injector: Injector,
-    public _service: AdminCategoryServiceProxy,
-    private _dialogRef: MatDialogRef<CreateOrUpdateCategoryDialogComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private _id: number
+    public _service: AdminQuizServiceProxy,
+    private _dialogRef: MatDialogRef<CreateOrUpdateQuizDialogComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) private _id: string
   ) {
     super(injector);
   }
 
   ngOnInit(): void {
-    if (this._id == undefined || this._id <= 0) {
-      this.dialogTitle = this.l("CreateNewCategory");
+    if (this._id == undefined || this._id == '') {
+      this.dialogTitle = this.l("CreateNewQuiz");
     }
     else {
-      this.dialogTitle = this.l("EditCategory");
-      this._service.get(this._id).subscribe((result: CreateUpdateCategoryDto) => {
+      this.dialogTitle = this.l("EditQuiz");
+      this._service.get(this._id).subscribe((result: QuizDto) => {
         this.entity = result;
       });
     }
@@ -51,7 +52,7 @@ export class CreateOrUpdateCategoryDialogComponent extends AppComponentBase
   save(): void {
     this.saving = true;
 
-    let createOrUpdate = this.entity.id == undefined || this.entity.id <= 0 ?
+    let createOrUpdate = this.entity.id == undefined || this.entity.id == '' ?
       this._service.create(this.entity) :
       this._service.update(this.entity);
 

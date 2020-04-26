@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Azmoon.Core.Quiz.Entities
 {
-    public class Quiz: FullAuditedEntity<Guid>, IMayHaveTenant
+    public class Quiz : FullAuditedEntity<Guid>, IMayHaveTenant
     {
         public Quiz()
         {
@@ -18,8 +18,9 @@ namespace Azmoon.Core.Quiz.Entities
         public string Description { get; set; }
         public TimeSpan? Duration { get; set; }
         public List<QuizQuestion> Questions { get; set; }
+        public bool IsActive { get; set; }
 
-        public int TotalQuestion { get { return Questions.Count; } }
-        public int TotalMarks { get { return Questions.Sum(q => q.Marks); } }
+        public int TotalQuestions { get { return Questions != null ? Questions.Count : 0; } }
+        public int TotalMarks { get { return Questions != null ? Questions.Sum(q => q.Marks) : 0; } }
     }
 }
