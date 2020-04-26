@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace Azmoon.Admin.Application.Quiz.Categories
 {
     [AbpAuthorize(PermissionNames.Pages_Categories)]
-    public class AdminCategoryAppService : AzmoonAdminBaseCrudService<Category, CategoryDto, int, PagedCategoryResultRequestDto, CreateUpdateCategoryDto, CreateUpdateCategoryDto>, IAdminCategoryAppService
+    public class AdminCategoryAppService : AdminCrudServiceWithHostApprovalBase<Category, CategoryDto, int, PagedCategoryResultRequestDto, CreateUpdateCategoryDto, CreateUpdateCategoryDto>, 
+        IAdminCategoryAppService
     {
         public AdminCategoryAppService(IRepository<Category, int> repository): base(repository)
         {

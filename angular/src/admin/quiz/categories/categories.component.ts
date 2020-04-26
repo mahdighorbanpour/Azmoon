@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -8,6 +8,7 @@ import {
 } from 'shared/paged-listing-component-base';
 import { CategoryDto, AdminCategoryServiceProxy, CategoryDtoPagedResultDto, CreateUpdateCategoryDto } from '@shared/service-proxies/service-proxies';
 import { CreateOrUpdateCategoryDialogComponent } from './create-update/create-update-category-dialog.component';
+import { IMayBePublicApproval } from 'admin/shared/IMayBePublicApproval';
 
 class PagedCategoriesRequestDto extends PagedRequestDto {
     filter: string;
@@ -17,7 +18,7 @@ class PagedCategoriesRequestDto extends PagedRequestDto {
     animations: [appModuleAnimation()],
     templateUrl: './categories.component.html'
 })
-export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> {
+export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> implements IMayBePublicApproval{
 
     entityList: CategoryDto[] = [];
     filter = '';
@@ -89,5 +90,38 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
                 this.refresh();
             }
         });
+    }
+
+    approveIsPublic(id: any) {
+        this._service.approveIsPublic(id)
+        .subscribe(
+          res => {
+              abp.notify.success(this.l('SuccessfullyApproved'));
+              this.refresh();
+          },
+          err => {}
+        );
+    }
+
+    rejectIsPublic(id: any) {
+        this._service.rejectIsPublic(id)
+          .subscribe(
+            res => {
+                abp.notify.success(this.l('SuccessfullyRejected'));
+                this.refresh();
+            },
+            err => {}
+          );
+    }
+
+    resetIsPublic(id: any) {
+        this._service.resetIsPublic(id)
+          .subscribe(
+            res => {
+                abp.notify.success(this.l('SuccessfullyReseted'));
+                this.refresh();
+            },
+            err => {}
+          );
     }
 }
