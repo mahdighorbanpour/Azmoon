@@ -131,5 +131,6 @@
     <text name="SuccessfullyRejected">Successfully Rejected</text>
     <text name="SuccessfullyReseted">Successfully Reseted</text>
     <text name="EntityCannotBeApproved">This entity cannot be approved!</text>
+    <text name="NotAuthorized">You are not authorized to perform this action.</text>
   </texts>
 </localizationDictionary>
