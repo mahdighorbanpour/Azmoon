@@ -16,7 +16,9 @@ namespace Azmoon.Core.Quiz.Entities
         public bool? IsApproved { get; set; }
 
         public List<Question> Questions { get; set; }
+        public List<Quiz> Quizzes { get; set; }
 
         public int TotalQuestion { get { return Questions.Count; } }
+        public int TotalQuizzes { get { return Quizzes.Count; } }
     }
 }
