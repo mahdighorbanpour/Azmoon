@@ -6,5 +6,7 @@ namespace Azmoon.Application.Shared.Quiz.Quiz.Dto
     {
         public string Filter { get; set; }
         public bool? IsActive { get; set; }
+        public int? CategoryId { get; set; }
+        public bool? IsPublic { get; set; }
     }
 }
