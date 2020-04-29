@@ -13,5 +13,7 @@ namespace Azmoon.Application.Shared.Quiz.Categories.Dto
         public string ImageUri { get; set; }
         public bool IsPublic { get; set; }
         public bool? IsApproved { get; set; }
+        public int QuestionsCount { get; set; }
+        public int QuizzesCount { get; set; }
     }
 }
