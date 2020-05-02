@@ -1,38 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import { Router } from '@angular/router';
-
-declare interface RouteInfo {
-    path: string;
-    title: string;
-    icon: string;
-    class: string;
-}
-export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
-    { path: '/icons', title: 'Icons',  icon:'ni-planet text-blue', class: '' },
-    { path: '/maps', title: 'Maps',  icon:'ni-pin-3 text-orange', class: '' },
-    { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
-    { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '' },
-    { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
-    { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' }
-];
+import { AppComponentBase } from '@shared/app-component-base';
+import { MenuItem } from '@shared/layout/menu-item';
 
 @Component({
-  selector: 'admin-sidebar',
-  templateUrl: './admin-sidebar.component.html',
-  styleUrls: ['./admin-sidebar.component.scss']
+    selector: 'admin-sidebar',
+    templateUrl: './admin-sidebar.component.html',
+    styleUrls: ['./admin-sidebar.component.scss']
 })
-export class AdminSidebarComponent implements OnInit {
+export class AdminSidebarComponent extends AppComponentBase {
+    versionText: string;
+    currentYear: number;
+    isCollapsed = true;
+  menuItems: MenuItem[] = [
+      new MenuItem(this.l('AdminPage'), 'Pages.Admin', 'settings', '/admin/home', 'text-blue'),
+      new MenuItem(this.l('About'), '', 'info', '/app/about', 'text-orange'),
+      new MenuItem(this.l('HomePage'), '', 'home', '/app/home', 'text-primary'),
 
-  public menuItems: any[];
-  public isCollapsed = true;
+        new MenuItem(this.l('Categories'), 'Pages.Categories', 'view_list', '/admin/categories'),
+        new MenuItem(this.l('Quizzes'), 'Pages.Quiz', 'question_answer', '/admin/quiz'),
+        new MenuItem(this.l('Tenants'), 'Pages.Tenants', 'business', '/admin/tenants'),
+        new MenuItem(this.l('Users'), 'Pages.Users', 'people', '/admin/users'),
+        new MenuItem(this.l('Roles'), 'Pages.Roles', 'local_offer', '/admin/roles'),
+    ];
 
-  constructor(private router: Router) { }
+    constructor(
+        injector: Injector,
+        private router: Router
+    ) {
+        super(injector);
+        this.currentYear = new Date().getFullYear();
+        this.versionText = this.appSession.application.version + ' [' + this.appSession.application.releaseDate.format('YYYYDDMM') + ']';
+    }
 
-  ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
-    this.router.events.subscribe((event) => {
-      this.isCollapsed = true;
-   });
-  }
+    showMenuItem(menuItem): boolean {
+        if (menuItem.permissionName) {
+            return this.permission.isGranted(menuItem.permissionName);
+        }
+
+        return true;
+    }
+    
+    ngOnInit() {
+        this.router.events.subscribe((event) => {
+          this.isCollapsed = true;
+       });
+      }
 }

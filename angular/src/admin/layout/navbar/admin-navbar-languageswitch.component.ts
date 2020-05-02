@@ -5,11 +5,11 @@ import { UserServiceProxy, ChangeUserLanguageDto } from '@shared/service-proxies
 import * as _ from 'lodash';
 
 @Component({
-  templateUrl: './admin-topbar-languageswitch.component.html',
-  selector: 'admin-topbar-languageswitch',
+  templateUrl: './admin-navbar-languageswitch.component.html',
+  selector: '[admin-navbar-languageswitch]',
   encapsulation: ViewEncapsulation.None
 })
-export class AdminTopBarLanguageSwitchComponent extends AppComponentBase implements OnInit {
+export class AdminNavBarLanguageSwitchComponent extends AppComponentBase implements OnInit {
 
   languages: abp.localization.ILanguageInfo[];
   currentLanguage: abp.localization.ILanguageInfo;

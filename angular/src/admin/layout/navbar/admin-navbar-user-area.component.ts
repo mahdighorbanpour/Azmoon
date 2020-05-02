@@ -3,11 +3,11 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { AppAuthService } from '@shared/auth/app-auth.service';
 
 @Component({
-    templateUrl: './admin-sidebar-user-area.component.html',
-    selector: 'admin-sidebar-user-area',
+    templateUrl: './admin-navbar-user-area.component.html',
+    selector: '[admin-navbar-user-area]',
     encapsulation: ViewEncapsulation.None
 })
-export class AdminSideBarUserAreaComponent extends AppComponentBase implements OnInit {
+export class AdminNavBarUserAreaComponent extends AppComponentBase implements OnInit {
 
     shownLoginName = '';
 
