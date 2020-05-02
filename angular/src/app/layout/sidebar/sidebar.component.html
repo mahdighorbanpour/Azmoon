@@ -2,20 +2,20 @@
   <div class="container-fluid">
     <!-- Toggler -->
     <button class="navbar-toggler" type="button" (click)="isCollapsed=!isCollapsed"
-       aria-controls="sidenav-collapse-main">
+      aria-controls="sidenav-collapse-main">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Brand -->
     <a class="navbar-brand pt-0" routerLinkActive="active" [routerLink]="['/app/home']">
       <img src="./argon-theme/img/brand/red.png" class="navbar-brand-img" alt="Azmoon">
     </a>
-    
-    <div class="collapse navbar-collapse"  [collapse]="isCollapsed" id="sidenav-collapse-main">
+
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed" id="sidenav-collapse-main">
       <!-- Collapse header -->
       <div class="navbar-collapse-header d-md-none">
         <div class="row">
           <div class="col-6 collapse-brand">
-            <a  routerLinkActive="active" [routerLink]="['/dashboard']">
+            <a routerLinkActive="active" [routerLink]="['/dashboard']">
               <img src="/argon-theme/img/brand/blue.png">
             </a>
           </div>
@@ -31,50 +31,90 @@
       <ul class="navbar-nav">
         <ng-template ngFor let-menuItem [ngForOf]="menuItems" let-mainMenuItemIndex="index">
           <li *ngIf="showMenuItem(menuItem)" routerLinkActive="active" class="{{menuItem.class}} nav-item">
-              <!-- route name -->
-              <a [routerLink]="[menuItem.route]" *ngIf="!menuItem.items.length && menuItem.route.indexOf('http') != 0"  class="nav-link">
-                  <i *ngIf="menuItem.icon" class="material-icons" [ngClass]='menuItem.cssClass'>{{menuItem.icon}}</i>
-                  <span>{{menuItem.name}}</span>
-              </a>
-              <!-- Static link (starts with 'http') -->
-              <a href="{{menuItem.route}}" target="_blank" *ngIf="!menuItem.items.length && menuItem.route.indexOf('http') == 0"  class="nav-link">
-                  <i *ngIf="menuItem.icon" class="material-icons" [ngClass]='menuItem.cssClass'>{{menuItem.icon}}</i>
-                  <span>{{menuItem.name}}</span>
-              </a>
-              <!-- Has child menu items (so, this is a parent menu) -->
-              <a href="javascript:void(0);" *ngIf="menuItem.items.length" class="nav-link" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
-                  <i *ngIf="menuItem.icon" class="material-icons" [ngClass]='menuItem.cssClass'>{{menuItem.icon}}</i>
-                  <span>{{menuItem.name}}</span>
-              </a>
-                <div class="collapse" id="navbar-dashboards" *ngIf="menuItem.items.length">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a href="../../pages/dashboards/dashboard.html" class="nav-link">
-                        <span class="sidenav-mini-icon"> D </span>
-                        <span class="sidenav-normal"> Dashboard </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="../../pages/dashboards/alternative.html" class="nav-link">
-                        <span class="sidenav-mini-icon"> A </span>
-                        <span class="sidenav-normal"> Alternative </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              
+            <!-- route name -->
+            <a [routerLink]="[menuItem.route]" *ngIf="!menuItem.items.length && menuItem.route.indexOf('http') != 0"
+              class="nav-link">
+              <i *ngIf="menuItem.icon" class="material-icons" [ngClass]='menuItem.cssClass'>{{menuItem.icon}}</i>
+              <span>{{menuItem.name}}</span>
+            </a>
+            <!-- Static link (starts with 'http') -->
+            <a href="{{menuItem.route}}" target="_blank"
+              *ngIf="!menuItem.items.length && menuItem.route.indexOf('http') == 0" class="nav-link">
+              <i *ngIf="menuItem.icon" class="material-icons" [ngClass]='menuItem.cssClass'>{{menuItem.icon}}</i>
+              <span>{{menuItem.name}}</span>
+            </a>
+            <!-- Has child menu items (so, this is a parent menu) -->
+            <a href="#sidebar-{{mainMenuItemIndex}}" *ngIf="menuItem.items.length" class="nav-link"
+              data-toggle="collapse" role="button" aria-expanded="false">
+              <i *ngIf="menuItem.icon" class="material-icons" [ngClass]='menuItem.cssClass'>{{menuItem.icon}}</i>
+              <span>{{menuItem.name}}</span>
+            </a>
+            <div class="collapse" id="sidebar-{{mainMenuItemIndex}}" *ngIf="menuItem.items.length">
+              <ul class="nav nav-sm flex-column">
+                <ng-template ngFor let-subMenuItem [ngForOf]="menuItem.items" let-subMenuItemIndex="index">
+                  <li *ngIf="showMenuItem(subMenuItem)" routerLinkActive="active">
+                    <!-- route name -->
+                    <a [routerLink]="[subMenuItem.route]" class="toggled"
+                      *ngIf="!subMenuItem.items.length && subMenuItem.route.indexOf('http') != 0" class="nav-link">
+                      <i *ngIf="subMenuItem.icon" class="material-icons"
+                        [ngClass]='subMenuItem.cssClass'>{{subMenuItem.icon}}</i>
+                      <span>{{subMenuItem.name}}</span>
+                    </a>
+                    <!-- Static link (starts with 'http') -->
+                    <a href="{{subMenuItem.route}}" class="toggled" target="_blank"
+                      *ngIf="!subMenuItem.items.length && subMenuItem.route.indexOf('http') == 0" class="nav-link">
+                      <i *ngIf="subMenuItem.icon" class="material-icons"
+                        [ngClass]='subMenuItem.cssClass'>{{subMenuItem.icon}}</i>
+                      <span>{{subMenuItem.name}}</span>
+                    </a>
+                    <!-- Has child menu items (so, this is a parent menu) -->
+                    <a href="#subSidebar-{{subMenuItemIndex}}" *ngIf="subMenuItem.items.length" class="nav-link"
+                      data-toggle="collapse" role="button" aria-expanded="false">
+                      <i *ngIf="subMenuItem.icon" class="material-icons"
+                        [ngClass]='subMenuItem.cssClass'>{{subMenuItem.icon}}</i>
+                      <span>{{subMenuItem.name}}</span>
+                    </a>
+                    <div class="collapse" id="subSidebar-{{subMenuItemIndex}}" *ngIf="subMenuItem.items.length">
+                      <ul class="nav nav-sm flex-column">
+                        <ng-template ngFor let-subSubMenuItem [ngForOf]="subMenuItem.items"
+                          let-subSubMenuItemIndex="index" class="nav-link">
+                          <li *ngIf="showMenuItem(subSubMenuItem)" routerLinkActive="active">
+                            <!-- route name -->
+                            <a [routerLink]="[subSubMenuItem.route]" *ngIf="subSubMenuItem.route.indexOf('http') != 0"
+                              class="nav-link">
+                              <i *ngIf="subSubMenuItem.icon" class="material-icons">{{subSubMenuItem.icon}}</i>
+                              <span>{{subSubMenuItem.name}}</span>
+                            </a>
+                            <!-- Static link (starts with 'http') -->
+                            <a href="{{subSubMenuItem.route}}" target="_blank"
+                              *ngIf="subSubMenuItem.route.indexOf('http') == 0" class="nav-link">
+                              <i *ngIf="subSubMenuItem.icon" class="material-icons">{{subSubMenuItem.icon}}</i>
+                              <span>{{subSubMenuItem.name}}</span>
+                            </a>
+                          </li>
+                        </ng-template>
+                      </ul>
+
+                    </div>
+                  </li>
+                </ng-template>
+              </ul>
+            </div>
+
           </li>
-      </ng-template>
-          <!-- <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-              <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
-                  <i class="ni {{menuItem.icon}}"></i>
-                  {{menuItem.title}}
-              </a>
-          </li> -->
+        </ng-template>
       </ul>
       <!-- Divider -->
-      <!-- <hr class="my-3"> -->
-      
+
     </div>
+    <div class="legal d-sm-none d-md-block">
+      <div class="copyright">
+          &copy; {{currentYear}} <a href="javascript:void(0);">Azmoon</a>.
+      </div>
+      <div class="version">
+          <b>{{ "Version" | localize }} </b> {{versionText}}
+      </div>
   </div>
+  </div>
+  
 </nav>
