@@ -21,6 +21,13 @@
     <text name="RememberMe" value="Remember me" />
     <text name="LogIn" value="Log in" />
     <text name="LoginFailed" value="Login failed!" />
+    <text name="LoginWelcomeMessage" value="Welcome!" />
+    <text name="SignInWith" value="Sign in with" />
+    <text name="SignUpWith" value="Sign up with" />
+    <text name="SignInWithCredentials" value="Or sign in with credentials" />
+    <text name="SignUpWithCredentials" value="Or sign up with credentials" />
+    
+    <text name="MyProfile" value="My profile" />
     <text name="NameSurname" value="Name surname" />
     <text name="UserName" value="User name" />
     <text name="Name" value="Name" />
@@ -95,6 +102,7 @@
     <text name="StartTyping">Start Typing</text>
     <text name="Skins">Skins</text>
     <text name="Settings">Settings</text>
+    <text name="Support">Support</text>
     <text name="Filter">Filter</text>
     <text name="CurrentPassword">Current Password</text>
     <text name="NewPassword">New Password</text>

@@ -17,24 +17,32 @@ import { SharedModule } from '@shared/shared.module';
 
 import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
-import { TopBarComponent } from '@app/layout/topbar.component';
-import { TopBarLanguageSwitchComponent } from '@app/layout/topbar-languageswitch.component';
 import { SideBarUserAreaComponent } from '@app/layout/sidebar-user-area.component';
 import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
 import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { NavbarComponent } from './layout/navbar/navbar.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NavBarUserAreaComponent } from './layout/navbar/navbar-user-area.component';
+import { NavBarLanguageSwitchComponent } from './layout/navbar/navbar-languageswitch.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AboutComponent,
-    TopBarComponent,
-    TopBarLanguageSwitchComponent,
     SideBarUserAreaComponent,
     SideBarNavComponent,
     SideBarFooterComponent,
     RightSideBarComponent,
+    FooterComponent,
+    NavbarComponent,
+    NavBarUserAreaComponent,
+    NavBarLanguageSwitchComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,
@@ -43,6 +51,8 @@ import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
     HttpClientModule,
     HttpClientJsonpModule,
     ModalModule.forRoot(),
+    CollapseModule.forRoot(),
+    //BsDropdownModule.forRoot(),
     AbpModule,
     AppRoutingModule,
     ServiceProxyModule,

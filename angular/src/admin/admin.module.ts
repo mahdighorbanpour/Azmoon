@@ -37,6 +37,9 @@ import { CategoriesComponent } from './quiz/categories/categories.component';
 import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-update/create-update-category-dialog.component';
 import { AdminQuizzesComponent } from './quiz/quiz/quiz.component';
 import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/create-update-quiz-dialog.component';
+import { AdminSidebarComponent } from './layout/sidebar/admin-sidebar.component';
+import { AdminNavbarComponent } from './layout/navbar/admin-navbar.component';
+import { AdminFooterComponent } from './layout/footer/admin-footer.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,11 @@ import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/cre
     CreateOrUpdateCategoryDialogComponent,
     // quizzes
     AdminQuizzesComponent,
-    CreateOrUpdateQuizDialogComponent
+    CreateOrUpdateQuizDialogComponent,
+    // new components
+    AdminFooterComponent,
+    AdminNavbarComponent,
+    AdminSidebarComponent
   ],
   imports: [
     CommonModule,
