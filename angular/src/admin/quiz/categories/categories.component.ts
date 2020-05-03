@@ -28,6 +28,7 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
         private _dialog: MatDialog
     ) {
         super(injector);
+        this.setTitle(this.l('Categories'));
     }
 
     list(

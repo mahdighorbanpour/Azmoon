@@ -8,6 +8,7 @@ import { SettingService } from '@abp/settings/setting.service';
 import { MessageService } from '@abp/message/message.service';
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
 import { AppSessionService } from '@shared/session/app-session.service';
+import { Title } from '@angular/platform-browser';
 
 export abstract class AppComponentBase {
 
@@ -22,6 +23,7 @@ export abstract class AppComponentBase {
     multiTenancy: AbpMultiTenancyService;
     appSession: AppSessionService;
     elementRef: ElementRef;
+    titleService: Title;
 
     constructor(injector: Injector) {
         this.localization = injector.get(LocalizationService);
@@ -33,6 +35,7 @@ export abstract class AppComponentBase {
         this.multiTenancy = injector.get(AbpMultiTenancyService);
         this.appSession = injector.get(AppSessionService);
         this.elementRef = injector.get(ElementRef);
+        this.titleService = injector.get(Title);
     }
 
     l(key: string, ...args: any[]): string {
@@ -52,5 +55,14 @@ export abstract class AppComponentBase {
 
     isGranted(permissionName: string): boolean {
         return this.permission.isGranted(permissionName);
+    }
+
+    setTitle(newTitle: string) {
+        this.titleService.setTitle(AppConsts.appName + '-'+ newTitle);
+    }
+
+    getTitle(): string {
+        return this.titleService.getTitle()
+        .replace(AppConsts.appName + '-', "");
     }
 }
