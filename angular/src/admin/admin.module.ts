@@ -34,6 +34,8 @@ import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/cre
 import { AdminSidebarComponent } from './layout/sidebar/admin-sidebar.component';
 import { AdminNavbarComponent } from './layout/navbar/admin-navbar.component';
 import { AdminFooterComponent } from './layout/footer/admin-footer.component';
+import { AdminNavBarLanguageSwitchComponent } from './layout/navbar/admin-navbar-languageswitch.component';
+import { AdminNavBarUserAreaComponent } from './layout/navbar/admin-navbar-user-area.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { AdminFooterComponent } from './layout/footer/admin-footer.component';
     // new components
     AdminFooterComponent,
     AdminNavbarComponent,
+    AdminNavBarUserAreaComponent,
+    AdminNavBarLanguageSwitchComponent,
     AdminSidebarComponent
   ],
   imports: [
