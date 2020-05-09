@@ -40,6 +40,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
         private _dialog: MatDialog
     ) {
         super(injector);
+        this.setTitle(this.l('Roles'));
     }
 
     list(
