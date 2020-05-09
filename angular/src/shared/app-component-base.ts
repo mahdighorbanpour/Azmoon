@@ -25,6 +25,9 @@ export abstract class AppComponentBase {
     elementRef: ElementRef;
     titleService: Title;
 
+    isSelectLoading = false;
+    selectName = '';
+
     constructor(injector: Injector) {
         this.localization = injector.get(LocalizationService);
         this.permission = injector.get(PermissionCheckerService);
@@ -64,5 +67,15 @@ export abstract class AppComponentBase {
     getTitle(): string {
         return this.titleService.getTitle()
         .replace(AppConsts.appName + '-', "");
+    }
+
+    setSelectIsLoading(name: string){
+        this.isSelectLoading = true;
+        this.selectName = name;
+    }
+
+    clearSelectIsLoading(){
+        this.isSelectLoading = false;
+        this.selectName = '';
     }
 }

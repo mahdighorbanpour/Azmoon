@@ -19,25 +19,6 @@ namespace Azmoon.Admin.Application.Quiz.Quiz
         {
         }
 
-        public async override Task<PagedResultDto<QuizDto>> GetAllAsync(PagedQuizResultRequestDto input)
-        {
-            CheckGetAllPermission();
-
-            var query = CreateFilteredQuery(input);
-
-            var totalCount = await AsyncQueryableExecuter.CountAsync(query);
-
-            query = ApplySorting(query, input);
-            query = ApplyPaging(query, input);
-
-            var entities = await ObjectMapper.ProjectTo<QuizDto>(query).ToListAsync();
-            
-            return new PagedResultDto<QuizDto>(
-                totalCount,
-                entities
-            );
-        }
-
         protected override IQueryable<Core.Quiz.Entities.Quiz> CreateFilteredQuery(PagedQuizResultRequestDto input)
         {
             return Repository

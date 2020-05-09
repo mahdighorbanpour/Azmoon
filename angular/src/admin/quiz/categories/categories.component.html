@@ -1,52 +1,50 @@
+<!-- header start -->
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8" [@routerTransition]>
   <div class="container-fluid">
     <div class="header-body">
-      <!-- Card stats -->
+      <!-- Search start -->
       <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0">{{ "Search" | localize }}</h5>
-            </div>
-            <div class="col text-right">
-              <ul class="header-dropdown m-r--5">
-                <li>
-                  <button mat-icon-button [matMenuTriggerFor]="headerMenu" class="header-dropdown-mat-icon-button">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #headerMenu="matMenu">
-                    <button mat-menu-item (click)="refresh()">
-                      <mat-icon>refresh</mat-icon>
-                      <span>{{ "Refresh" | localize }}</span>
-                    </button>
-                  </mat-menu>
-                </li>
-              </ul>
+        <form>
+          <div class="card-header border-0">
+            <div class="row">
+              <div class="col-6">
+                <h3 class="mb-0">{{ "Search" | localize }}</h3>
+              </div>
+              <div class="col-6 text-right">
+                <button mat-mini-fab color="primary" class="pull-right" (click)="getDataPage(1)"
+                  [title]="'Search' | localize">
+                  <mat-icon>search</mat-icon>
+                </button>
+                <button mat-mini-fab color="primary" class="pull-right mr-10" (click)="refresh()"
+                  [title]="'Refresh' | localize">
+                  <mat-icon>refresh</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
-          <!--query start-->
+          <div class="card-body">
+            <!--query start-->
           <div class="row clearfix">
             <div class="col">
               <form>
                 <div class="searchbar">
                   <mat-form-field appearance="fill">
                     <mat-label>{{'Filter' | localize}}</mat-label>
-                    <input matInput [type]="text" [(ngModel)]="filter" name="filter">
-                    <button mat-icon-button matSuffix (click)="getDataPage(1)">
-                      <mat-icon>search</mat-icon>
-                    </button>
+                    <input matInput [type]="text" [(ngModel)]="filter" name="filter" (keyup.enter)="getDataPage(1)">
                   </mat-form-field>
                 </div>
               </form>
             </div>
-
           </div>
           <!--query end-->
-        </div>
+          </div>
+        </form>
       </div>
+      <!-- Search end -->
     </div>
   </div>
 </div>
+<!-- header end -->
 <div class="container-fluid mt--7">
   <div class="row">
     <div class="col">
@@ -57,35 +55,38 @@
               <h3 class="mb-0">{{ "Categories" | localize }}</h3>
             </div>
             <div class="col-6 text-right">
-              <button mat-mini-fab color="primary" class="pull-right" (click)="create()">
+                <button mat-mini-fab color="primary" class="pull-right" (click)="create()" [title]="'Add' | localize">
                 <mat-icon>add</mat-icon>
               </button>
             </div>
           </div>
         </div>
         <div class="table-responsive">
+          <!-- table start -->
           <table class="table align-items-center table-flush" [busy]="isTableLoading">
             <thead class="thead-light">
               <tr>
                 <th>{{ "Title" | localize }}</th>
                 <th>{{ "ShortDescription" | localize }}</th>
+                <th>{{ "Quizzes" | localize }}</th>
+                <th>{{ "Questions" | localize }}</th>
                 <th>{{ "IsPublic" | localize }}</th>
                 <th>{{ "Actions" | localize }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="
-          let item of (entityList
-            | paginate
-              : {
+              <tr *ngFor="let item of (entityList | paginate : 
+                {
                   id: 'server',
                   itemsPerPage: pageSize,
                   currentPage: pageNumber,
                   totalItems: totalItems
-                })
-        ">
+                })">
                 <td>{{ item.title }}</td>
                 <td>{{ item.shortDescription }}</td>
+                <td>{{ item.quizzesCount }}</td>
+                <td>{{ item.questionsCount }}</td>
+
                 <td>
                   <i class="material-icons" [ngClass]="(item.isPublic)?'check_box':'check_box_outline_blank'">
                     {{ (item.isPublic)?'check_box':'check_box_outline_blank' }}
@@ -129,6 +130,7 @@
               </tr>
             </tbody>
           </table>
+          <!-- table end -->
         </div>
         <div class="card-footer py-4">
           <div *ngIf="totalItems > pageSize">

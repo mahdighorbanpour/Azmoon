@@ -48,7 +48,6 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
             )
             .subscribe((result: CategoryDtoPagedResultDto) => {
                 this.entityList = result.items;
-                console.log(this.entityList);
                 this.showPaging(result, pageNumber);
             });
     }
