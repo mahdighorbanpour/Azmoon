@@ -9,12 +9,13 @@ import { MessageService } from '@abp/message/message.service';
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { Title } from '@angular/platform-browser';
+import { AzmoonLocalizationService } from './localization/azmoon.localization';
 
 export abstract class AppComponentBase {
 
     localizationSourceName = AppConsts.localization.defaultLocalizationSourceName;
 
-    localization: LocalizationService;
+    localization: AzmoonLocalizationService;
     permission: PermissionCheckerService;
     feature: FeatureCheckerService;
     notify: NotifyService;
@@ -29,7 +30,7 @@ export abstract class AppComponentBase {
     selectName = '';
 
     constructor(injector: Injector) {
-        this.localization = injector.get(LocalizationService);
+        this.localization = injector.get(AzmoonLocalizationService);
         this.permission = injector.get(PermissionCheckerService);
         this.feature = injector.get(FeatureCheckerService);
         this.notify = injector.get(NotifyService);
