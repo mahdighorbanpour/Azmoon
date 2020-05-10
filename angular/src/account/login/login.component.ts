@@ -1,5 +1,5 @@
 import { Component, Injector, OnDestroy } from '@angular/core';
-import { AbpSessionService } from '@abp/session/abp-session.service';
+import { AbpSessionService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { LoginService } from './login.service';

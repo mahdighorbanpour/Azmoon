@@ -4,9 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ModalModule } from 'ngx-bootstrap';
-
-import { AbpModule } from '@abp/abp.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AccountRoutingModule } from './account-routing.module';
 
@@ -31,7 +29,6 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         FormsModule,
         HttpClientModule,
         HttpClientJsonpModule,
-        AbpModule,
         SharedModule,
         ServiceProxyModule,
         AccountRoutingModule,

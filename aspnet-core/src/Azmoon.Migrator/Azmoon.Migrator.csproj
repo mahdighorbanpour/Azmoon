@@ -15,7 +15,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Abp.Castle.Log4Net" Version="5.4.0" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="5.7.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Azmoon.Core\Azmoon.Core.csproj" />

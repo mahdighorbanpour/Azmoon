@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { ModalModule, CollapseModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { AbpModule } from '@abp/abp.module';
+// import { AbpModule } from '@abp/abp.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
 
@@ -76,7 +77,7 @@ import { AdminNavBarUserAreaComponent } from './layout/navbar/admin-navbar-user-
     HttpClientJsonpModule,
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
-    AbpModule,
+    // AbpModule,
     AdminRoutingModule,
     ServiceProxyModule,
     SharedModule,
