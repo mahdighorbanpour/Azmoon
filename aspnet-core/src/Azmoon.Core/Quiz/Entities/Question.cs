@@ -2,13 +2,14 @@
 using Abp.Domain.Entities.Auditing;
 using Azmoon.Core.Quiz.Enums;
 using Azmoon.Core.Quiz.Exceptions;
+using Azmoon.Core.Quiz.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Azmoon.Core.Quiz.Entities
 {
-    public class Question: FullAuditedEntity<Guid>, IMayHaveTenant
+    public class Question: FullAuditedEntity<Guid>, IMayHaveTenant, IMayBePublic, INeedHostApproval
     {
         public Question()
         {
@@ -29,7 +30,8 @@ namespace Azmoon.Core.Quiz.Entities
         private readonly List<Choice> _choices = new List<Choice>();
         public IReadOnlyList<Choice> Choices => _choices.AsReadOnly();
         public bool? RandomizeChoices { get; set; }
-        
+        public bool IsPublic { get; set; }
+        public bool? IsApproved { get; set; }
         public void AddChoice(string value, bool isCorrect)
         {
             if (_choices.Any(c => c.Value == value))

@@ -13,7 +13,7 @@ namespace Azmoon.Persistence.EntityFrameworkCore.Configurations
                 .IsRequired();
 
             builder.Property(p => p.Description)
-                .HasMaxLength(1000);
+                .HasMaxLength(10000);
 
             builder.Property(p => p.Hint)
                 .HasMaxLength(1000);
