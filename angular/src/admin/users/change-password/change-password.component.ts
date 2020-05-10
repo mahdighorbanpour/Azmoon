@@ -5,7 +5,7 @@ import { ChangePasswordDto, UserServiceProxy } from '@shared/service-proxies/ser
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, FormGroupDirective, NgForm } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { ErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 export class FormGroupErrorStateMatcher implements ErrorStateMatcher {
     constructor(private formGroup: FormGroup) { }

@@ -20,7 +20,7 @@ import { AppPreBootstrap } from './AppPreBootstrap';
 import { ModalModule } from 'ngx-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 
-import { GestureConfig } from '@angular/material';
+import { GestureConfig } from '@angular/material/core';
 
 import * as _ from 'lodash';
 
