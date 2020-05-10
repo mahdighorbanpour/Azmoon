@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AccountServiceProxy } from '@shared/service-proxies/service-proxies';

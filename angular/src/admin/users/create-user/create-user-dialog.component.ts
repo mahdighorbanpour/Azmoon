@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { MatDialogRef, MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { AppComponentBase } from '@shared/app-component-base';

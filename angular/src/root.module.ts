@@ -3,8 +3,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { NgModule, Injector, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { PlatformLocation, registerLocaleData } from '@angular/common';
 
-import { AbpModule } from '@abp/abp.module';
-import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
+import { AbpHttpInterceptor } from 'abp-ng2-module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SharedModule } from '@shared/shared.module';
@@ -17,10 +16,10 @@ import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 
 import { RootComponent } from './root.component';
 import { AppPreBootstrap } from './AppPreBootstrap';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpClientModule } from '@angular/common/http';
 
-import { GestureConfig } from '@angular/material';
+import { GestureConfig } from '@angular/material/core';
 
 import * as _ from 'lodash';
 
@@ -97,7 +96,6 @@ export function getCurrentLanguage(): string {
         BrowserAnimationsModule,
         SharedModule.forRoot(),
         ModalModule.forRoot(),
-        AbpModule,
         ServiceProxyModule,
         RootRoutingModule,
         HttpClientModule
