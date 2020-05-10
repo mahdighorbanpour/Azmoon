@@ -1,12 +1,13 @@
 import { Injector, ElementRef } from '@angular/core';
 import { AppConsts } from '@shared/AppConsts';
-import { LocalizationService } from '@abp/localization/localization.service';
-import { PermissionCheckerService } from '@abp/auth/permission-checker.service';
-import { FeatureCheckerService } from '@abp/features/feature-checker.service';
-import { NotifyService } from '@abp/notify/notify.service';
-import { SettingService } from '@abp/settings/setting.service';
-import { MessageService } from '@abp/message/message.service';
-import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
+import {
+    PermissionCheckerService,
+    FeatureCheckerService,
+    NotifyService,
+    SettingService,
+    MessageService,
+    AbpMultiTenancyService
+} from 'abp-ng2-module';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { Title } from '@angular/platform-browser';
 import { AzmoonLocalizationService } from './localization/azmoon.localization';

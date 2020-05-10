@@ -28,7 +28,7 @@
               <div class="col-md-6">
                 <mat-form-field>
                   <mat-label>{{'Filter' | localize}}</mat-label>
-                  <input matInput [type]="text" [(ngModel)]="keyword" name="keyword" (keyup.enter)="getDataPage(1)">
+                  <input matInput type="text" [(ngModel)]="keyword" name="keyword" (keyup.enter)="getDataPage(1)">
                 </mat-form-field>
               </div>
               <div class="col-md-6">

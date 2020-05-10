@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { AbpModule } from '@abp/abp.module';
+// import { AbpModule } from '@abp/abp.module';
 import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -55,7 +55,7 @@ import { AzmoonLocalizationService } from './localization/azmoon.localization';
 @NgModule({
     imports: [
         CommonModule,
-        AbpModule,
+        // AbpModule,
         RouterModule,
         NgxPaginationModule,
         MatAutocompleteModule,

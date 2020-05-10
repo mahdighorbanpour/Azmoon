@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap';
 
-import { AbpModule } from '@abp/abp.module';
+// import { AbpModule } from '@abp/abp.module';
 
 import { AccountRoutingModule } from './account-routing.module';
 
@@ -31,7 +31,7 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         FormsModule,
         HttpClientModule,
         HttpClientJsonpModule,
-        AbpModule,
+        // AbpModule,
         SharedModule,
         ServiceProxyModule,
         AccountRoutingModule,

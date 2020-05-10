@@ -3,8 +3,8 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { NgModule, Injector, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { PlatformLocation, registerLocaleData } from '@angular/common';
 
-import { AbpModule } from '@abp/abp.module';
-import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
+// import { AbpModule } from '@abp/abp.module';
+import { AbpHttpInterceptor } from 'abp-ng2-module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SharedModule } from '@shared/shared.module';
@@ -97,7 +97,7 @@ export function getCurrentLanguage(): string {
         BrowserAnimationsModule,
         SharedModule.forRoot(),
         ModalModule.forRoot(),
-        AbpModule,
+        // AbpModule,
         ServiceProxyModule,
         RootRoutingModule,
         HttpClientModule

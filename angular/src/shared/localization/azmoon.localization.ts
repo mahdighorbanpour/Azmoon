@@ -1,4 +1,4 @@
-import { LocalizationService } from "abp-ng2-module/dist/src/localization/localization.service";
+import { LocalizationService } from "abp-ng2-module";
 import { AppConsts } from "@shared/AppConsts";
 
 export class AzmoonLocalizationService extends LocalizationService {
