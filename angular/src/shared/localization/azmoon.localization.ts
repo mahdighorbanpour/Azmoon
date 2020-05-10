@@ -1,6 +1,7 @@
 import { LocalizationService } from "abp-ng2-module";
 import { AppConsts } from "@shared/AppConsts";
-
+import { Injectable } from "@angular/core";
+@Injectable()
 export class AzmoonLocalizationService extends LocalizationService {
     localizationSourceName = AppConsts.localization.defaultLocalizationSourceName;
     constructor() {
