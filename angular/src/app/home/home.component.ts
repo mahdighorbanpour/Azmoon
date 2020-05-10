@@ -8,10 +8,9 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 })
 export class HomeComponent extends AppComponentBase implements AfterViewInit {
 
-    constructor(
-        injector: Injector
-    ) {
+    constructor(injector: Injector) {
         super(injector);
+        this.setTitle(this.l("Dashboard"))
     }
 
     ngAfterViewInit(): void {

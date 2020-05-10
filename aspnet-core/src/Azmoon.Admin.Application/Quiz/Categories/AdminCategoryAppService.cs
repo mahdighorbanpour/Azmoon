@@ -1,19 +1,23 @@
-﻿using Abp.Application.Services;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Abp.Domain.Repositories;
-using Azmoon.Core.Quiz.Entities;
-using Azmoon.Application.Shared.Quiz.Categories.Dto;
 using Abp.Collections.Extensions;
-using System.Linq;
 using Abp.Linq.Extensions;
 using Abp.Authorization;
+using Azmoon.Core.Quiz.Entities;
 using Azmoon.Authorization;
-using System.Threading.Tasks;
+using Azmoon.Admin.Application.Quiz.Interfaces;
+using Azmoon.Application.Shared.Quiz.Categories.Dto;
+using System.Collections.Generic;
+using Azmoon.Application.Shared.Quiz;
 
 namespace Azmoon.Admin.Application.Quiz.Categories
 {
     [AbpAuthorize(PermissionNames.Pages_Categories)]
     public class AdminCategoryAppService : AdminCrudServiceWithHostApprovalBase<Category, CategoryDto, int, PagedCategoryResultRequestDto, CreateUpdateCategoryDto, CreateUpdateCategoryDto>, 
-        IAdminCategoryAppService
+        IAdminCategoryAppService,
+        IHaveDictionary
     {
         public AdminCategoryAppService(IRepository<Category, int> repository): base(repository)
         {
@@ -29,5 +33,13 @@ namespace Azmoon.Admin.Application.Quiz.Categories
                );
         }
 
+        public async Task<List<DictionaryDto>> GetDictionary()
+        {
+            CheckGetAllPermission();
+
+            var query = this.Repository.GetAll();
+
+            return await ObjectMapper.ProjectTo<DictionaryDto>(query).ToListAsync();
+        }
     }
 }

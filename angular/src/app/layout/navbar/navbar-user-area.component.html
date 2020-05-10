@@ -1,0 +1,29 @@
+<a class="nav-link dropdown-toggle" href="#" id="profile-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="media align-items-center">
+    <span class="avatar avatar-sm rounded-circle">
+      <img alt="Image placeholder" src="/argon-theme/img/theme/team-4-800x800.jpg">
+    </span>
+    <div class="media-body ml-2 d-none d-lg-block">
+      <span class="mb-0 text-sm  font-weight-bold">{{shownLoginName}}</span>
+    </div>
+  </div>
+</a>
+<div class="dropdown-menu" aria-labelledby="profile-link">
+  <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
+    <i class="ni ni-single-02"></i>
+    <span>{{ 'MyProfile' | localize }}</span>
+  </a>
+  <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
+    <i class="ni ni-settings-gear-65"></i>
+    <span>{{ 'Settings' | localize }}</span>
+  </a>
+  <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
+    <i class="ni ni-support-16"></i>
+    <span>{{ 'Support' | localize }}</span>
+  </a>
+  <a routerLinkActive="active" class="dropdown-item" (click)="logout()">
+    <i class="ni ni-user-run"></i>
+    <span>{{ 'LogOut' | localize }}</span>
+  </a>
+</div>
+

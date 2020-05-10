@@ -5,6 +5,7 @@ using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.UI;
 using Azmoon.Core.Quiz.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace Azmoon.Admin.Application
@@ -67,6 +68,30 @@ namespace Azmoon.Admin.Application
             await CurrentUnitOfWork.SaveChangesAsync();
         }
 
+        public override async Task<TEntityDto> UpdateAsync(TUpdateInput input)
+        {
+            await AuthorizeIMayBePublicEntity(input.Id);
 
+            return await base.UpdateAsync(input);
+        }
+
+        public override async Task DeleteAsync(EntityDto<TPrimaryKey> input)
+        {
+            await AuthorizeIMayBePublicEntity(input.Id);
+
+            await base.DeleteAsync(input);
+        }
+
+        private async Task AuthorizeIMayBePublicEntity(TPrimaryKey id)
+        {
+            TEntity entityAsObj = await GetEntityByIdAsync(id);
+            if (!(entityAsObj is IMayHaveTenant) || !(entityAsObj is IMayBePublic))
+            {
+                return;
+            }
+            var entity = entityAsObj.As<IMayHaveTenant>();
+            if (entity.TenantId != AbpSession.TenantId)
+                throw new UserFriendlyException(L("NotAuthorized"));
+        }
     }
 }

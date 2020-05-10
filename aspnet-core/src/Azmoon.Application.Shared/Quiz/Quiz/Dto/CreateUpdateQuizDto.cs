@@ -8,6 +8,8 @@ namespace Azmoon.Application.Shared.Quiz.Quiz.Dto
     [AutoMapTo(typeof(Core.Quiz.Entities.Quiz))]
     public class CreateUpdateQuizDto : EntityDto<Guid>
     {
+        public int CategoryId { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
@@ -18,5 +20,6 @@ namespace Azmoon.Application.Shared.Quiz.Quiz.Dto
 
         public TimeSpan? Duration { get; set; }
         public bool IsActive { get; set; }
+        public bool IsPublic { get; set; }
     }
 }

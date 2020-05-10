@@ -23,6 +23,9 @@ namespace Azmoon.Persistence.EntityFrameworkCore.Configurations
             builder.Property(p => p.ImageUri)
                .HasMaxLength(250);
 
+            builder.HasMany<Quiz>(c => c.Quizzes)
+                .WithOne(q => q.Category)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

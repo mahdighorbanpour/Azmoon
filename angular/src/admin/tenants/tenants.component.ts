@@ -40,6 +40,7 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
         private _dialog: MatDialog
     ) {
         super(injector);
+        this.setTitle(this.l('Tenants'));
     }
 
     list(
@@ -95,10 +96,13 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
     showCreateOrEditTenantDialog(id?: number): void {
         let createOrEditTenantDialog;
         if (id === undefined || id <= 0) {
-            createOrEditTenantDialog = this._dialog.open(CreateTenantDialogComponent);
+            createOrEditTenantDialog = this._dialog.open(CreateTenantDialogComponent, {
+                width: '600px'
+                });
         } else {
             createOrEditTenantDialog = this._dialog.open(EditTenantDialogComponent, {
-                data: id
+            width: '600px',
+            data: id
             });
         }
 

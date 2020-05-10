@@ -1693,6 +1693,9 @@ namespace Azmoon.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -1716,7 +1719,13 @@ namespace Azmoon.Persistence.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("IsApproved")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
@@ -1734,6 +1743,8 @@ namespace Azmoon.Persistence.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Quizzes");
                 });
@@ -2063,6 +2074,15 @@ namespace Azmoon.Persistence.Migrations
                         .WithMany("Questions")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Azmoon.Core.Quiz.Entities.Quiz", b =>
+                {
+                    b.HasOne("Azmoon.Core.Quiz.Entities.Category", "Category")
+                        .WithMany("Quizzes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
