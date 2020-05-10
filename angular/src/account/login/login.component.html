@@ -23,13 +23,13 @@
           <form role="form" novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
             <div class="row clearfix">
               <div class="col">
-                <mat-form-field appearance="fill">
+                <mat-form-field>
                   <mat-icon matPrefix>person</mat-icon>
                   <mat-label>{{'UserNameOrEmail' | localize}}</mat-label>
                   <input matInput name="userNameOrEmailAddress" [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" autocomplete="off" required maxlength="255" />
                 </mat-form-field>
 
-                <mat-form-field appearance="fill">
+                <mat-form-field>
                   <mat-icon matPrefix>lock</mat-icon>
                   <mat-label>{{'Password' | localize}}</mat-label>
                       <input matInput type="password" name="password" [(ngModel)]="loginService.authenticateModel.password" required maxlength="32" />

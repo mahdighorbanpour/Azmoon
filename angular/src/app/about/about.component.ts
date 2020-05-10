@@ -12,5 +12,6 @@ export class AboutComponent extends AppComponentBase {
         injector: Injector
     ) {
         super(injector);
+        this.setTitle(this.l("About"))
     }
 }

@@ -28,7 +28,7 @@
             <div class="col">
               <form>
                 <div class="searchbar">
-                  <mat-form-field appearance="fill">
+                  <mat-form-field>
                     <mat-label>{{'Filter' | localize}}</mat-label>
                     <input matInput [type]="text" [(ngModel)]="filter" name="filter" (keyup.enter)="getDataPage(1)">
                   </mat-form-field>
