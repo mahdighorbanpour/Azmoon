@@ -6,12 +6,14 @@ import {
     PagedListingComponentBase,
     PagedRequestDto
 } from 'shared/paged-listing-component-base';
-import { QuizDto, AdminQuizServiceProxy, QuizDtoPagedResultDto } from '@shared/service-proxies/service-proxies';
+import { QuizDto, AdminQuizServiceProxy, QuizDtoPagedResultDto, DictionaryDto, AdminCategoryServiceProxy, CategoryDto } from '@shared/service-proxies/service-proxies';
 import { CreateOrUpdateQuizDialogComponent } from './create-update/create-update-quiz-dialog.component';
 
 class PagedQuizzesRequestDto extends PagedRequestDto {
     filter: string;
     isActive: boolean;
+    categoryId: number;
+    isPublic: boolean;
 }
 
 @Component({
@@ -23,11 +25,32 @@ export class AdminQuizzesComponent extends PagedListingComponentBase<QuizDto> {
     entityList: QuizDto[] = [];
     filter = '';
     isActive: boolean;
+    categoryId: number;
+    isPublic: boolean;
+    categories: DictionaryDto[] = undefined;
+
     constructor(injector: Injector,
         private _service: AdminQuizServiceProxy,
+        private _categoryService: AdminCategoryServiceProxy,
         private _dialog: MatDialog
     ) {
         super(injector);
+        this.setTitle(this.l('Quizzes'));
+    }
+
+    getCategoriesDictionary() {
+        if (this.categories == undefined) {
+            this.setSelectIsLoading('categories');
+            this._categoryService.getDictionary()
+                .pipe(
+                    finalize(() => {
+                        this.clearSelectIsLoading();
+                    })
+                )
+                .subscribe((result: DictionaryDto[]) => {
+                    this.categories = result;
+                });
+        }
     }
 
     list(
@@ -35,11 +58,12 @@ export class AdminQuizzesComponent extends PagedListingComponentBase<QuizDto> {
         pageNumber: number,
         finishedCallback: Function
     ): void {
-
         request.filter = this.filter;
-
+        request.categoryId = this.categoryId;
+        request.isActive = this.isActive;
+        request.isPublic = this.isPublic;
         this._service
-            .getAll(request.filter, request.isActive, request.skipCount, request.maxResultCount)
+            .getAll(request.filter, request.isActive, request.categoryId, request.isPublic, request.skipCount, request.maxResultCount)
             .pipe(
                 finalize(() => {
                     finishedCallback();
@@ -47,7 +71,6 @@ export class AdminQuizzesComponent extends PagedListingComponentBase<QuizDto> {
             )
             .subscribe((result: QuizDtoPagedResultDto) => {
                 this.entityList = result.items;
-                console.log(this.entityList);
                 this.showPaging(result, pageNumber);
             });
     }
@@ -90,5 +113,38 @@ export class AdminQuizzesComponent extends PagedListingComponentBase<QuizDto> {
                 this.refresh();
             }
         });
+    }
+
+    approveIsPublic(id: any) {
+        this._service.approveIsPublic(id)
+            .subscribe(
+                res => {
+                    abp.notify.success(this.l('SuccessfullyApproved'));
+                    this.refresh();
+                },
+                err => { }
+            );
+    }
+
+    rejectIsPublic(id: any) {
+        this._service.rejectIsPublic(id)
+            .subscribe(
+                res => {
+                    abp.notify.success(this.l('SuccessfullyRejected'));
+                    this.refresh();
+                },
+                err => { }
+            );
+    }
+
+    resetIsPublic(id: any) {
+        this._service.resetIsPublic(id)
+            .subscribe(
+                res => {
+                    abp.notify.success(this.l('SuccessfullyReseted'));
+                    this.refresh();
+                },
+                err => { }
+            );
     }
 }

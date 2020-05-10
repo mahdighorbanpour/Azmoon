@@ -1,0 +1,12 @@
+<a class="nav-link dropdown-toggle" href="#" id="language-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="media align-items-center">
+    <i class="{{currentLanguage.icon}}" title="{{currentLanguage.displayName}}"></i>
+    {{currentLanguage.displayName}}
+  </div>
+</a>
+<div class="dropdown-menu" aria-labelledby="language-link">
+  <ng-container *ngFor="let language of languages">
+    <a *ngIf="language.name != currentLanguage.name" class="dropdown-item" (click)="changeLanguage(language.name)"><i
+      class="{{language.icon}}"></i> {{language.displayName}}</a>
+  </ng-container>
+</div>

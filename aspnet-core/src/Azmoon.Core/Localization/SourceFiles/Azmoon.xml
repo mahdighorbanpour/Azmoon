@@ -21,6 +21,13 @@
     <text name="RememberMe" value="Remember me" />
     <text name="LogIn" value="Log in" />
     <text name="LoginFailed" value="Login failed!" />
+    <text name="LoginWelcomeMessage" value="Welcome!" />
+    <text name="SignInWith" value="Sign in with" />
+    <text name="SignUpWith" value="Sign up with" />
+    <text name="SignInWithCredentials" value="Or sign in with credentials" />
+    <text name="SignUpWithCredentials" value="Or sign up with credentials" />
+    
+    <text name="MyProfile" value="My profile" />
     <text name="NameSurname" value="Name surname" />
     <text name="UserName" value="User name" />
     <text name="Name" value="Name" />
@@ -41,7 +48,7 @@
     <text name="WaitingForActivationMessage" value="Your account is waiting to be activated by system admin." />
     <text name="TenantSelection" value="Tenant Selection" />
     <text name="TenantSelection_Detail" value="Please select one of the following tenants." />
-    <text name="Logout" value="Logout" />
+    <text name="LogOut" value="Log out" />
     <text name="RegisterFormUserNameInvalidMessage">Please don't enter an email address for username.</text>
     <text name="DatabaseConnectionString" value="Database connection string" />
     <text name="Users" value="Users" />
@@ -95,7 +102,9 @@
     <text name="StartTyping">Start Typing</text>
     <text name="Skins">Skins</text>
     <text name="Settings">Settings</text>
+    <text name="Support">Support</text>
     <text name="Filter">Filter</text>
+    <text name="Loading">Loading</text>
     <text name="CurrentPassword">Current Password</text>
     <text name="NewPassword">New Password</text>
     <text name="ConfirmNewPassword">Confirm New Password</text>
@@ -105,7 +114,11 @@
     <text name="RoleDeleteWarningMessage">Role {0} will be deleted and unassigned from all assigned users.</text>
     <text name="TenantDeleteWarningMessage">Tenant {0} will be deleted.</text>
     <text name="SearchWithThreeDot">Search...</text>
+    <text name="Search">Search</text>
+    <text name="Dashboard">Dashboard</text>
+    <text name="All">All</text>
     <text name="Categories">Categories</text>
+    <text name="Category">Category</text>
     <text name="Title">Title</text>
     <text name="ShortDescription">Short Description</text>
     <text name="LongDescription">Long Description</text>
@@ -115,11 +128,12 @@
     <text name="CategoryDeleteWarningMessage">Category {0} will be deleted.</text>
     <text name="AdminPage">Administration</text>
     <text name="Quizzes">Quizzes</text>
+    <text name="CreateNewQuiz">New Quiz</text>
+    <text name="EditQuiz">Edit Quiz</text>
+    <text name="QuizDeleteWarningMessage">Quiz {0} will be deleted.</text>
     <text name="Description">Description</text>
     <text name="Duration">Duration</text>
-    <text name="TotalQuestions">Total Questions</text>
-    <text name="TotalMarks">Total Marks</text>
-    <text name="IsPublic">Is Public</text>
+    <text name="IsPublic">Is public</text>
     <text name="ApproveIsPublic">Approve IsPublic</text>
     <text name="Approve">Approve</text>
     <text name="Reject">Reject</text>
@@ -132,5 +146,6 @@
     <text name="SuccessfullyReseted">Successfully Reseted</text>
     <text name="EntityCannotBeApproved">This entity cannot be approved!</text>
     <text name="NotAuthorized">You are not authorized to perform this action.</text>
+    <text name="Questions">Questions</text>
   </texts>
 </localizationDictionary>

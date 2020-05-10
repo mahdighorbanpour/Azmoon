@@ -1,7 +1,9 @@
 ﻿using Abp.AutoMapper;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
+using Azmoon.Application.Shared.Quiz;
 using Azmoon.Authorization;
+using Azmoon.Core.Quiz.Entities;
 
 namespace Azmoon
 {
@@ -12,7 +14,13 @@ namespace Azmoon
     {
         public override void PreInitialize()
         {
-            //Configuration.Authorization.Providers.Add<AzmoonAuthorizationProvider>();
+            Configuration.Modules.AbpAutoMapper().Configurators.Add(config =>
+            {
+                config.CreateMap<Category, DictionaryDto>()
+                      .ForMember(u => u.GuidValue, options => options.Ignore())
+                      .ForMember(u => u.IntValue, options => options.MapFrom(input => input.Id))
+                      .ForMember(u => u.Text, options => options.MapFrom(input => input.Title));
+            });
         }
 
         public override void Initialize()

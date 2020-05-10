@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, OnDestroy } from '@angular/core';
 import { AbpSessionService } from '@abp/session/abp-session.service';
 import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
@@ -18,8 +18,9 @@ export class LoginComponent extends AppComponentBase {
     private _sessionService: AbpSessionService
   ) {
     super(injector);
+    document.body.className = 'bg-default';
   }
-
+  
   get multiTenancySideIsTeanant(): boolean {
     return this._sessionService.tenantId > 0;
   }

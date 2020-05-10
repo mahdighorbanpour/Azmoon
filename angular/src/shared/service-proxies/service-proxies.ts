@@ -152,6 +152,127 @@ export class AdminCategoryServiceProxy {
     }
 
     /**
+     * @param filter (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CategoryDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminCategory/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<CategoryDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CategoryDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<CategoryDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CategoryDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CategoryDtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getDictionary(): Observable<DictionaryDto[]> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminCategory/GetDictionary";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDictionary(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDictionary(<any>response_);
+                } catch (e) {
+                    return <Observable<DictionaryDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DictionaryDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetDictionary(response: HttpResponseBase): Observable<DictionaryDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(DictionaryDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DictionaryDto[]>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -308,184 +429,6 @@ export class AdminCategoryServiceProxy {
     }
 
     /**
-     * @param id (optional) 
-     * @return Success
-     */
-    get(id: number | undefined): Observable<CategoryDto> {
-        let url_ = this.baseUrl + "/api/services/admin/AdminCategory/Get?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGet(<any>response_);
-                } catch (e) {
-                    return <Observable<CategoryDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<CategoryDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGet(response: HttpResponseBase): Observable<CategoryDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = CategoryDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<CategoryDto>(<any>null);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<CategoryDtoPagedResultDto> {
-        let url_ = this.baseUrl + "/api/services/admin/AdminCategory/GetAll?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<CategoryDtoPagedResultDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<CategoryDtoPagedResultDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<CategoryDtoPagedResultDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = CategoryDtoPagedResultDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<CategoryDtoPagedResultDto>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    create(body: CreateUpdateCategoryDto | undefined): Observable<CategoryDto> {
-        let url_ = this.baseUrl + "/api/services/admin/AdminCategory/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<CategoryDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<CategoryDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<CategoryDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = CategoryDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<CategoryDto>(<any>null);
-    }
-
-    /**
      * @param body (optional) 
      * @return Success
      */
@@ -592,25 +535,13 @@ export class AdminCategoryServiceProxy {
         }
         return _observableOf<void>(<any>null);
     }
-}
-
-@Injectable()
-export class AdminQuizServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
 
     /**
      * @param id (optional) 
      * @return Success
      */
-    get(id: string | undefined): Observable<QuizDto> {
-        let url_ = this.baseUrl + "/api/services/admin/AdminQuiz/Get?";
+    get(id: number | undefined): Observable<CategoryDto> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminCategory/Get?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -632,14 +563,14 @@ export class AdminQuizServiceProxy {
                 try {
                     return this.processGet(<any>response_);
                 } catch (e) {
-                    return <Observable<QuizDto>><any>_observableThrow(e);
+                    return <Observable<CategoryDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<QuizDto>><any>_observableThrow(response_);
+                return <Observable<CategoryDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<QuizDto> {
+    protected processGet(response: HttpResponseBase): Observable<CategoryDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -650,7 +581,7 @@ export class AdminQuizServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = QuizDto.fromJS(resultData200);
+            result200 = CategoryDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -658,17 +589,87 @@ export class AdminQuizServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<QuizDto>(<any>null);
+        return _observableOf<CategoryDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreateUpdateCategoryDto | undefined): Observable<CategoryDto> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminCategory/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<CategoryDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CategoryDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<CategoryDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CategoryDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CategoryDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class AdminQuizServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
     }
 
     /**
      * @param filter (optional) 
      * @param isActive (optional) 
+     * @param categoryId (optional) 
+     * @param isPublic (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, isActive: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<QuizDtoPagedResultDto> {
+    getAll(filter: string | undefined, isActive: boolean | undefined, categoryId: number | undefined, isPublic: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<QuizDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/admin/AdminQuiz/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -678,6 +679,14 @@ export class AdminQuizServiceProxy {
             throw new Error("The parameter 'isActive' cannot be null.");
         else if (isActive !== undefined)
             url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&";
+        if (categoryId === null)
+            throw new Error("The parameter 'categoryId' cannot be null.");
+        else if (categoryId !== undefined)
+            url_ += "CategoryId=" + encodeURIComponent("" + categoryId) + "&";
+        if (isPublic === null)
+            throw new Error("The parameter 'isPublic' cannot be null.");
+        else if (isPublic !== undefined)
+            url_ += "IsPublic=" + encodeURIComponent("" + isPublic) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -733,40 +742,39 @@ export class AdminQuizServiceProxy {
     }
 
     /**
-     * @param body (optional) 
+     * @param id (optional) 
      * @return Success
      */
-    create(body: CreateUpdateQuizDto | undefined): Observable<QuizDto> {
-        let url_ = this.baseUrl + "/api/services/admin/AdminQuiz/Create";
+    approveIsPublic(id: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminQuiz/ApproveIsPublic?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
             })
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
+            return this.processApproveIsPublic(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCreate(<any>response_);
+                    return this.processApproveIsPublic(<any>response_);
                 } catch (e) {
-                    return <Observable<QuizDto>><any>_observableThrow(e);
+                    return <Observable<void>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<QuizDto>><any>_observableThrow(response_);
+                return <Observable<void>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<QuizDto> {
+    protected processApproveIsPublic(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -775,17 +783,118 @@ export class AdminQuizServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = QuizDto.fromJS(resultData200);
-            return _observableOf(result200);
+            return _observableOf<void>(<any>null);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<QuizDto>(<any>null);
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    rejectIsPublic(id: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminQuiz/RejectIsPublic?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRejectIsPublic(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRejectIsPublic(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRejectIsPublic(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    resetIsPublic(id: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminQuiz/ResetIsPublic?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processResetIsPublic(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processResetIsPublic(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processResetIsPublic(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 
     /**
@@ -894,6 +1003,118 @@ export class AdminQuizServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: string | undefined): Observable<QuizDto> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminQuiz/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<QuizDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<QuizDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<QuizDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = QuizDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<QuizDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreateUpdateQuizDto | undefined): Observable<QuizDto> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminQuiz/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<QuizDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<QuizDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<QuizDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = QuizDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<QuizDto>(<any>null);
     }
 }
 
@@ -2992,6 +3213,8 @@ export class CategoryDto implements ICategoryDto {
     imageUri: string | undefined;
     isPublic: boolean;
     isApproved: boolean | undefined;
+    questionsCount: number;
+    quizzesCount: number;
     id: number;
 
     constructor(data?: ICategoryDto) {
@@ -3011,6 +3234,8 @@ export class CategoryDto implements ICategoryDto {
             this.imageUri = _data["imageUri"];
             this.isPublic = _data["isPublic"];
             this.isApproved = _data["isApproved"];
+            this.questionsCount = _data["questionsCount"];
+            this.quizzesCount = _data["quizzesCount"];
             this.id = _data["id"];
         }
     }
@@ -3030,6 +3255,8 @@ export class CategoryDto implements ICategoryDto {
         data["imageUri"] = this.imageUri;
         data["isPublic"] = this.isPublic;
         data["isApproved"] = this.isApproved;
+        data["questionsCount"] = this.questionsCount;
+        data["quizzesCount"] = this.quizzesCount;
         data["id"] = this.id;
         return data; 
     }
@@ -3049,6 +3276,8 @@ export interface ICategoryDto {
     imageUri: string | undefined;
     isPublic: boolean;
     isApproved: boolean | undefined;
+    questionsCount: number;
+    quizzesCount: number;
     id: number;
 }
 
@@ -3105,6 +3334,57 @@ export class CategoryDtoPagedResultDto implements ICategoryDtoPagedResultDto {
 export interface ICategoryDtoPagedResultDto {
     totalCount: number;
     items: CategoryDto[] | undefined;
+}
+
+export class DictionaryDto implements IDictionaryDto {
+    intValue: number | undefined;
+    guidValue: string | undefined;
+    text: string | undefined;
+
+    constructor(data?: IDictionaryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.intValue = _data["intValue"];
+            this.guidValue = _data["guidValue"];
+            this.text = _data["text"];
+        }
+    }
+
+    static fromJS(data: any): DictionaryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DictionaryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["intValue"] = this.intValue;
+        data["guidValue"] = this.guidValue;
+        data["text"] = this.text;
+        return data; 
+    }
+
+    clone(): DictionaryDto {
+        const json = this.toJSON();
+        let result = new DictionaryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IDictionaryDto {
+    intValue: number | undefined;
+    guidValue: string | undefined;
+    text: string | undefined;
 }
 
 export class CreateUpdateCategoryDto implements ICreateUpdateCategoryDto {
@@ -3175,8 +3455,11 @@ export class QuizDto implements IQuizDto {
     description: string | undefined;
     duration: string | undefined;
     isActive: boolean;
-    totalQuestion: number;
-    totalMarks: number;
+    isPublic: boolean;
+    isApproved: boolean | undefined;
+    categoryId: number;
+    categoryTitle: string | undefined;
+    questionsCount: number;
     id: string;
 
     constructor(data?: IQuizDto) {
@@ -3194,8 +3477,11 @@ export class QuizDto implements IQuizDto {
             this.description = _data["description"];
             this.duration = _data["duration"];
             this.isActive = _data["isActive"];
-            this.totalQuestion = _data["totalQuestion"];
-            this.totalMarks = _data["totalMarks"];
+            this.isPublic = _data["isPublic"];
+            this.isApproved = _data["isApproved"];
+            this.categoryId = _data["categoryId"];
+            this.categoryTitle = _data["categoryTitle"];
+            this.questionsCount = _data["questionsCount"];
             this.id = _data["id"];
         }
     }
@@ -3213,8 +3499,11 @@ export class QuizDto implements IQuizDto {
         data["description"] = this.description;
         data["duration"] = this.duration;
         data["isActive"] = this.isActive;
-        data["totalQuestion"] = this.totalQuestion;
-        data["totalMarks"] = this.totalMarks;
+        data["isPublic"] = this.isPublic;
+        data["isApproved"] = this.isApproved;
+        data["categoryId"] = this.categoryId;
+        data["categoryTitle"] = this.categoryTitle;
+        data["questionsCount"] = this.questionsCount;
         data["id"] = this.id;
         return data; 
     }
@@ -3232,8 +3521,11 @@ export interface IQuizDto {
     description: string | undefined;
     duration: string | undefined;
     isActive: boolean;
-    totalQuestion: number;
-    totalMarks: number;
+    isPublic: boolean;
+    isApproved: boolean | undefined;
+    categoryId: number;
+    categoryTitle: string | undefined;
+    questionsCount: number;
     id: string;
 }
 
@@ -3293,10 +3585,12 @@ export interface IQuizDtoPagedResultDto {
 }
 
 export class CreateUpdateQuizDto implements ICreateUpdateQuizDto {
+    categoryId: number;
     title: string | undefined;
     description: string | undefined;
     duration: string | undefined;
     isActive: boolean;
+    isPublic: boolean;
     id: string;
 
     constructor(data?: ICreateUpdateQuizDto) {
@@ -3310,10 +3604,12 @@ export class CreateUpdateQuizDto implements ICreateUpdateQuizDto {
 
     init(_data?: any) {
         if (_data) {
+            this.categoryId = _data["categoryId"];
             this.title = _data["title"];
             this.description = _data["description"];
             this.duration = _data["duration"];
             this.isActive = _data["isActive"];
+            this.isPublic = _data["isPublic"];
             this.id = _data["id"];
         }
     }
@@ -3327,10 +3623,12 @@ export class CreateUpdateQuizDto implements ICreateUpdateQuizDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["categoryId"] = this.categoryId;
         data["title"] = this.title;
         data["description"] = this.description;
         data["duration"] = this.duration;
         data["isActive"] = this.isActive;
+        data["isPublic"] = this.isPublic;
         data["id"] = this.id;
         return data; 
     }
@@ -3344,10 +3642,12 @@ export class CreateUpdateQuizDto implements ICreateUpdateQuizDto {
 }
 
 export interface ICreateUpdateQuizDto {
+    categoryId: number;
     title: string | undefined;
     description: string | undefined;
     duration: string | undefined;
     isActive: boolean;
+    isPublic: boolean;
     id: string;
 }
 

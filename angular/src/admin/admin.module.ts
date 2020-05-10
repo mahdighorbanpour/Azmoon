@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule, CollapseModule } from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AbpModule } from '@abp/abp.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
@@ -12,12 +12,6 @@ import { SharedModule } from '@shared/shared.module';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminHomeComponent } from './home/admin-home.component';
-import { AdminTopBarComponent } from './layout/admin-topbar.component';
-import { AdminTopBarLanguageSwitchComponent } from './layout/admin-topbar-languageswitch.component';
-import { AdminSideBarUserAreaComponent } from './layout/admin-sidebar-user-area.component';
-import { AdminSideBarNavComponent } from './layout/admin-sidebar-nav.component';
-import { AdminSideBarFooterComponent } from './layout/admin-sidebar-footer.component';
-import { AdminRightSideBarComponent } from './layout/admin-right-sidebar.component';
 // tenants
 import { TenantsComponent } from './tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
@@ -37,17 +31,16 @@ import { CategoriesComponent } from './quiz/categories/categories.component';
 import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-update/create-update-category-dialog.component';
 import { AdminQuizzesComponent } from './quiz/quiz/quiz.component';
 import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/create-update-quiz-dialog.component';
+import { AdminSidebarComponent } from './layout/sidebar/admin-sidebar.component';
+import { AdminNavbarComponent } from './layout/navbar/admin-navbar.component';
+import { AdminFooterComponent } from './layout/footer/admin-footer.component';
+import { AdminNavBarLanguageSwitchComponent } from './layout/navbar/admin-navbar-languageswitch.component';
+import { AdminNavBarUserAreaComponent } from './layout/navbar/admin-navbar-user-area.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     AdminHomeComponent,
-    AdminTopBarComponent,
-    AdminTopBarLanguageSwitchComponent,
-    AdminSideBarUserAreaComponent,
-    AdminSideBarNavComponent,
-    AdminSideBarFooterComponent,
-    AdminRightSideBarComponent,
     // tenants
     TenantsComponent,
     CreateTenantDialogComponent,
@@ -67,7 +60,13 @@ import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/cre
     CreateOrUpdateCategoryDialogComponent,
     // quizzes
     AdminQuizzesComponent,
-    CreateOrUpdateQuizDialogComponent
+    CreateOrUpdateQuizDialogComponent,
+    // new components
+    AdminFooterComponent,
+    AdminNavbarComponent,
+    AdminNavBarUserAreaComponent,
+    AdminNavBarLanguageSwitchComponent,
+    AdminSidebarComponent
   ],
   imports: [
     CommonModule,
@@ -76,6 +75,7 @@ import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/cre
     HttpClientModule,
     HttpClientJsonpModule,
     ModalModule.forRoot(),
+    CollapseModule.forRoot(),
     AbpModule,
     AdminRoutingModule,
     ServiceProxyModule,
@@ -83,12 +83,6 @@ import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/cre
     NgxPaginationModule
   ],
   exports:[
-    AdminTopBarComponent,
-    AdminTopBarLanguageSwitchComponent,
-    AdminSideBarUserAreaComponent,
-    AdminSideBarNavComponent,
-    AdminSideBarFooterComponent,
-    AdminRightSideBarComponent,
   ],
   providers: [],
   entryComponents: [

@@ -5,7 +5,9 @@ import { AppComponentBase } from '@shared/app-component-base';
 import {
   AdminQuizServiceProxy,
   QuizDto,
-  CreateUpdateQuizDto
+  CreateUpdateQuizDto,
+  AdminCategoryServiceProxy,
+  DictionaryDto
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
@@ -26,9 +28,11 @@ export class CreateOrUpdateQuizDialogComponent extends AppComponentBase
   saving = false;
   entity: CreateUpdateQuizDto = new CreateUpdateQuizDto();
   dialogTitle: string = '';
+  categories: DictionaryDto[] = undefined;
 
   constructor(
     injector: Injector,
+    private _categoryService: AdminCategoryServiceProxy,
     public _service: AdminQuizServiceProxy,
     private _dialogRef: MatDialogRef<CreateOrUpdateQuizDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) private _id: string
@@ -44,10 +48,27 @@ export class CreateOrUpdateQuizDialogComponent extends AppComponentBase
       this.dialogTitle = this.l("EditQuiz");
       this._service.get(this._id).subscribe((result: QuizDto) => {
         this.entity = result;
+        console.log(this.entity)
       });
     }
 
   }
+
+  getCategoriesDictionary() {
+    if (this.categories == undefined) {
+      this.setSelectIsLoading('categories');
+      this._categoryService.getDictionary()
+        .pipe(
+          finalize(() => {
+            this.clearSelectIsLoading();
+          })
+        )
+        .subscribe((result: DictionaryDto[]) => {
+          this.categories = result;
+        });
+    }
+  }
+
 
   save(): void {
     this.saving = true;

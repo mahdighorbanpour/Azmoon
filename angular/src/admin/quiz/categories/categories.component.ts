@@ -28,6 +28,7 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
         private _dialog: MatDialog
     ) {
         super(injector);
+        this.setTitle(this.l('Categories'));
     }
 
     list(
@@ -47,7 +48,6 @@ export class CategoriesComponent extends PagedListingComponentBase<CategoryDto> 
             )
             .subscribe((result: CategoryDtoPagedResultDto) => {
                 this.entityList = result.items;
-                console.log(this.entityList);
                 this.showPaging(result, pageNumber);
             });
     }

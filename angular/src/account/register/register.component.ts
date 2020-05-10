@@ -35,6 +35,7 @@ export class RegisterComponent extends AppComponentBase {
     private _loginService: LoginService
   ) {
     super(injector);
+    document.body.className = 'bg-default';
   }
 
   back(): void {

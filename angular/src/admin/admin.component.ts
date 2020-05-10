@@ -37,17 +37,9 @@ export class AdminComponent extends AppComponentBase implements OnInit, AfterVie
     }
 
     ngAfterViewInit(): void {
-        $.AdminBSB.activateAll();
-        $.AdminBSB.activateDemo();
     }
 
     onResize(event) {
-        // exported from $.AdminBSB.activateAll
-        $.AdminBSB.leftSideBar.setMenuHeight();
-        $.AdminBSB.leftSideBar.checkStatuForResize(false);
-
-        // exported from $.AdminBSB.activateDemo
-        $.AdminBSB.demo.setSkinListHeightAndScroll();
-        $.AdminBSB.demo.setSettingListHeightAndScroll();
+       
     }
 }

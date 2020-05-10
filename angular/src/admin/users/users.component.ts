@@ -36,6 +36,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
         private _dialog: MatDialog
     ) {
         super(injector);
+        this.setTitle(this.l('Users'));
     }
 
     createUser(): void {
