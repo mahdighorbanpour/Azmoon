@@ -1,5 +1,5 @@
 // Contextual backgrounds
-@mixin bg-variant($parent, $color) {
+@mixin bg-variant($parent, $color, $ignore-warning:true) {
     #{$parent} {
         background-color: $color !important;
     }
@@ -28,3 +28,18 @@
         }
     }
 }
+
+
+
+@mixin text-emphasis-variant($parent, $color, $ignore-warning: true) {
+    #{$parent} {
+      color: $color !important;
+    }
+    @if $emphasized-link-hover-darken-percentage != 0 {
+      a#{$parent} {
+        @include hover-focus() {
+          color: darken($color, $emphasized-link-hover-darken-percentage) !important;
+        }
+      }
+    }
+  }
