@@ -2,6 +2,7 @@
 using Abp.AutoMapper;
 using Azmoon.Core.Quiz.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Azmoon.Application.Shared.Quiz.Questions.Dto
@@ -23,11 +24,7 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         public string Hint { get; set; }
         public int Marks { get; set; }
         public QuestionType QuestionType { get; set; }
-
-        //public List<QuizQuestion> Quizzes { get; set; }
-
-        //private readonly List<Choice> _choices = new List<Choice>();
-        //public IReadOnlyList<Choice> Choices => _choices.AsReadOnly();
+        public List<CreateUpdateChoiceDto> Choices { get; set; }
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
     }

@@ -2,19 +2,28 @@
 using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
+using Abp.UI;
 using Azmoon.Application.Shared.Quiz.Questions.Dto;
 using Azmoon.Authorization;
 using Azmoon.Core.Quiz.Entities;
+using Azmoon.Core.Quiz.Questions;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Azmoon.Admin.Application.Quiz.Questions
 {
     [AbpAuthorize(PermissionNames.Pages_Questions)]
     public class AdminQuestionAppService : AdminCrudServiceWithHostApprovalBase<Question, QuestionDto, Guid, PagedQuestionResultRequestDto, CreateUpdateQuestionDto, CreateUpdateQuestionDto>, IAdminQuestionAppService
     {
-        public AdminQuestionAppService(IRepository<Question, Guid> repository) : base(repository)
+        private readonly IQuestionManager _questionManager;
+
+        public AdminQuestionAppService(
+            IRepository<Question, Guid> repository,
+            IQuestionManager questionManager
+            ) : base(repository)
         {
+            _questionManager = questionManager;
         }
 
         protected override IQueryable<Question> CreateFilteredQuery(PagedQuestionResultRequestDto input)
@@ -29,6 +38,23 @@ namespace Azmoon.Admin.Application.Quiz.Questions
                 .WhereIf(input.CategoryId.HasValue, q => q.CategoryId == input.CategoryId);
         }
 
-        
+        public override async Task<QuestionDto> CreateAsync(CreateUpdateQuestionDto input)
+        {
+            CheckCreatePermission();
+
+            var entity = MapToEntity(input);
+            try
+            {
+                foreach (var choice in input.Choices)
+                    entity.AddChoice(choice.Value, choice.IsCorrect);
+
+                entity = await _questionManager.CreateAsync(entity);
+                return MapToEntityDto(entity);
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L(ex.Message));
+            }
+        }
     }
 }

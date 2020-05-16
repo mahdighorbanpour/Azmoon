@@ -15,6 +15,7 @@ using Azmoon.Tests.DependencyInjection;
 namespace Azmoon.Tests
 {
     [DependsOn(
+        typeof(AzmoonCoreModule),
         typeof(AzmoonApplicationModule),
         typeof(AzmoonEntityFrameworkModule),
         typeof(AbpTestBaseModule)

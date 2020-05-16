@@ -1,4 +1,5 @@
-﻿using Abp.Modules;
+﻿using Abp.Dependency;
+using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Timing;
 using Abp.Zero;
@@ -6,6 +7,7 @@ using Abp.Zero.Configuration;
 using Azmoon.Authorization.Roles;
 using Azmoon.Authorization.Users;
 using Azmoon.Configuration;
+using Azmoon.Core.Quiz.Questions;
 using Azmoon.Localization;
 using Azmoon.MultiTenancy;
 using Azmoon.Timing;
@@ -38,6 +40,8 @@ namespace Azmoon
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(AzmoonCoreModule).GetAssembly());
+            IocManager.Register<IQuestionManager, QuestionManager>(DependencyLifeStyle.Transient);
+            IocManager.Register<IQuestionPolicyFactory, QuestionPolicyFactory>(DependencyLifeStyle.Transient);
         }
 
         public override void PostInitialize()

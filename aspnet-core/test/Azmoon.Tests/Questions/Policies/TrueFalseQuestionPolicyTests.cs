@@ -2,9 +2,6 @@
 using Azmoon.Core.Quiz.Entities;
 using Azmoon.Core.Quiz.Enums;
 using Azmoon.Core.Quiz.Questions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Azmoon.Tests.Questions.Policies
@@ -29,12 +26,14 @@ namespace Azmoon.Tests.Questions.Policies
         {
             // Arrange
             question.QuestionType = QuestionType.ShortAnswer;
+            string message = "Incompatible policy cheker is selected!";
             // Act
 
             // Assert
-            Assert.Throws<UserFriendlyException>(() =>
+            var exception = Assert.Throws<UserFriendlyException>(() =>
              new TrueFalseQuestionPolicy(question)
             );
+            Assert.Equal(message, exception.Message);
         }
 
         [Fact]
@@ -42,11 +41,13 @@ namespace Azmoon.Tests.Questions.Policies
         {
             // Arrange
             question.AddChoice("Correct", true);
+            string message = "True/False question is allowed to have only 2 choices!";
 
             // Act
 
             // Assert
-            Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            var exception = Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            Assert.Equal(message, exception.Message);
         }
 
         [Fact]
@@ -56,11 +57,13 @@ namespace Azmoon.Tests.Questions.Policies
             question.AddChoice("Correct", true);
             question.AddChoice("Incorrect", false);
             question.AddChoice("thirdChoice", false);
+            string message = "True/False question is allowed to have only 2 choices!";
 
             // Act
 
             // Assert
-            Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            var exception = Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            Assert.Equal(message, exception.Message);
         }
 
         [Fact]
@@ -69,11 +72,13 @@ namespace Azmoon.Tests.Questions.Policies
             // Arrange
             question.AddChoice("Incorrect1", false);
             question.AddChoice("Incorrect2", false);
-
+            string message = "True/False question must have only 1 correct choice!";
+            
             // Act
 
             // Assert
-            Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            var exception = Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            Assert.Equal(message, exception.Message);
         }
 
         [Fact]
@@ -82,11 +87,13 @@ namespace Azmoon.Tests.Questions.Policies
             // Arrange
             question.AddChoice("Correct1", true);
             question.AddChoice("Correct2", true);
+            string message = "True/False question must have only 1 correct choice!";
 
             // Act
 
             // Assert
-            Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            var exception = Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            Assert.Equal(message, exception.Message);
         }
 
         [Fact]
