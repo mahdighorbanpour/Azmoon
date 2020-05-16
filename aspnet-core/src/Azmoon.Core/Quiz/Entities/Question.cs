@@ -39,5 +39,10 @@ namespace Azmoon.Core.Quiz.Entities
 
             _choices.Add(new Choice(Id, value, isCorrect));
         }
+
+        public int ChoicesCount => Choices.Count;
+
+        public int CorrectChoicesCount => Choices.Count(c => c.IsCorrect);
+
     }
 }
