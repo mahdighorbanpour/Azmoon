@@ -152,5 +152,8 @@
     <text name="ShortAnswer">Short Answer</text>
     <text name="FillInTheBlank">Fill In The Blank</text>
     <text name="Matching">Matching</text>
+    <text name="Incompatible policy cheker is selected!">Incompatible policy cheker is selected!</text>
+    <text name="True/False question must have only 1 correct choice!">True/False question must have only 1 correct choice!</text>
+    <text name="True/False question is allowed to have only 2 choices!">True/False question is allowed to have only 2 choices!</text>
   </texts>
 </localizationDictionary>
