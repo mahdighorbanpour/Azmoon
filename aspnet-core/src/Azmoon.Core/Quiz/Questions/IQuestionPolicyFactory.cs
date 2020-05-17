@@ -22,7 +22,7 @@ namespace Azmoon.Core.Quiz.Questions
                     break;
                 case QuestionType.ShortAnswer:
                     break;
-                case QuestionType.FillInTtheBlank:
+                case QuestionType.FillInTheBlank:
                     break;
                 case QuestionType.Matching:
                     break;

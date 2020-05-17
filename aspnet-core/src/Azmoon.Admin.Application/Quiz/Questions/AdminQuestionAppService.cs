@@ -3,11 +3,14 @@ using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
 using Abp.UI;
+using Azmoon.Application.Shared.Quiz;
 using Azmoon.Application.Shared.Quiz.Questions.Dto;
 using Azmoon.Authorization;
 using Azmoon.Core.Quiz.Entities;
+using Azmoon.Core.Quiz.Enums;
 using Azmoon.Core.Quiz.Questions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,6 +58,20 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             {
                 throw new UserFriendlyException(L(ex.Message));
             }
+        }
+
+        public Task<List<DictionaryDto>> GetQuestionTypesDictionary()
+        {
+            List<DictionaryDto> list = new List<DictionaryDto>();
+            foreach (var item in Enum.GetValues(typeof(QuestionType)))
+            {
+                list.Add(new DictionaryDto()
+                {
+                    IntValue = (int)item,
+                    Text = L(item.ToString())
+                });
+            }
+            return Task.FromResult(list);
         }
     }
 }

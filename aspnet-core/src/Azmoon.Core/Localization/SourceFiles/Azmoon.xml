@@ -26,7 +26,6 @@
     <text name="SignUpWith" value="Sign up with" />
     <text name="SignInWithCredentials" value="Or sign in with credentials" />
     <text name="SignUpWithCredentials" value="Or sign up with credentials" />
-    
     <text name="MyProfile" value="My profile" />
     <text name="NameSurname" value="Name surname" />
     <text name="UserName" value="User name" />
@@ -147,5 +146,11 @@
     <text name="EntityCannotBeApproved">This entity cannot be approved!</text>
     <text name="NotAuthorized">You are not authorized to perform this action.</text>
     <text name="Questions">Questions</text>
+    <text name="TrueFalse">True / False</text>
+    <text name="MultipleChoice">Multiple Choices</text>
+    <text name="Ordering">Ordering</text>
+    <text name="ShortAnswer">Short Answer</text>
+    <text name="FillInTheBlank">Fill In The Blank</text>
+    <text name="Matching">Matching</text>
   </texts>
 </localizationDictionary>

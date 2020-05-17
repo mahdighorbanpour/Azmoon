@@ -10,7 +10,7 @@ namespace Azmoon.Core.Quiz.Enums
         MultipleChoice = 2,
         Ordering = 3,
         ShortAnswer = 4,
-        FillInTtheBlank = 5,
+        FillInTheBlank = 5,
         Matching = 6
     }
 }
