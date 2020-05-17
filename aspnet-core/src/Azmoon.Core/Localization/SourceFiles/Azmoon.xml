@@ -146,6 +146,15 @@
     <text name="EntityCannotBeApproved">This entity cannot be approved!</text>
     <text name="NotAuthorized">You are not authorized to perform this action.</text>
     <text name="Questions">Questions</text>
+    <text name="Marks">Marks</text>
+    <text name="QuestionType">Question type</text>
+    <text name="Hint">Hints</text>
+    <text name="ChoicesCount">Choices count</text>
+    <text name="QuizzsCount">Quizzs count</text>
+    <text name="RandomizeChoices">Randomize choices</text>
+    <text name="CreateNewQuestion">New Question</text>
+    <text name="EditQuestion">Edit Question</text>
+    <text name="QuestionDeleteWarningMessage">Question {0} will be deleted.</text>
     <text name="TrueFalse">True / False</text>
     <text name="MultipleChoice">Multiple Choices</text>
     <text name="Ordering">Ordering</text>
