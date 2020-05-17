@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Azmoon.Admin.Application
 {
@@ -21,6 +22,48 @@ namespace Azmoon.Admin.Application
 
         }
     }
+
+    public abstract class AdminCrudServiceBase<TEntity, TEntityDto, TPrimaryKey, TListDto, TGetAllInput, TCreateInput, TUpdateInput>
+       : AdminCrudServiceBase<TEntity, TEntityDto, TPrimaryKey, TGetAllInput, TCreateInput, TUpdateInput, EntityDto<TPrimaryKey>, EntityDto<TPrimaryKey>>
+       where TEntity : class, IEntity<TPrimaryKey>
+       where TEntityDto : IEntityDto<TPrimaryKey>
+       where TListDto : IEntityDto<TPrimaryKey>
+       where TUpdateInput : IEntityDto<TPrimaryKey>
+    {
+        protected AdminCrudServiceBase(IRepository<TEntity, TPrimaryKey> repository)
+            : base(repository)
+        {
+
+        }
+
+        [ActionName("GetAll")]
+        public async Task<PagedResultDto<TListDto>> GetAllListDtoAsync(TGetAllInput input)
+        {
+            CheckGetAllPermission();
+
+            var query = CreateFilteredQuery(input);
+
+            var totalCount = await AsyncQueryableExecuter.CountAsync(query);
+
+            query = ApplySorting(query, input);
+            query = ApplyPaging(query, input);
+
+            var entities = await ObjectMapper.ProjectTo<TListDto>(query).ToListAsync();
+
+            return new PagedResultDto<TListDto>(
+                totalCount,
+                entities
+            );
+        }
+
+
+        [NonAction]
+        public override Task<PagedResultDto<TEntityDto>> GetAllAsync(TGetAllInput input)
+        {
+            return base.GetAllAsync(input);
+        }
+    }
+
 
     public abstract class AdminCrudServiceBase<TEntity, TEntityDto, TPrimaryKey, TGetAllInput, TCreateInput, TUpdateInput, TGetInput, TDeleteInput>
         : AsyncCrudAppService<TEntity, TEntityDto, TPrimaryKey, TGetAllInput, TCreateInput, TUpdateInput, TGetInput, TDeleteInput>

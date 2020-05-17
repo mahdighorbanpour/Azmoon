@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Azmoon.Admin.Application.Quiz.Questions
 {
     [AbpAuthorize(PermissionNames.Pages_Questions)]
-    public class AdminQuestionAppService : AdminCrudServiceWithHostApprovalBase<Question, QuestionDto, Guid, PagedQuestionResultRequestDto, CreateUpdateQuestionDto, CreateUpdateQuestionDto>, IAdminQuestionAppService
+    public class AdminQuestionAppService : AdminCrudServiceWithHostApprovalBase<Question, QuestionDto, Guid, ListQuestionDto, PagedQuestionResultRequestDto, CreateUpdateQuestionDto, CreateUpdateQuestionDto>, IAdminQuestionAppService
     {
         private readonly IQuestionManager _questionManager;
 
