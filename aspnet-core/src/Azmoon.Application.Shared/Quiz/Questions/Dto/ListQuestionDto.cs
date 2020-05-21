@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using Azmoon.Core.Quiz.Entities;
+using Azmoon.Core.Quiz.Enums;
 using System;
 
 namespace Azmoon.Application.Shared.Quiz.Questions.Dto
@@ -10,7 +11,8 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
     {
         public string Title { get; set; }
         public int Marks { get; set; }
-        public string QuestionType { get; set; }
+        public QuestionType QuestionType { get; set; }
+        public string QuestionTypeString { get; set; }
         public int CategoryId { get; set; }
         public string CategoryTitle { get; set; }
         public bool IsPublic { get; set; }

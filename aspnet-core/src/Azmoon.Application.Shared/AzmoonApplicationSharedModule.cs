@@ -2,6 +2,7 @@
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Azmoon.Application.Shared.Quiz;
+using Azmoon.Application.Shared.Quiz.Questions.Dto;
 using Azmoon.Authorization;
 using Azmoon.Core.Quiz.Entities;
 
@@ -20,6 +21,9 @@ namespace Azmoon
                       .ForMember(u => u.GuidValue, options => options.Ignore())
                       .ForMember(u => u.IntValue, options => options.MapFrom(input => input.Id))
                       .ForMember(u => u.Text, options => options.MapFrom(input => input.Title));
+
+                config.CreateMap<Question, ListQuestionDto>()
+                    .ForMember(q => q.QuestionTypeString, options => options.MapFrom(input => input.QuestionType.ToString()));
             });
         }
 

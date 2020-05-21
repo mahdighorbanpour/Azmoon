@@ -27,7 +27,7 @@ namespace Azmoon.Core.Quiz.Entities
 
         public List<QuizQuestion> Quizzes { get; set; }
 
-        private readonly List<Choice> _choices = new List<Choice>();
+        private List<Choice> _choices = new List<Choice>();
         public IReadOnlyList<Choice> Choices => _choices.AsReadOnly();
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
@@ -40,7 +40,7 @@ namespace Azmoon.Core.Quiz.Entities
             _choices.Add(new Choice(Id, value, isCorrect));
         }
 
-        public int ChoicesCount => Choices.Count;
+        public int AllChoicesCount => Choices.Count;
 
         public int CorrectChoicesCount => Choices.Count(c => c.IsCorrect);
 

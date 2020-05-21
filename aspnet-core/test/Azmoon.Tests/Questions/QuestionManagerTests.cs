@@ -54,7 +54,7 @@ namespace Azmoon.Tests.Questions
             // Assert
             savedQuestion.Id.ShouldNotBeNull();
             savedQuestion.Title.ShouldBe("True/False Question");
-            savedQuestion.ChoicesCount.ShouldBe(2);
+            savedQuestion.AllChoicesCount.ShouldBe(2);
             savedQuestion.CorrectChoicesCount.ShouldBe(1);
         }
     }
