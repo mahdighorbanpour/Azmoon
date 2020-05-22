@@ -41,7 +41,7 @@ namespace Azmoon.Tests.Questions.Policies
         {
             // Arrange
             question.AddChoice("Correct", true);
-            string message = "True/False question is allowed to have only 2 choices!";
+            string message = "True/False question must have 2 choices!";
 
             // Act
 
@@ -57,7 +57,7 @@ namespace Azmoon.Tests.Questions.Policies
             question.AddChoice("Correct", true);
             question.AddChoice("Incorrect", false);
             question.AddChoice("thirdChoice", false);
-            string message = "True/False question is allowed to have only 2 choices!";
+            string message = "True/False question must have 2 choices!";
 
             // Act
 

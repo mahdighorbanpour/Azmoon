@@ -40,6 +40,11 @@ namespace Azmoon.Core.Quiz.Entities
             _choices.Add(new Choice(Id, value, isCorrect));
         }
 
+        public void ClearChoices()
+        {
+            _choices.Clear();
+        }
+
         public int AllChoicesCount => Choices.Count;
 
         public int CorrectChoicesCount => Choices.Count(c => c.IsCorrect);

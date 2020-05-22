@@ -24,6 +24,7 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         public string Hint { get; set; }
         public int Marks { get; set; }
         public QuestionType QuestionType { get; set; }
+        public string QuestionTypeString { get; set; }
         public List<CreateUpdateChoiceDto> Choices { get; set; }
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }

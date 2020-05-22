@@ -28,7 +28,7 @@ namespace Azmoon.Tests.Questions
             // Arrange
             question.QuestionType = QuestionType.TrueFalse;
             question.AddChoice("Correct", true);
-            string message = "True/False question is allowed to have only 2 choices!";
+            string message = "True/False question must have 2 choices!";
             
             // Act
 

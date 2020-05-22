@@ -25,7 +25,7 @@
                     <mat-option *ngIf="isSelectLoading && selectName == 'questionTypes'" value="">{{ 'Loading' | localize }}
                     </mat-option>
                     <mat-option *ngIf="!isSelectLoading && entity.questionType && questionTypes == undefined"
-                      [value]="entity.questionType">{{ entity.questionTypeString }}</mat-option>
+                      [value]="entity.questionType">{{ entity.questionTypeString | localize}}</mat-option>
                     <mat-option *ngFor="let item of questionTypes" [value]="item.intValue">{{ item.text }}</mat-option>
                   </mat-select>
                 </mat-form-field>

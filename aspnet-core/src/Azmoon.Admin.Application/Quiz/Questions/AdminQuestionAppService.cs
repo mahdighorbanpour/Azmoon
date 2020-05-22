@@ -60,6 +60,28 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             }
         }
 
+        public override async Task<QuestionDto> UpdateAsync(CreateUpdateQuestionDto input)
+        {
+            CheckUpdatePermission();
+
+            var entity = await GetEntityByIdAsync(input.Id);
+
+            MapToEntity(input, entity);
+            try
+            {
+                entity.ClearChoices();
+                foreach (var choice in input.Choices)
+                    entity.AddChoice(choice.Value, choice.IsCorrect);
+
+                entity = await _questionManager.UpdateAsync(entity);
+                return MapToEntityDto(entity);
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L(ex.Message));
+            }
+        }
+
         public Task<List<DictionaryDto>> GetQuestionTypesDictionary()
         {
             List<DictionaryDto> list = new List<DictionaryDto>();

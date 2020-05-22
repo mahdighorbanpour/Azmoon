@@ -163,7 +163,7 @@
     <text name="Matching">Matching</text>
     <text name="Incompatible policy cheker is selected!">Incompatible policy cheker is selected!</text>
     <text name="True/False question must have 1 correct choice!">True/False question must have 1 correct choice!</text>
-    <text name="True/False question is allowed to have only 2 choices!">True/False question is allowed to have only 2 choices!</text>
+    <text name="True/False question must have 2 choices!">True/False question must have 2 choices!</text>
     <text name="Details">Details</text>
     <text name="Choices">Choices</text>
     <text name="Value">Value</text>

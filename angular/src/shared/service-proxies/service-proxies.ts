@@ -715,6 +715,62 @@ export class AdminQuestionServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: CreateUpdateQuestionDto | undefined): Observable<QuestionDto> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminQuestion/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<QuestionDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<QuestionDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<QuestionDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = QuestionDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<QuestionDto>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     getQuestionTypesDictionary(): Observable<DictionaryDto[]> {
@@ -923,62 +979,6 @@ export class AdminQuestionServiceProxy {
             }));
         }
         return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    update(body: CreateUpdateQuestionDto | undefined): Observable<QuestionDto> {
-        let url_ = this.baseUrl + "/api/services/admin/AdminQuestion/Update";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processUpdate(<any>response_);
-                } catch (e) {
-                    return <Observable<QuestionDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<QuestionDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processUpdate(response: HttpResponseBase): Observable<QuestionDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = QuestionDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<QuestionDto>(<any>null);
     }
 
     /**
@@ -4015,6 +4015,7 @@ export class CreateUpdateQuestionDto implements ICreateUpdateQuestionDto {
     hint: string | undefined;
     marks: number;
     questionType: QuestionType;
+    questionTypeString: string | undefined;
     choices: CreateUpdateChoiceDto[] | undefined;
     randomizeChoices: boolean | undefined;
     isPublic: boolean;
@@ -4037,6 +4038,7 @@ export class CreateUpdateQuestionDto implements ICreateUpdateQuestionDto {
             this.hint = _data["hint"];
             this.marks = _data["marks"];
             this.questionType = _data["questionType"];
+            this.questionTypeString = _data["questionTypeString"];
             if (Array.isArray(_data["choices"])) {
                 this.choices = [] as any;
                 for (let item of _data["choices"])
@@ -4063,6 +4065,7 @@ export class CreateUpdateQuestionDto implements ICreateUpdateQuestionDto {
         data["hint"] = this.hint;
         data["marks"] = this.marks;
         data["questionType"] = this.questionType;
+        data["questionTypeString"] = this.questionTypeString;
         if (Array.isArray(this.choices)) {
             data["choices"] = [];
             for (let item of this.choices)
@@ -4089,6 +4092,7 @@ export interface ICreateUpdateQuestionDto {
     hint: string | undefined;
     marks: number;
     questionType: QuestionType;
+    questionTypeString: string | undefined;
     choices: CreateUpdateChoiceDto[] | undefined;
     randomizeChoices: boolean | undefined;
     isPublic: boolean;

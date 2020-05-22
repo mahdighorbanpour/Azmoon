@@ -24,6 +24,8 @@ namespace Azmoon
 
                 config.CreateMap<Question, ListQuestionDto>()
                     .ForMember(q => q.QuestionTypeString, options => options.MapFrom(input => input.QuestionType.ToString()));
+                config.CreateMap<Question, QuestionDto>()
+                    .ForMember(q => q.QuestionTypeString, options => options.MapFrom(input => input.QuestionType.ToString()));
             });
         }
 

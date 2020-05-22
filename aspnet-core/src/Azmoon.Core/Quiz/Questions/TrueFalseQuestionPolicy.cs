@@ -29,7 +29,7 @@ namespace Azmoon.Core.Quiz.Questions
         private void CheckHasOnlyTwoChoices()
         {
             if (Question.AllChoicesCount != 2)
-                throw new UserFriendlyException("True/False question is allowed to have only 2 choices!");
+                throw new UserFriendlyException("True/False question must have 2 choices!");
         }
     }
 }
