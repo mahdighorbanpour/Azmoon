@@ -13,6 +13,11 @@ import { SharedModule } from '@shared/shared.module';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminHomeComponent } from './home/admin-home.component';
+import { AdminSidebarComponent } from './layout/sidebar/admin-sidebar.component';
+import { AdminNavbarComponent } from './layout/navbar/admin-navbar.component';
+import { AdminFooterComponent } from './layout/footer/admin-footer.component';
+import { AdminNavBarLanguageSwitchComponent } from './layout/navbar/admin-navbar-languageswitch.component';
+import { AdminNavBarUserAreaComponent } from './layout/navbar/admin-navbar-user-area.component';
 // tenants
 import { TenantsComponent } from './tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
@@ -32,16 +37,19 @@ import { CategoriesComponent } from './quiz/categories/categories.component';
 import { CreateOrUpdateCategoryDialogComponent } from './quiz/categories/create-update/create-update-category-dialog.component';
 import { AdminQuizzesComponent } from './quiz/quiz/quiz.component';
 import { CreateOrUpdateQuizDialogComponent } from './quiz/quiz/create-update/create-update-quiz-dialog.component';
-import { AdminSidebarComponent } from './layout/sidebar/admin-sidebar.component';
-import { AdminNavbarComponent } from './layout/navbar/admin-navbar.component';
-import { AdminFooterComponent } from './layout/footer/admin-footer.component';
-import { AdminNavBarLanguageSwitchComponent } from './layout/navbar/admin-navbar-languageswitch.component';
-import { AdminNavBarUserAreaComponent } from './layout/navbar/admin-navbar-user-area.component';
+import {AdminQuestionsComponent } from './quiz/questions/question.component'
+import { CreateOrUpdateQuestionDialogComponent } from './quiz/questions/create-update/create-update-question-dialog.component'
 
 @NgModule({
   declarations: [
     AdminComponent,
     AdminHomeComponent,
+    // new components
+    AdminFooterComponent,
+    AdminNavbarComponent,
+    AdminNavBarUserAreaComponent,
+    AdminNavBarLanguageSwitchComponent,
+    AdminSidebarComponent,
     // tenants
     TenantsComponent,
     CreateTenantDialogComponent,
@@ -62,12 +70,9 @@ import { AdminNavBarUserAreaComponent } from './layout/navbar/admin-navbar-user-
     // quizzes
     AdminQuizzesComponent,
     CreateOrUpdateQuizDialogComponent,
-    // new components
-    AdminFooterComponent,
-    AdminNavbarComponent,
-    AdminNavBarUserAreaComponent,
-    AdminNavBarLanguageSwitchComponent,
-    AdminSidebarComponent
+    // questions
+    AdminQuestionsComponent,
+    CreateOrUpdateQuestionDialogComponent
   ],
   imports: [
     CommonModule,

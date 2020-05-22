@@ -10,9 +10,23 @@ using System.Threading.Tasks;
 
 namespace Azmoon.Admin.Application
 {
-    public class AdminCrudServiceWithHostApprovalBase<TEntity, TEntityDto, TPrimaryKey, TGetAllInput, TCreateInput, TUpdateInput> : AdminCrudServiceBase<TEntity, TEntityDto, TPrimaryKey, TGetAllInput, TCreateInput, TUpdateInput>
+
+    public abstract class AdminCrudServiceWithHostApprovalBase<TEntity, TEntityDto, TPrimaryKey, TGetAllInput, TCreateInput, TUpdateInput>
+        : AdminCrudServiceWithHostApprovalBase<TEntity, TEntityDto, TPrimaryKey, TEntityDto, TGetAllInput, TCreateInput, TUpdateInput>
         where TEntity : class, IEntity<TPrimaryKey>
         where TEntityDto : IEntityDto<TPrimaryKey>
+        where TUpdateInput : IEntityDto<TPrimaryKey>
+    {
+        public AdminCrudServiceWithHostApprovalBase(IRepository<TEntity, TPrimaryKey> repository) : base(repository)
+        {
+        }
+
+    }
+    public abstract class AdminCrudServiceWithHostApprovalBase<TEntity, TEntityDto, TPrimaryKey, TListDto, TGetAllInput, TCreateInput, TUpdateInput>
+        : AdminCrudServiceBase<TEntity, TEntityDto, TPrimaryKey, TListDto, TGetAllInput, TCreateInput, TUpdateInput>
+        where TEntity : class, IEntity<TPrimaryKey>
+        where TEntityDto : IEntityDto<TPrimaryKey>
+        where TListDto : IEntityDto<TPrimaryKey>
         where TUpdateInput : IEntityDto<TPrimaryKey>
     {
         public AdminCrudServiceWithHostApprovalBase(IRepository<TEntity, TPrimaryKey> repository) : base(repository)

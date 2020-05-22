@@ -26,7 +26,6 @@
     <text name="SignUpWith" value="Sign up with" />
     <text name="SignInWithCredentials" value="Or sign in with credentials" />
     <text name="SignUpWithCredentials" value="Or sign up with credentials" />
-    
     <text name="MyProfile" value="My profile" />
     <text name="NameSurname" value="Name surname" />
     <text name="UserName" value="User name" />
@@ -147,5 +146,29 @@
     <text name="EntityCannotBeApproved">This entity cannot be approved!</text>
     <text name="NotAuthorized">You are not authorized to perform this action.</text>
     <text name="Questions">Questions</text>
+    <text name="Marks">Marks</text>
+    <text name="QuestionType">Question type</text>
+    <text name="Hint">Hints</text>
+    <text name="ChoicesCount">Choices count</text>
+    <text name="QuizzsCount">Quizzs count</text>
+    <text name="RandomizeChoices">Randomize choices</text>
+    <text name="CreateNewQuestion">New Question</text>
+    <text name="EditQuestion">Edit Question</text>
+    <text name="QuestionDeleteWarningMessage">Question {0} will be deleted.</text>
+    <text name="TrueFalse">True / False</text>
+    <text name="MultipleChoice">Multiple Choices</text>
+    <text name="Ordering">Ordering</text>
+    <text name="ShortAnswer">Short Answer</text>
+    <text name="FillInTheBlank">Fill In The Blank</text>
+    <text name="Matching">Matching</text>
+    <text name="Incompatible policy cheker is selected!">Incompatible policy cheker is selected!</text>
+    <text name="True/False question must have 1 correct choice!">True/False question must have 1 correct choice!</text>
+    <text name="True/False question must have 2 choices!">True/False question must have 2 choices!</text>
+    <text name="Details">Details</text>
+    <text name="Choices">Choices</text>
+    <text name="Value">Value</text>
+    <text name="IsCorrect">Is correct</text>
+    <text name="AddChoice">Add a choice</text>
+    <text name="RemoveChoice">Remove a choice</text>
   </texts>
 </localizationDictionary>

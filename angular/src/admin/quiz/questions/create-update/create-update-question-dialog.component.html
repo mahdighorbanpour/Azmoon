@@ -1,0 +1,109 @@
+<form autocomplete="off" #createQuestionForm="ngForm" (ngSubmit)="save()">
+  <h1 mat-dialog-title>{{ dialogTitle }}</h1>
+  <mat-dialog-content>
+    <mat-tab-group>
+      <mat-tab [label]="'Details' | localize">
+        <div class="row-fluid">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-6">
+                <mat-form-field>
+                  <mat-select [placeholder]="l('Category')" [(value)]="entity.categoryId" name="categoryId"
+                    (click)="getCategoriesDictionary()" required>
+                    <mat-option *ngIf="isSelectLoading && selectName == 'categories'" value="">{{ 'Loading' | localize }}
+                    </mat-option>
+                    <mat-option *ngIf="!isSelectLoading && entity.categoryId && categories == undefined"
+                      [value]="entity.categoryId">{{ entity.categoryTitle }}</mat-option>
+                    <mat-option *ngFor="let item of categories" [value]="item.intValue">{{ item.text }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-6">
+                <mat-form-field>
+                  <mat-select [placeholder]="l('QuestionType')" [(value)]="entity.questionType" name="questionType"
+                    (click)="getQuestionTypesDictionary()" required>
+                    <mat-option *ngIf="isSelectLoading && selectName == 'questionTypes'" value="">{{ 'Loading' | localize }}
+                    </mat-option>
+                    <mat-option *ngIf="!isSelectLoading && entity.questionType && questionTypes == undefined"
+                      [value]="entity.questionType">{{ entity.questionTypeString | localize}}</mat-option>
+                    <mat-option *ngFor="let item of questionTypes" [value]="item.intValue">{{ item.text }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <mat-form-field>
+              <input matInput name="Title" [placeholder]="'Title' | localize" [(ngModel)]="entity.title" required
+                minlength="2" maxlength="200" />
+            </mat-form-field>
+            <mat-form-field>
+              <textarea matInput name="Description" [placeholder]="'Description' | localize"
+                [(ngModel)]="entity.description" required maxlength="10000" rows="4"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput name="Hint" [placeholder]="'Hint' | localize" [(ngModel)]="entity.hint"
+                maxlength="1000" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="number" name="Marks" [placeholder]="'Marks' | localize"
+                [(ngModel)]="entity.marks" />
+            </mat-form-field>
+            <div class="row">
+              <div class="col-6">
+                <div class="checkbox-wrapper">
+                  <mat-checkbox name="RandomizeChoices" [(ngModel)]="entity.randomizeChoices">
+                    {{ "RandomizeChoices" | localize }}
+                  </mat-checkbox>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="checkbox-wrapper">
+                  <mat-checkbox name="IsPublic" [(ngModel)]="entity.isPublic">
+                    {{ "IsPublic" | localize }}
+                  </mat-checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab [label]="'Choices' | localize" [disabled]="!createQuestionForm.form.valid">
+        <div class="row-fluid">
+          <div class="col-md-12">
+            <div class="mb-20 mt-10">
+              <button type="button" mat-mini-fab color="primary" (click)="addChoice()" [title]="'AddChoice' | localize">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div *ngFor="let choice of entity.choices; let i = index" [ngModelGroup]="i" class="row">
+              <div class="col-8">
+                <mat-form-field>
+                  <input matInput name="Value" [placeholder]="'Value' | localize" [(ngModel)]="choice.value" required
+                    minlength="1" maxlength="500" />
+                </mat-form-field>
+              </div>
+              <div class="checkbox-wrapper col-3">
+                <mat-checkbox name="IsCorrect" [(ngModel)]="choice.isCorrect">
+                  {{ "IsCorrect" | localize }}
+                </mat-checkbox>
+              </div>
+              <div class="col-1 mt-20">
+                <button mat-mini-fab color="primary" (click)="removeChoice(choice)" [title]="'RemoveChoice' | localize">
+                  <mat-icon>remove</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-dialog-content>
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" [disabled]="saving" (click)="close(false)">
+      {{ "Cancel" | localize }}
+    </button>
+    <button mat-flat-button type="submit" flex="15" color="primary"
+      [disabled]="!createQuestionForm.form.valid || saving">
+      {{ "Save" | localize }}
+    </button>
+  </div>
+</form>

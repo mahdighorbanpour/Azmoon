@@ -8,6 +8,7 @@ $font-size-xs: ($font-size-base * 0.75);
 
 .mat-form-field {
   padding: 10px;
+  width: 100%;
 }
 
 .input-group.mb-3.searchbar {
@@ -154,4 +155,24 @@ $font-size-xs: ($font-size-base * 0.75);
 /* spacing */
 .mr-10{
   margin-right: 10px !important;
+}
+.mt-10{
+  margin-top: 10px;
+}
+.mt-20{
+  margin-top: 20px;
+}
+.mb-20{
+  margin-bottom: 20px;
+}
+
+/* font colors */
+.col-green{
+  color: green;
+}
+.col-red{
+  color: red;
+}
+.col-grey{
+  color:gray;
 }

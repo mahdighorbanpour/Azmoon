@@ -15,6 +15,7 @@ namespace Azmoon.Authorization
             context.CreatePermission(PermissionNames.Pages_Categories, L("Categories"));
             context.CreatePermission(PermissionNames.Pages_Quiz, L("Quizzes"));
             context.CreatePermission(PermissionNames.ApproveIsPublic, L("ApproveIsPublic"), multiTenancySides: MultiTenancySides.Host);
+            context.CreatePermission(PermissionNames.Pages_Questions, L("Questions"));
         }
 
         private static ILocalizableString L(string name)
