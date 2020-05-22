@@ -7,7 +7,8 @@ import {
   QuestionDto,
   CreateUpdateQuestionDto,
   AdminCategoryServiceProxy,
-  DictionaryDto
+  DictionaryDto,
+  CreateUpdateChoiceDto
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
@@ -29,6 +30,7 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
   entity: CreateUpdateQuestionDto = new CreateUpdateQuestionDto();
   dialogTitle: string = '';
   categories: DictionaryDto[] = undefined;
+  questionTypes: DictionaryDto[] = undefined;
 
   constructor(
     injector: Injector,
@@ -69,6 +71,20 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
     }
   }
 
+  getQuestionTypesDictionary() {
+    if (this.questionTypes == undefined) {
+      this.setSelectIsLoading('questionTypes');
+      this._service.getQuestionTypesDictionary()
+        .pipe(
+          finalize(() => {
+            this.clearSelectIsLoading();
+          })
+        )
+        .subscribe((result: DictionaryDto[]) => {
+          this.questionTypes = result;
+        });
+    }
+  }
 
   save(): void {
     this.saving = true;
@@ -86,6 +102,19 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
         this.notify.info(this.l('SavedSuccessfully'));
         this.close(true);
       });
+  }
+
+  addChoice() {
+    if (this.entity.choices == undefined)
+      this.entity.choices = [];
+    this.entity.choices.push(
+      new CreateUpdateChoiceDto()
+    )
+  }
+
+  removeChoice(choice: CreateUpdateChoiceDto) {
+    let idx = this.entity.choices.findIndex(c => c == choice);
+    this.entity.choices.splice(idx, 1);
   }
 
   close(result: any): void {

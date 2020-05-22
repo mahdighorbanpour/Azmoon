@@ -23,7 +23,7 @@ namespace Azmoon.Core.Quiz.Questions
         private void CheckHasOnlyOnCorrectChoice()
         {
             if (Question.CorrectChoicesCount != 1)
-                throw new UserFriendlyException("True/False question must have only 1 correct choice!");
+                throw new UserFriendlyException("True/False question must have 1 correct choice!");
         }
 
         private void CheckHasOnlyTwoChoices()

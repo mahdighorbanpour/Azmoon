@@ -72,7 +72,7 @@ namespace Azmoon.Tests.Questions.Policies
             // Arrange
             question.AddChoice("Incorrect1", false);
             question.AddChoice("Incorrect2", false);
-            string message = "True/False question must have only 1 correct choice!";
+            string message = "True/False question must have 1 correct choice!";
             
             // Act
 
@@ -87,7 +87,7 @@ namespace Azmoon.Tests.Questions.Policies
             // Arrange
             question.AddChoice("Correct1", true);
             question.AddChoice("Correct2", true);
-            string message = "True/False question must have only 1 correct choice!";
+            string message = "True/False question must have 1 correct choice!";
 
             // Act
 

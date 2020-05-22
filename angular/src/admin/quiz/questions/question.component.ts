@@ -105,7 +105,7 @@ export class AdminQuestionsComponent extends PagedListingComponentBase<QuestionD
 
     showCreateOrEditDialog(id?: any): void {
         let createOrEditDialog = this._dialog.open(CreateOrUpdateQuestionDialogComponent, {
-            width: '600px',
+            width: '70vw',
             data: id
         });
         createOrEditDialog.afterClosed().subscribe(result => {
