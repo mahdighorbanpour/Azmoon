@@ -96,7 +96,7 @@ namespace Azmoon.Admin.Application
             await base.DeleteAsync(input);
         }
 
-        private async Task AuthorizeIMayBePublicEntity(TPrimaryKey id)
+        protected async Task AuthorizeIMayBePublicEntity(TPrimaryKey id)
         {
             TEntity entityAsObj = await GetEntityByIdAsync(id);
             if (!(entityAsObj is IMayHaveTenant) || !(entityAsObj is IMayBePublic))

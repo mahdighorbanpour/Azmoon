@@ -9,6 +9,7 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
     [AutoMapFrom(typeof(Question))]
     public class ListQuestionDto : EntityDto<Guid>
     {
+        public int? TenantId { get; set; }
         public string Title { get; set; }
         public int Marks { get; set; }
         public QuestionType QuestionType { get; set; }

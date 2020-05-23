@@ -1,5 +1,7 @@
-﻿using Abp.Authorization;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Collections.Extensions;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
 using Abp.UI;
@@ -9,6 +11,7 @@ using Azmoon.Authorization;
 using Azmoon.Core.Quiz.Entities;
 using Azmoon.Core.Quiz.Enums;
 using Azmoon.Core.Quiz.Questions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +22,17 @@ namespace Azmoon.Admin.Application.Quiz.Questions
     [AbpAuthorize(PermissionNames.Pages_Questions)]
     public class AdminQuestionAppService : AdminCrudServiceWithHostApprovalBase<Question, QuestionDto, Guid, ListQuestionDto, PagedQuestionResultRequestDto, CreateUpdateQuestionDto, CreateUpdateQuestionDto>, IAdminQuestionAppService
     {
+        private readonly IRepository<Choice, Guid> _choicesRepository;
         private readonly IQuestionManager _questionManager;
 
         public AdminQuestionAppService(
             IRepository<Question, Guid> repository,
+            IRepository<Choice, Guid> choicesRepository,
+
             IQuestionManager questionManager
             ) : base(repository)
         {
+            _choicesRepository = choicesRepository;
             _questionManager = questionManager;
         }
 
@@ -63,6 +70,7 @@ namespace Azmoon.Admin.Application.Quiz.Questions
         public override async Task<QuestionDto> UpdateAsync(CreateUpdateQuestionDto input)
         {
             CheckUpdatePermission();
+            await AuthorizeIMayBePublicEntity(input.Id);
 
             var entity = await GetEntityByIdAsync(input.Id);
 
@@ -80,6 +88,23 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             {
                 throw new UserFriendlyException(L(ex.Message));
             }
+        }
+
+        public override async Task DeleteAsync(EntityDto<Guid> input)
+        {
+            CheckDeletePermission();
+            await AuthorizeIMayBePublicEntity(input.Id);
+
+            var choices = await _choicesRepository.GetAll()
+                .Where(c => c.QuestionId.Equals(input.Id))
+                .ToListAsync();
+            if (choices.Count > 0)
+            {
+                foreach (var choice in choices)
+                    await _choicesRepository.DeleteAsync(choice);
+            }
+
+            await Repository.DeleteAsync(input.Id);
         }
 
         public Task<List<DictionaryDto>> GetQuestionTypesDictionary()

@@ -771,6 +771,58 @@ export class AdminQuestionServiceProxy {
     }
 
     /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/admin/AdminQuestion/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     getQuestionTypesDictionary(): Observable<DictionaryDto[]> {
@@ -963,58 +1015,6 @@ export class AdminQuestionServiceProxy {
     }
 
     protected processResetIsPublic(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/admin/AdminQuestion/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -4159,6 +4159,7 @@ export class QuestionDto implements IQuestionDto {
     hint: string | undefined;
     randomizeChoices: boolean | undefined;
     choices: ChoiceDto[] | undefined;
+    tenantId: number | undefined;
     title: string | undefined;
     marks: number;
     questionType: QuestionType;
@@ -4190,6 +4191,7 @@ export class QuestionDto implements IQuestionDto {
                 for (let item of _data["choices"])
                     this.choices.push(ChoiceDto.fromJS(item));
             }
+            this.tenantId = _data["tenantId"];
             this.title = _data["title"];
             this.marks = _data["marks"];
             this.questionType = _data["questionType"];
@@ -4221,6 +4223,7 @@ export class QuestionDto implements IQuestionDto {
             for (let item of this.choices)
                 data["choices"].push(item.toJSON());
         }
+        data["tenantId"] = this.tenantId;
         data["title"] = this.title;
         data["marks"] = this.marks;
         data["questionType"] = this.questionType;
@@ -4248,6 +4251,7 @@ export interface IQuestionDto {
     hint: string | undefined;
     randomizeChoices: boolean | undefined;
     choices: ChoiceDto[] | undefined;
+    tenantId: number | undefined;
     title: string | undefined;
     marks: number;
     questionType: QuestionType;
@@ -4262,6 +4266,7 @@ export interface IQuestionDto {
 }
 
 export class ListQuestionDto implements IListQuestionDto {
+    tenantId: number | undefined;
     title: string | undefined;
     marks: number;
     questionType: QuestionType;
@@ -4285,6 +4290,7 @@ export class ListQuestionDto implements IListQuestionDto {
 
     init(_data?: any) {
         if (_data) {
+            this.tenantId = _data["tenantId"];
             this.title = _data["title"];
             this.marks = _data["marks"];
             this.questionType = _data["questionType"];
@@ -4308,6 +4314,7 @@ export class ListQuestionDto implements IListQuestionDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
         data["title"] = this.title;
         data["marks"] = this.marks;
         data["questionType"] = this.questionType;
@@ -4331,6 +4338,7 @@ export class ListQuestionDto implements IListQuestionDto {
 }
 
 export interface IListQuestionDto {
+    tenantId: number | undefined;
     title: string | undefined;
     marks: number;
     questionType: QuestionType;
