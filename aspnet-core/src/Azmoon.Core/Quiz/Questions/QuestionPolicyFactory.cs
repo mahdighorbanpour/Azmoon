@@ -14,7 +14,7 @@ namespace Azmoon.Core.Quiz.Questions
                 case QuestionType.MultipleChoice:
                     return new MultipleChoiceQuestionPolicy(question);
                 case QuestionType.Ordering:
-                    break;
+                    return new OrderingQuestionPolicy(question);
                 case QuestionType.ShortAnswer:
                     break;
                 case QuestionType.FillInTheBlank:

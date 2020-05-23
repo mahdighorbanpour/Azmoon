@@ -15,10 +15,17 @@ namespace Azmoon.Core.Quiz.Questions
 
         protected abstract void CheckType();
         public abstract void CheckPolicies();
+        
         protected void CheckHasAtLeastOnCorrectChoice()
         {
             if (Question.CorrectChoicesCount == 0)
                 throw new UserFriendlyException("Question must have at least 1 correct choice!");
+        }
+
+        protected void CheckHasAtLeastOnChoice()
+        {
+            if (Question.AllChoicesCount == 0)
+                throw new UserFriendlyException("Question must have at least 1 choice!");
         }
     }
 }

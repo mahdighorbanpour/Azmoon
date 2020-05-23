@@ -31,7 +31,7 @@ namespace Azmoon.Tests.Questions.Policies
 
             // Assert
             var exception = Assert.Throws<UserFriendlyException>(() =>
-             new TrueFalseQuestionPolicy(question)
+             new MultipleChoiceQuestionPolicy(question)
             );
             Assert.Equal(message, exception.Message);
         }
