@@ -34,7 +34,7 @@ namespace Azmoon.Admin.Application
         }
 
         [AbpAuthorize("ApproveIsPublic")]
-        public async Task ApproveIsPublic(TPrimaryKey id)
+        public virtual async Task ApproveIsPublic(TPrimaryKey id)
         {
             var entityAsObj = await GetEntityByIdAsync(id);
 
@@ -50,7 +50,7 @@ namespace Azmoon.Admin.Application
         }
 
         [AbpAuthorize("ApproveIsPublic")]
-        public async Task RejectIsPublic(TPrimaryKey id)
+        public virtual async Task RejectIsPublic(TPrimaryKey id)
         {
             var entityAsObj = await GetEntityByIdAsync(id);
 
@@ -67,7 +67,7 @@ namespace Azmoon.Admin.Application
 
 
         [AbpAuthorize("ApproveIsPublic")]
-        public async Task ResetIsPublic(TPrimaryKey id)
+        public virtual async Task ResetIsPublic(TPrimaryKey id)
         {
             var entityAsObj = await GetEntityByIdAsync(id);
 

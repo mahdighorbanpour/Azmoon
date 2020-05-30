@@ -8,7 +8,8 @@ import {
   CreateUpdateQuestionDto,
   AdminCategoryServiceProxy,
   DictionaryDto,
-  CreateUpdateChoiceDto
+  CreateUpdateChoiceDto,
+  QuestionType
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
@@ -107,14 +108,33 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
   addChoice() {
     if (this.entity.choices == undefined)
       this.entity.choices = [];
-    this.entity.choices.push(
-      new CreateUpdateChoiceDto()
-    )
+    let newChoice = new CreateUpdateChoiceDto();
+    this.entity.choices.push(newChoice);
+    if (this.entity.questionType == QuestionType._3) // Ordering
+    {
+      this.setOrderNo();
+    }
   }
 
   removeChoice(choice: CreateUpdateChoiceDto) {
     let idx = this.entity.choices.findIndex(c => c == choice);
     this.entity.choices.splice(idx, 1);
+  }
+
+  questionTypeChanged() {
+    if (this.entity.questionType == QuestionType._3) // Ordering
+    {
+      this.entity.randomizeChoices = true;
+      this.setOrderNo();
+    }
+  }
+
+  private setOrderNo() {
+    if (this.entity.choices)
+    {
+      for (let i = 0; i < this.entity.choices.length; i++)
+        this.entity.choices[i].orderNo = i;
+    }
   }
 
   close(result: any): void {

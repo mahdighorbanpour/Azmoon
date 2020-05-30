@@ -56,7 +56,7 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             try
             {
                 foreach (var choice in input.Choices)
-                    entity.AddChoice(choice.Value, choice.IsCorrect);
+                    entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
 
                 entity = await _questionManager.CreateAsync(entity);
                 return MapToEntityDto(entity);
@@ -79,7 +79,7 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             {
                 entity.ClearChoices();
                 foreach (var choice in input.Choices)
-                    entity.AddChoice(choice.Value, choice.IsCorrect);
+                    entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
 
                 entity = await _questionManager.UpdateAsync(entity);
                 return MapToEntityDto(entity);
@@ -95,9 +95,7 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             CheckDeletePermission();
             await AuthorizeIMayBePublicEntity(input.Id);
 
-            var choices = await _choicesRepository.GetAll()
-                .Where(c => c.QuestionId.Equals(input.Id))
-                .ToListAsync();
+            var choices = await GetChoicesForQuestion(input.Id);
             if (choices.Count > 0)
             {
                 foreach (var choice in choices)
@@ -119,6 +117,27 @@ namespace Azmoon.Admin.Application.Quiz.Questions
                 });
             }
             return Task.FromResult(list);
+        }
+
+        public override async Task ApproveIsPublic(Guid id)
+        {
+            await base.ApproveIsPublic(id);
+            var choices = await GetChoicesForQuestion(id);
+            if (choices.Count > 0)
+            {
+                foreach (var choice in choices)
+                {
+                    choice.IsApproved = true;
+                    await _choicesRepository.UpdateAsync(choice);
+                }
+            }
+        }
+
+        private async Task<List<Choice>> GetChoicesForQuestion(Guid questionId)
+        {
+            return await _choicesRepository.GetAll()
+                .Where(c => c.QuestionId.Equals(questionId))
+                .ToListAsync();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         [MaxLength(500)]
         public string Value { get; set; }
         public bool IsCorrect { get; set; }
+        public int? OrderNo { get; set; }
     }
 
 

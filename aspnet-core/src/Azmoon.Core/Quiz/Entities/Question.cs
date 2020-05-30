@@ -34,7 +34,9 @@ namespace Azmoon.Core.Quiz.Entities
         public bool? IsApproved { get; set; }
         public void AddChoice(string value, bool isCorrect, int? orderNo = null)
         {
-            _choices.Add(new Choice(Id, value, isCorrect, orderNo));
+            var choice = new Choice(Id, value, isCorrect, orderNo);
+            choice.IsPublic = IsPublic;
+            _choices.Add(choice);
         }
 
         public void ClearChoices()

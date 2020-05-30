@@ -8,13 +8,16 @@ namespace Azmoon.Core.Quiz.Questions
     public class QuestionManager : IQuestionManager
     {
         private readonly IRepository<Question, Guid> _repository;
+        private readonly IRepository<Choice, Guid> _choicesRepository;
         private readonly IQuestionPolicyFactory _questionPlociyFacory;
 
         public QuestionManager(
             IRepository<Question, Guid> repository,
+            IRepository<Choice, Guid> choicesRepository,
             IQuestionPolicyFactory questionPlociyFacory)
         {
             _repository = repository;
+            _choicesRepository = choicesRepository;
             _questionPlociyFacory = questionPlociyFacory;
         }
 
@@ -22,8 +25,8 @@ namespace Azmoon.Core.Quiz.Questions
         {
             var policy = _questionPlociyFacory.CreatePolicy(question);
             policy.CheckPolicies();
-
-           return await _repository.InsertAsync(question);
+            
+            return await _repository.InsertAsync(question);
         }
 
         public async Task<Question> UpdateAsync(Question question)
