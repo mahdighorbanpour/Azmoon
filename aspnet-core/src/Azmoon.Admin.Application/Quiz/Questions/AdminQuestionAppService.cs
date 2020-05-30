@@ -10,7 +10,7 @@ using Azmoon.Application.Shared.Quiz.Questions.Dto;
 using Azmoon.Authorization;
 using Azmoon.Core.Quiz.Entities;
 using Azmoon.Core.Quiz.Enums;
-using Azmoon.Core.Quiz.Questions;
+using Azmoon.Admin.Application.Questions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

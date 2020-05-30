@@ -1,6 +1,6 @@
 ﻿using Azmoon.Core.Quiz.Entities;
 
-namespace Azmoon.Core.Quiz.Questions
+namespace Azmoon.Admin.Application.Questions
 {
     public interface IQuestionPolicyFactory
     {

@@ -1,9 +1,10 @@
 ﻿using Abp.UI;
 using Azmoon.Core.Quiz.Entities;
+using Azmoon.Core.Quiz.Enums;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 
-namespace Azmoon.Core.Quiz.Questions
+namespace Azmoon.Admin.Application.Questions
 {
     public class OrderingQuestionPolicy : QuestionPolicyBase
     {
@@ -21,7 +22,7 @@ namespace Azmoon.Core.Quiz.Questions
 
         protected override void CheckType()
         {
-            if (Question.QuestionType != Enums.QuestionType.Ordering)
+            if (Question.QuestionType != QuestionType.Ordering)
                 throw new UserFriendlyException("Incompatible policy cheker is selected!");
         }
 

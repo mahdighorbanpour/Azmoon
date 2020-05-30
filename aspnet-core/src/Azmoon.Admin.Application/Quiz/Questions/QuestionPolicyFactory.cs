@@ -1,7 +1,7 @@
 ﻿using Azmoon.Core.Quiz.Entities;
 using Azmoon.Core.Quiz.Enums;
 
-namespace Azmoon.Core.Quiz.Questions
+namespace Azmoon.Admin.Application.Questions
 {
     public class QuestionPolicyFactory : IQuestionPolicyFactory
     {

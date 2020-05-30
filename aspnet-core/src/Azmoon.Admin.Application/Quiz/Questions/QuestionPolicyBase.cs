@@ -1,7 +1,7 @@
 ﻿using Abp.UI;
 using Azmoon.Core.Quiz.Entities;
 
-namespace Azmoon.Core.Quiz.Questions
+namespace Azmoon.Admin.Application.Questions
 {
     public abstract class QuestionPolicyBase
     {

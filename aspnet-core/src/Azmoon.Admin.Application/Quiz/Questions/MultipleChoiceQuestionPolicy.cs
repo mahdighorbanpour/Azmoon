@@ -1,7 +1,8 @@
 ﻿using Abp.UI;
 using Azmoon.Core.Quiz.Entities;
+using Azmoon.Core.Quiz.Enums;
 
-namespace Azmoon.Core.Quiz.Questions
+namespace Azmoon.Admin.Application.Questions
 {
     public class MultipleChoiceQuestionPolicy : QuestionPolicyBase
     {
@@ -16,7 +17,7 @@ namespace Azmoon.Core.Quiz.Questions
 
         protected override void CheckType()
         {
-            if (Question.QuestionType != Enums.QuestionType.MultipleChoice)
+            if (Question.QuestionType != QuestionType.MultipleChoice)
                 throw new UserFriendlyException("Incompatible policy cheker is selected!");
         }
 

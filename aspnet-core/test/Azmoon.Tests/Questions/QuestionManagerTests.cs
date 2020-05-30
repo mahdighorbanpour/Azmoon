@@ -1,7 +1,7 @@
 ﻿using Abp.UI;
 using Azmoon.Core.Quiz.Entities;
 using Azmoon.Core.Quiz.Enums;
-using Azmoon.Core.Quiz.Questions;
+using Azmoon.Admin.Application.Questions;
 using Shouldly;
 using System;
 using System.Collections.Generic;

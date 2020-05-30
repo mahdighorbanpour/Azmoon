@@ -1,7 +1,8 @@
 ﻿using Abp.AutoMapper;
+using Abp.Dependency;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using Azmoon.Authorization;
+using Azmoon.Admin.Application.Questions;
 
 namespace Azmoon
 {
@@ -15,6 +16,8 @@ namespace Azmoon
         public override void PreInitialize()
         {
             //Configuration.Authorization.Providers.Add<AzmoonAuthorizationProvider>();
+            IocManager.Register<IQuestionManager, QuestionManager>(DependencyLifeStyle.Transient);
+            IocManager.Register<IQuestionPolicyFactory, QuestionPolicyFactory>(DependencyLifeStyle.Transient);
         }
 
         public override void Initialize()

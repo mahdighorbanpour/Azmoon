@@ -3,7 +3,7 @@ using Azmoon.Core.Quiz.Entities;
 using System;
 using System.Threading.Tasks;
 
-namespace Azmoon.Core.Quiz.Questions
+namespace Azmoon.Admin.Application.Questions
 {
     public class QuestionManager : IQuestionManager
     {
