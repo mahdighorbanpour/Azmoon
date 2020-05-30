@@ -23,17 +23,16 @@ namespace Azmoon.Admin.Application.Quiz.Questions
     public class AdminQuestionAppService : AdminCrudServiceWithHostApprovalBase<Question, QuestionDto, Guid, ListQuestionDto, PagedQuestionResultRequestDto, CreateUpdateQuestionDto, CreateUpdateQuestionDto>, IAdminQuestionAppService
     {
         private readonly IRepository<Choice, Guid> _choicesRepository;
-        private readonly IQuestionManager _questionManager;
+        private readonly IQuestionPolicyFactory _questionPlociyFacory;
 
         public AdminQuestionAppService(
             IRepository<Question, Guid> repository,
             IRepository<Choice, Guid> choicesRepository,
-
-            IQuestionManager questionManager
+            IQuestionPolicyFactory questionPlociyFacory
             ) : base(repository)
         {
             _choicesRepository = choicesRepository;
-            _questionManager = questionManager;
+            _questionPlociyFacory = questionPlociyFacory;
         }
 
         protected override IQueryable<Question> CreateFilteredQuery(PagedQuestionResultRequestDto input)
@@ -58,7 +57,10 @@ namespace Azmoon.Admin.Application.Quiz.Questions
                 foreach (var choice in input.Choices)
                     entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
 
-                entity = await _questionManager.CreateAsync(entity);
+                var policy = _questionPlociyFacory.CreatePolicy(entity);
+                policy.CheckPolicies();
+
+                entity = await Repository.InsertAsync(entity);
                 return MapToEntityDto(entity);
             }
             catch (Exception ex)
@@ -81,7 +83,7 @@ namespace Azmoon.Admin.Application.Quiz.Questions
                 foreach (var choice in input.Choices)
                     entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
 
-                entity = await _questionManager.UpdateAsync(entity);
+                entity = await Repository.UpdateAsync(entity);
                 return MapToEntityDto(entity);
             }
             catch (Exception ex)

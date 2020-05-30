@@ -16,7 +16,6 @@ namespace Azmoon
         public override void PreInitialize()
         {
             //Configuration.Authorization.Providers.Add<AzmoonAuthorizationProvider>();
-            IocManager.Register<IQuestionManager, QuestionManager>(DependencyLifeStyle.Transient);
             IocManager.Register<IQuestionPolicyFactory, QuestionPolicyFactory>(DependencyLifeStyle.Transient);
         }
 
