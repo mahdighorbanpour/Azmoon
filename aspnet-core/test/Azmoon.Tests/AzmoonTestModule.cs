@@ -17,6 +17,7 @@ namespace Azmoon.Tests
     [DependsOn(
         typeof(AzmoonCoreModule),
         typeof(AzmoonApplicationModule),
+        typeof(AzmoonAdminApplicationModule),
         typeof(AzmoonEntityFrameworkModule),
         typeof(AbpTestBaseModule)
         )]
