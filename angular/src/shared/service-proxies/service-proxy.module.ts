@@ -16,6 +16,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.AdminCategoryServiceProxy,
         ApiServiceProxies.CategoryServiceProxy,
         ApiServiceProxies.AdminQuizServiceProxy,
+        ApiServiceProxies.AdminQuestionServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

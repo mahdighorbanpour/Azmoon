@@ -18,6 +18,7 @@ export class AdminSidebarComponent extends AppComponentBase {
       new MenuItem(this.l('HomePage'), '', 'home', '/app/home', 'text-primary'),
 
         new MenuItem(this.l('Categories'), 'Pages.Categories', 'view_list', '/admin/categories'),
+        new MenuItem(this.l('Questions'), 'Pages.Questions', 'question_answer', '/admin/questions'),
         new MenuItem(this.l('Quizzes'), 'Pages.Quiz', 'question_answer', '/admin/quiz'),
         new MenuItem(this.l('Tenants'), 'Pages.Tenants', 'business', '/admin/tenants'),
         new MenuItem(this.l('Users'), 'Pages.Users', 'people', '/admin/users'),

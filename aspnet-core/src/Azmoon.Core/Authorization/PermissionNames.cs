@@ -13,6 +13,8 @@
         public const string Pages_Categories = "Pages.Categories";
         
         public const string Pages_Quiz = "Pages.Quiz";
+
+        public const string Pages_Questions = "Pages.Questions";
         
         public const string ApproveIsPublic = "ApproveIsPublic";
 

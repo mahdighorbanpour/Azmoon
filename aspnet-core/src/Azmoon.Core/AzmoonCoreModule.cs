@@ -1,4 +1,5 @@
-﻿using Abp.Modules;
+﻿using Abp.Dependency;
+using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Timing;
 using Abp.Zero;
@@ -38,6 +39,7 @@ namespace Azmoon
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(AzmoonCoreModule).GetAssembly());
+            
         }
 
         public override void PostInitialize()

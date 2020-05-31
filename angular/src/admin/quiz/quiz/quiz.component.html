@@ -126,7 +126,7 @@
                   <i *ngIf="item.isPublic" class="material-icons"
                     [ngClass]="item.isApproved? 'col-green': item.isApproved == undefined ? 'col-grey' : 'col-red                   '"
                     [title]="l(item.isApproved? 'Approved': item.isApproved == undefined ? 'WaitingForApproval' : 'Rejected')">
-                    {{item.isApproved? 'check_circle': item.isApproved == undefined ? 'watch_later' : 'highlight_off'}}
+                    {{item.isApproved? 'check_circle': item.isApproved == undefined ? 'watch_later' : 'remove_circle'}}
                   </i>
                 </td>
                 <td>
@@ -134,11 +134,11 @@
                     <mat-icon>menu</mat-icon>
                   </button>
                   <mat-menu #actionsMenu="matMenu">
-                    <button mat-menu-item (click)="edit(item)">
+                    <button mat-menu-item (click)="edit(item)" *ngIf="item.tenantId == appSession.tenantId">
                       <mat-icon>edit</mat-icon>
                       <span>{{ "Edit" | localize }}</span>
                     </button>
-                    <button mat-menu-item (click)="delete(item)">
+                    <button mat-menu-item (click)="delete(item)" *ngIf="item.tenantId == appSession.tenantId">
                       <mat-icon>delete</mat-icon>
                       <span>{{ "Delete" | localize }}</span>
                     </button>

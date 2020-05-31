@@ -26,7 +26,6 @@
     <text name="SignUpWith" value="Sign up with" />
     <text name="SignInWithCredentials" value="Or sign in with credentials" />
     <text name="SignUpWithCredentials" value="Or sign up with credentials" />
-    
     <text name="MyProfile" value="My profile" />
     <text name="NameSurname" value="Name surname" />
     <text name="UserName" value="User name" />
@@ -147,5 +146,38 @@
     <text name="EntityCannotBeApproved">This entity cannot be approved!</text>
     <text name="NotAuthorized">You are not authorized to perform this action.</text>
     <text name="Questions">Questions</text>
+    <text name="Marks">Marks</text>
+    <text name="QuestionType">Question type</text>
+    <text name="Hint">Hints</text>
+    <text name="ChoicesCount">Choices count</text>
+    <text name="QuizzsCount">Quizzs count</text>
+    <text name="RandomizeChoices">Randomize choices</text>
+    <text name="CreateNewQuestion">New Question</text>
+    <text name="EditQuestion">Edit Question</text>
+    <text name="QuestionDeleteWarningMessage">Question {0} will be deleted.</text>
+    <text name="TrueFalse">True / False</text>
+    <text name="MultipleChoice">Multiple Choices</text>
+    <text name="Ordering">Ordering</text>
+    <text name="ShortAnswer">Short Answer</text>
+    <text name="FillInTheBlank">Fill In The Blank</text>
+    <text name="Matching">Matching</text>
+    <text name="Incompatible policy cheker is selected!">Incompatible policy cheker is selected!</text>
+    <text name="True/False question must have 1 correct choice!">True/False question must have 1 correct choice!</text>
+    <text name="True/False question must have 2 choices!">True/False question must have 2 choices!</text>
+    <text name="Details">Details</text>
+    <text name="Choices">Choices</text>
+    <text name="Value">Value</text>
+    <text name="IsCorrect">Is correct</text>
+    <text name="AddChoice">Add a choice</text>
+    <text name="RemoveChoice">Remove a choice</text>
+    <text name="Choice is not valid">Choice is not valid</text>
+    <text name="Question must have at least 1 correct choice!">Question must have at least 1 correct choice</text>
+    <text name="Multiple choice question must have 2 choices or more!">Multiple choice question must have 2 choices or more</text>
+    <text name="Ordering question must have 2 choices or more!">Ordering question must have 2 choices or more!</text>
+    <text name="Ordering question all choices must have an order number!">Ordering question all choices must have an order number!</text>
+    <text name="Order numbers must be in a sequence starting from 0!">Order numbers must be in a sequence starting from 0!</text>
+    <text name="Randomize choices must be checked for ordering question!">Randomize choices must be checked for ordering question!</text>
+    <text name="IncompatibleIsPublicCategoryWarning">Selected category is not public! Do you want to continue? You're question will not be visible to public users.</text>
+    <text name="IncompatibleIsPublicQuizWarning">Selected category is not public! Do you want to continue? You're quiz will not be visible to public users.</text>
   </texts>
 </localizationDictionary>
