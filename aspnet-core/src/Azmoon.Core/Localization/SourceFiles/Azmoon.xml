@@ -179,5 +179,6 @@
     <text name="Randomize choices must be checked for ordering question!">Randomize choices must be checked for ordering question!</text>
     <text name="IncompatibleIsPublicCategoryWarning">Selected category is not public! Do you want to continue? You're question will not be visible to public users.</text>
     <text name="IncompatibleIsPublicQuizWarning">Selected category is not public! Do you want to continue? You're quiz will not be visible to public users.</text>
+    <text name="Short answer question must have only 1 choice which should be correct!">Short answer question must have only 1 choice which should be correct!</text>
   </texts>
 </localizationDictionary>
