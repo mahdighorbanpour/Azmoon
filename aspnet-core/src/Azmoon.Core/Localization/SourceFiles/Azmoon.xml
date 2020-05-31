@@ -170,6 +170,7 @@
     <text name="IsCorrect">Is correct</text>
     <text name="AddChoice">Add a choice</text>
     <text name="RemoveChoice">Remove a choice</text>
+    <text name="Choice is not valid">Choice is not valid</text>
     <text name="Question must have at least 1 correct choice!">Question must have at least 1 correct choice</text>
     <text name="Multiple choice question must have 2 choices or more!">Multiple choice question must have 2 choices or more</text>
     <text name="Ordering question must have 2 choices or more!">Ordering question must have 2 choices or more!</text>

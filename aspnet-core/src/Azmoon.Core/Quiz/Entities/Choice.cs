@@ -22,5 +22,10 @@ namespace Azmoon.Core.Quiz.Entities
         public int? OrderNo { get; set; }
         public bool IsPublic { get; set; }
         public bool? IsApproved { get; set; }
+
+        public void SetIsCorrect(bool value)
+        {
+            IsCorrect = value;
+        }
     }
 }

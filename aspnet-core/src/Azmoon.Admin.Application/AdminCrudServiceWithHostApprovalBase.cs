@@ -4,6 +4,7 @@ using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.UI;
+using Azmoon.Admin.Application.Quiz.Interfaces;
 using Azmoon.Core.Quiz.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Azmoon.Admin.Application
     }
     public abstract class AdminCrudServiceWithHostApprovalBase<TEntity, TEntityDto, TPrimaryKey, TListDto, TGetAllInput, TCreateInput, TUpdateInput>
         : AdminCrudServiceBase<TEntity, TEntityDto, TPrimaryKey, TListDto, TGetAllInput, TCreateInput, TUpdateInput>
+        , IMayBePublicService<TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
         where TEntityDto : IEntityDto<TPrimaryKey>
         where TListDto : IEntityDto<TPrimaryKey>

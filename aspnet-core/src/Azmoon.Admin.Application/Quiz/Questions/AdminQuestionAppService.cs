@@ -79,9 +79,23 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             MapToEntity(input, entity);
             try
             {
-                entity.ClearChoices();
+                // delete choices that are removed
+                var oldChoicesIds = (await GetChoicesForQuestion(input.Id)).Select(c => c.Id).ToList();
+                var newChoicesIds = input.Choices.Select(c => c.Id).ToList();
+                foreach (var choiceId in oldChoicesIds.Where(c => !newChoicesIds.Contains(c)))
+                    entity.DeleteChoice(entity.Choices.FirstOrDefault(c=>c.Id == choiceId));
+
+                // add or update choices
                 foreach (var choice in input.Choices)
-                    entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
+                {
+                    if (choice.Id == Guid.Empty)
+                        entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
+                    else
+                        entity.UpdateChoice(ObjectMapper.Map<Choice>(choice));
+                }
+
+                var policy = _questionPlociyFacory.CreatePolicy(entity);
+                policy.CheckPolicies();
 
                 entity = await Repository.UpdateAsync(entity);
                 return MapToEntityDto(entity);

@@ -17,7 +17,8 @@ namespace Azmoon.Admin.Application.Quiz.Categories
     [AbpAuthorize(PermissionNames.Pages_Categories)]
     public class AdminCategoryAppService : AdminCrudServiceWithHostApprovalBase<Category, CategoryDto, int, PagedCategoryResultRequestDto, CreateUpdateCategoryDto, CreateUpdateCategoryDto>, 
         IAdminCategoryAppService,
-        IHaveDictionary
+        IHaveDictionary,
+        IMayBePublicService<int>
     {
         public AdminCategoryAppService(IRepository<Category, int> repository): base(repository)
         {
