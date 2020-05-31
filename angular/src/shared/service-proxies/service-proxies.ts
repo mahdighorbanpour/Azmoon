@@ -3957,6 +3957,7 @@ export class CreateUpdateChoiceDto implements ICreateUpdateChoiceDto {
     questionId: string;
     value: string;
     isCorrect: boolean;
+    orderNo: number | undefined;
     id: string;
 
     constructor(data?: ICreateUpdateChoiceDto) {
@@ -3973,6 +3974,7 @@ export class CreateUpdateChoiceDto implements ICreateUpdateChoiceDto {
             this.questionId = _data["questionId"];
             this.value = _data["value"];
             this.isCorrect = _data["isCorrect"];
+            this.orderNo = _data["orderNo"];
             this.id = _data["id"];
         }
     }
@@ -3989,6 +3991,7 @@ export class CreateUpdateChoiceDto implements ICreateUpdateChoiceDto {
         data["questionId"] = this.questionId;
         data["value"] = this.value;
         data["isCorrect"] = this.isCorrect;
+        data["orderNo"] = this.orderNo;
         data["id"] = this.id;
         return data; 
     }
@@ -4005,6 +4008,7 @@ export interface ICreateUpdateChoiceDto {
     questionId: string;
     value: string;
     isCorrect: boolean;
+    orderNo: number | undefined;
     id: string;
 }
 
@@ -4103,6 +4107,7 @@ export class ChoiceDto implements IChoiceDto {
     questionId: string;
     value: string | undefined;
     readonly isCorrect: boolean;
+    orderNo: number | undefined;
     id: string;
 
     constructor(data?: IChoiceDto) {
@@ -4119,6 +4124,7 @@ export class ChoiceDto implements IChoiceDto {
             this.questionId = _data["questionId"];
             this.value = _data["value"];
             (<any>this).isCorrect = _data["isCorrect"];
+            this.orderNo = _data["orderNo"];
             this.id = _data["id"];
         }
     }
@@ -4135,6 +4141,7 @@ export class ChoiceDto implements IChoiceDto {
         data["questionId"] = this.questionId;
         data["value"] = this.value;
         data["isCorrect"] = this.isCorrect;
+        data["orderNo"] = this.orderNo;
         data["id"] = this.id;
         return data; 
     }
@@ -4151,6 +4158,7 @@ export interface IChoiceDto {
     questionId: string;
     value: string | undefined;
     isCorrect: boolean;
+    orderNo: number | undefined;
     id: string;
 }
 

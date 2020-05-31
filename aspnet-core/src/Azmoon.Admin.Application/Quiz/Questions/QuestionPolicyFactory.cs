@@ -1,13 +1,8 @@
 ﻿using Azmoon.Core.Quiz.Entities;
 using Azmoon.Core.Quiz.Enums;
 
-namespace Azmoon.Core.Quiz.Questions
+namespace Azmoon.Admin.Application.Questions
 {
-    public interface IQuestionPolicyFactory
-    {
-        QuestionPolicyBase CreatePolicy(Question question);
-    }
-
     public class QuestionPolicyFactory : IQuestionPolicyFactory
     {
         public QuestionPolicyBase CreatePolicy(Question question)
@@ -17,9 +12,9 @@ namespace Azmoon.Core.Quiz.Questions
                 case QuestionType.TrueFalse:
                     return new TrueFalseQuestionPolicy(question);
                 case QuestionType.MultipleChoice:
-                    break;
+                    return new MultipleChoiceQuestionPolicy(question);
                 case QuestionType.Ordering:
-                    break;
+                    return new OrderingQuestionPolicy(question);
                 case QuestionType.ShortAnswer:
                     break;
                 case QuestionType.FillInTheBlank:

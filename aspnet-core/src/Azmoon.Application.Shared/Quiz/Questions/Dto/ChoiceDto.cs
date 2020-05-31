@@ -11,7 +11,8 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         public Guid QuestionId { get; set; }
         public string Value { get; set; }
         public bool IsCorrect { get; private set; } = false;
+        public int? OrderNo { get; set; }
+        public bool IsPublic { get; set; }
+        public bool? IsApproved { get; set; }
     }
-
-
 }

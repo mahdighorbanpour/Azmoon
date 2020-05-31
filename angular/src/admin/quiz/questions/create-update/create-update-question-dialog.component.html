@@ -21,7 +21,9 @@
               <div class="col-6">
                 <mat-form-field>
                   <mat-select [placeholder]="l('QuestionType')" [(value)]="entity.questionType" name="questionType"
-                    (click)="getQuestionTypesDictionary()" required>
+                    (click)="getQuestionTypesDictionary()"
+                    (selectionChange)="questionTypeChanged()"
+                    required>
                     <mat-option *ngIf="isSelectLoading && selectName == 'questionTypes'" value="">{{ 'Loading' | localize }}
                     </mat-option>
                     <mat-option *ngIf="!isSelectLoading && entity.questionType && questionTypes == undefined"
@@ -77,6 +79,9 @@
             <div *ngFor="let choice of entity.choices; let i = index" [ngModelGroup]="i" class="row">
               <div class="col-8">
                 <mat-form-field>
+                  <span matPrefix *ngIf="choice.orderNo != undefined">
+                    No.{{ choice.orderNo }} &nbsp;
+                  </span>
                   <input matInput name="Value" [placeholder]="'Value' | localize" [(ngModel)]="choice.value" required
                     minlength="1" maxlength="500" />
                 </mat-form-field>

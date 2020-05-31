@@ -18,7 +18,7 @@ namespace Azmoon.Localization
                 )
             );
 
-            localizationConfiguration.ReturnGivenTextIfNotFound = false;
+            //localizationConfiguration.ReturnGivenTextIfNotFound = false;
             localizationConfiguration.LogWarnMessageIfNotFound = true;
             localizationConfiguration.WrapGivenTextIfNotFound = true;
         }

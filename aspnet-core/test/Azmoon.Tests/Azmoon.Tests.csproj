@@ -11,6 +11,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Azmoon.Admin.Application\Azmoon.Admin.Application.csproj" />
     <ProjectReference Include="..\..\src\Azmoon.Application\Azmoon.Application.csproj" />
     <ProjectReference Include="..\..\src\Azmoon.Persistence\Azmoon.Persistence.csproj" />
   </ItemGroup>

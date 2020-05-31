@@ -6,19 +6,19 @@ using Xunit;
 
 namespace Azmoon.Tests.Questions.Policies
 {
-    public class TrueFalseQuestionPolicyTests
+    public class OrderingQuestionPolicyTests
     {
-        private readonly TrueFalseQuestionPolicy policy;
+        private readonly OrderingQuestionPolicy policy;
         private readonly Question question;
 
-        public TrueFalseQuestionPolicyTests()
+        public OrderingQuestionPolicyTests()
         {
             question = new Question()
             {
-                QuestionType = QuestionType.TrueFalse,
-                Title = "True/False Question"
+                QuestionType = QuestionType.Ordering,
+                Title = "Ordering Question"
             };
-            policy = new TrueFalseQuestionPolicy(question);
+            policy = new OrderingQuestionPolicy(question);
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Azmoon.Tests.Questions.Policies
 
             // Assert
             var exception = Assert.Throws<UserFriendlyException>(() =>
-             new TrueFalseQuestionPolicy(question)
+             new OrderingQuestionPolicy(question)
             );
             Assert.Equal(message, exception.Message);
         }
@@ -40,8 +40,8 @@ namespace Azmoon.Tests.Questions.Policies
         public void CheckPolicies_OnlyOneChoice_Should_RaiseError()
         {
             // Arrange
-            question.AddChoice("Correct", true);
-            string message = "True/False question must have 2 choices!";
+            question.AddChoice("Choice 1", true, 0);
+            string message = "Ordering question must have 2 choices or more!";
 
             // Act
 
@@ -51,13 +51,13 @@ namespace Azmoon.Tests.Questions.Policies
         }
 
         [Fact]
-        public void CheckPolicies_MoreThanTwoChoices_Should_RaiseError()
+        public void CheckPolicies_HasChoicesWithNoOrderNo_Should_RaiseError()
         {
             // Arrange
-            question.AddChoice("Correct", true);
-            question.AddChoice("Incorrect", false);
-            question.AddChoice("thirdChoice", false);
-            string message = "True/False question must have 2 choices!";
+            question.AddChoice("Choice 1", true);
+            question.AddChoice("Choice 2", false);
+            question.AddChoice("Choice 3", false);
+            string message = "Ordering question all choices must have an order number!";
 
             // Act
 
@@ -67,27 +67,13 @@ namespace Azmoon.Tests.Questions.Policies
         }
 
         [Fact]
-        public void CheckPolicies_HasNoCorrectChoice_Should_RaiseError()
+        public void CheckPolicies_OrderNumbersAreNotInSequence_Should_RaiseError()
         {
             // Arrange
-            question.AddChoice("Incorrect1", false);
-            question.AddChoice("Incorrect2", false);
-            string message = "True/False question must have 1 correct choice!";
-            
-            // Act
-
-            // Assert
-            var exception = Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
-            Assert.Equal(message, exception.Message);
-        }
-
-        [Fact]
-        public void CheckPolicies_MoreThanOneCorrectChoices_Should_RaiseError()
-        {
-            // Arrange
-            question.AddChoice("Correct1", true);
-            question.AddChoice("Correct2", true);
-            string message = "True/False question must have 1 correct choice!";
+            question.AddChoice("Choice 1", true, 0);
+            question.AddChoice("Choice 2", false, 2);
+            question.AddChoice("Choice 3", false, 1);
+            string message = "Order numbers must be in a sequence starting from 0!";
 
             // Act
 
@@ -97,12 +83,27 @@ namespace Azmoon.Tests.Questions.Policies
         }
 
         [Fact]
-        public void CheckPolicies_TwoChoicesOneCorrectChoice_Should_Not_RaiseError()
+        public void CheckPolicies_RandomizeChoicesIsNotEnabled_Should_RaiseError()
         {
             // Arrange
-            question.AddChoice("Correct", true);
-            question.AddChoice("Incorrect", false);
+            question.AddChoice("Choice 1", false, 0);
+            question.AddChoice("Choice 2", false, 1);
+            string message = "Randomize choices must be checked for ordering question!";
 
+            // Act
+
+            // Assert
+            var exception = Assert.Throws<UserFriendlyException>(() => policy.CheckPolicies());
+            Assert.Equal(message, exception.Message);
+        }
+
+        [Fact]
+        public void CheckPolicies_MoreThanOneRandomizedChoiceWithCorrectOrderNumbers_Should_Not_RaiseError()
+        {
+            // Arrange
+            question.AddChoice("Choice 1", false, 0);
+            question.AddChoice("Choice 2", false, 1);
+            question.RandomizeChoices = true;
             // Act
 
             // Assert

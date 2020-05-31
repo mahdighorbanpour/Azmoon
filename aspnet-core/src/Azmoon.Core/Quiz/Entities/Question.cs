@@ -32,12 +32,32 @@ namespace Azmoon.Core.Quiz.Entities
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
         public bool? IsApproved { get; set; }
-        public void AddChoice(string value, bool isCorrect)
+        public void AddChoice(string value, bool isCorrect, int? orderNo = null)
         {
-            if (_choices.Any(c => c.Value == value))
-                throw new InvalidChoiceException($"There is alreay a choice with value of {value}");
+            var choice = new Choice(Id, value, isCorrect, orderNo);
+            choice.IsPublic = IsPublic;
+            _choices.Add(choice);
+        }
 
-            _choices.Add(new Choice(Id, value, isCorrect));
+        public void UpdateChoice(Choice choice)
+        {
+            var _choice = _choices.Find(c => c.Id == choice.Id);
+            if (_choice == null)
+                throw new Exception("Choice is not valid");
+           
+            _choice.Value = choice.Value;
+            _choice.OrderNo = choice.OrderNo;
+            _choice.SetIsCorrect(choice.IsCorrect);
+
+            _choice.IsPublic = IsPublic;
+            _choice.IsApproved = null;
+        }
+
+        public void DeleteChoice(Choice choice)
+        {
+            if (!_choices.Contains(choice))
+                throw new Exception("Choice is not valid");
+            _choices.Remove(choice);
         }
 
         public void ClearChoices()

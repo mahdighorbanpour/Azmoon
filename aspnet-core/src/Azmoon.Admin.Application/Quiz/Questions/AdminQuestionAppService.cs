@@ -10,7 +10,7 @@ using Azmoon.Application.Shared.Quiz.Questions.Dto;
 using Azmoon.Authorization;
 using Azmoon.Core.Quiz.Entities;
 using Azmoon.Core.Quiz.Enums;
-using Azmoon.Core.Quiz.Questions;
+using Azmoon.Admin.Application.Questions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,17 +23,16 @@ namespace Azmoon.Admin.Application.Quiz.Questions
     public class AdminQuestionAppService : AdminCrudServiceWithHostApprovalBase<Question, QuestionDto, Guid, ListQuestionDto, PagedQuestionResultRequestDto, CreateUpdateQuestionDto, CreateUpdateQuestionDto>, IAdminQuestionAppService
     {
         private readonly IRepository<Choice, Guid> _choicesRepository;
-        private readonly IQuestionManager _questionManager;
+        private readonly IQuestionPolicyFactory _questionPlociyFacory;
 
         public AdminQuestionAppService(
             IRepository<Question, Guid> repository,
             IRepository<Choice, Guid> choicesRepository,
-
-            IQuestionManager questionManager
+            IQuestionPolicyFactory questionPlociyFacory
             ) : base(repository)
         {
             _choicesRepository = choicesRepository;
-            _questionManager = questionManager;
+            _questionPlociyFacory = questionPlociyFacory;
         }
 
         protected override IQueryable<Question> CreateFilteredQuery(PagedQuestionResultRequestDto input)
@@ -56,9 +55,12 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             try
             {
                 foreach (var choice in input.Choices)
-                    entity.AddChoice(choice.Value, choice.IsCorrect);
+                    entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
 
-                entity = await _questionManager.CreateAsync(entity);
+                var policy = _questionPlociyFacory.CreatePolicy(entity);
+                policy.CheckPolicies();
+
+                entity = await Repository.InsertAsync(entity);
                 return MapToEntityDto(entity);
             }
             catch (Exception ex)
@@ -77,11 +79,25 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             MapToEntity(input, entity);
             try
             {
-                entity.ClearChoices();
-                foreach (var choice in input.Choices)
-                    entity.AddChoice(choice.Value, choice.IsCorrect);
+                // delete choices that are removed
+                var oldChoicesIds = (await GetChoicesForQuestion(input.Id)).Select(c => c.Id).ToList();
+                var newChoicesIds = input.Choices.Select(c => c.Id).ToList();
+                foreach (var choiceId in oldChoicesIds.Where(c => !newChoicesIds.Contains(c)))
+                    entity.DeleteChoice(entity.Choices.FirstOrDefault(c=>c.Id == choiceId));
 
-                entity = await _questionManager.UpdateAsync(entity);
+                // add or update choices
+                foreach (var choice in input.Choices)
+                {
+                    if (choice.Id == Guid.Empty)
+                        entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
+                    else
+                        entity.UpdateChoice(ObjectMapper.Map<Choice>(choice));
+                }
+
+                var policy = _questionPlociyFacory.CreatePolicy(entity);
+                policy.CheckPolicies();
+
+                entity = await Repository.UpdateAsync(entity);
                 return MapToEntityDto(entity);
             }
             catch (Exception ex)
@@ -95,9 +111,7 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             CheckDeletePermission();
             await AuthorizeIMayBePublicEntity(input.Id);
 
-            var choices = await _choicesRepository.GetAll()
-                .Where(c => c.QuestionId.Equals(input.Id))
-                .ToListAsync();
+            var choices = await GetChoicesForQuestion(input.Id);
             if (choices.Count > 0)
             {
                 foreach (var choice in choices)
@@ -119,6 +133,27 @@ namespace Azmoon.Admin.Application.Quiz.Questions
                 });
             }
             return Task.FromResult(list);
+        }
+
+        public override async Task ApproveIsPublic(Guid id)
+        {
+            await base.ApproveIsPublic(id);
+            var choices = await GetChoicesForQuestion(id);
+            if (choices.Count > 0)
+            {
+                foreach (var choice in choices)
+                {
+                    choice.IsApproved = true;
+                    await _choicesRepository.UpdateAsync(choice);
+                }
+            }
+        }
+
+        private async Task<List<Choice>> GetChoicesForQuestion(Guid questionId)
+        {
+            return await _choicesRepository.GetAll()
+                .Where(c => c.QuestionId.Equals(questionId))
+                .ToListAsync();
         }
     }
 }

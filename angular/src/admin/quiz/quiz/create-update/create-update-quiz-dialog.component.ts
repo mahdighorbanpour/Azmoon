@@ -70,7 +70,12 @@ export class CreateOrUpdateQuizDialogComponent extends AppComponentBase
   }
 
 
-  save(): void {
+  async save() {
+    let isPublicIssue = await this.checkForIncompatibleIsPublic();
+    if (isPublicIssue && !confirm(this.l("IncompatibleIsPublicQuizWarning"))) {
+      return;
+    }
+
     this.saving = true;
 
     let createOrUpdate = this.entity.id == undefined || this.entity.id == '' ?
@@ -86,6 +91,16 @@ export class CreateOrUpdateQuizDialogComponent extends AppComponentBase
         this.notify.info(this.l('SavedSuccessfully'));
         this.close(true);
       });
+  }
+
+  private async checkForIncompatibleIsPublic(): Promise<boolean> {
+    if (this.entity.isPublic) {
+      let category = await this._categoryService
+        .get(this.entity.categoryId)
+        .toPromise();
+      return !(category.isPublic && category.isApproved);
+    }
+    return false;
   }
 
   close(result: any): void {
