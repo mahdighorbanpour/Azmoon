@@ -177,5 +177,7 @@
     <text name="Ordering question all choices must have an order number!">Ordering question all choices must have an order number!</text>
     <text name="Order numbers must be in a sequence starting from 0!">Order numbers must be in a sequence starting from 0!</text>
     <text name="Randomize choices must be checked for ordering question!">Randomize choices must be checked for ordering question!</text>
+    <text name="IncompatibleIsPublicCategoryWarning">Selected category is not public! Do you want to continue? You're question will not be visible to public users.</text>
+    <text name="IncompatibleIsPublicQuizWarning">Selected category is not public! Do you want to continue? You're quiz will not be visible to public users.</text>
   </texts>
 </localizationDictionary>
