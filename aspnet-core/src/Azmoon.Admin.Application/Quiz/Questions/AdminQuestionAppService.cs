@@ -55,7 +55,11 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             try
             {
                 foreach (var choice in input.Choices)
-                    entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
+                {
+                    var newChoice = entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
+                    foreach (var blank in choice.Blanks)
+                        newChoice.AddBlank(blank.Index, blank.Answer);
+                }
 
                 var policy = _questionPlociyFacory.CreatePolicy(entity);
                 policy.CheckPolicies();
@@ -88,10 +92,21 @@ namespace Azmoon.Admin.Application.Quiz.Questions
                 // add or update choices
                 foreach (var choice in input.Choices)
                 {
+                    Choice newChoice;
                     if (choice.Id == Guid.Empty)
-                        entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
+                    {
+                        newChoice = entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
+                    }
                     else
-                        entity.UpdateChoice(ObjectMapper.Map<Choice>(choice));
+                    {
+                        newChoice = entity.UpdateChoice(ObjectMapper.Map<Choice>(choice));
+                    }
+                    while (newChoice.Blanks.Count > 0)
+                    {
+                        newChoice.Blanks.RemoveAt(0);
+                    }
+                    foreach (var blank in choice.Blanks)
+                        newChoice.AddBlank(blank.Index, blank.Answer);
                 }
 
                 var policy = _questionPlociyFacory.CreatePolicy(entity);
@@ -115,10 +130,15 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             if (choices.Count > 0)
             {
                 foreach (var choice in choices)
+                {
+                    while (choice.Blanks.Count > 0)
+                        choice.Blanks.RemoveAt(0);
                     await _choicesRepository.DeleteAsync(choice);
+                }
             }
 
             await Repository.DeleteAsync(input.Id);
+            await UnitOfWorkManager.Current.SaveChangesAsync();
         }
 
         public Task<List<DictionaryDto>> GetQuestionTypesDictionary()
@@ -152,6 +172,7 @@ namespace Azmoon.Admin.Application.Quiz.Questions
         private async Task<List<Choice>> GetChoicesForQuestion(Guid questionId)
         {
             return await _choicesRepository.GetAll()
+                .Include(c=>c.Blanks)
                 .Where(c => c.QuestionId.Equals(questionId))
                 .ToListAsync();
         }

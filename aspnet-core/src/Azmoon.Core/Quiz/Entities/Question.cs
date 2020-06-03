@@ -32,14 +32,16 @@ namespace Azmoon.Core.Quiz.Entities
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
         public bool? IsApproved { get; set; }
-        public void AddChoice(string value, bool isCorrect, int? orderNo = null)
+        public Choice AddChoice(string value, bool isCorrect, int? orderNo = null)
         {
             var choice = new Choice(Id, value, isCorrect, orderNo);
             choice.IsPublic = IsPublic;
             _choices.Add(choice);
+            return choice;
+
         }
 
-        public void UpdateChoice(Choice choice)
+        public Choice UpdateChoice(Choice choice)
         {
             var _choice = _choices.Find(c => c.Id == choice.Id);
             if (_choice == null)
@@ -51,6 +53,7 @@ namespace Azmoon.Core.Quiz.Entities
 
             _choice.IsPublic = IsPublic;
             _choice.IsApproved = null;
+            return _choice;
         }
 
         public void DeleteChoice(Choice choice)

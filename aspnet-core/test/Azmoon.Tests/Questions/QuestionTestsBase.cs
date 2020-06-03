@@ -67,5 +67,18 @@ namespace Azmoon.Tests.Questions
 
             return questionA;
         }
+
+        protected CreateUpdateQuestionDto GetCreateUpdateQuestionDtoFillInTheBlank()
+        {
+            var questionDto = GetCreateUpdateQuestionDtoA();
+
+            questionDto.QuestionType = QuestionType.FillInTheBlank;
+            questionDto.Choices[0].Blanks.Add(new BlankDto() { Index = 1, Answer = "a" });
+            questionDto.Choices[0].Blanks.Add(new BlankDto() { Index = 2, Answer = "b" });
+            questionDto.Choices[1].Blanks.Add(new BlankDto() { Index = 3, Answer = "c" });
+            questionDto.Choices[1].Blanks.Add(new BlankDto() { Index = 4, Answer = "d" });
+
+            return questionDto;
+        }
     }
 }

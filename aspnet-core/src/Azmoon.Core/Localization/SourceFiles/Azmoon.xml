@@ -180,5 +180,9 @@
     <text name="IncompatibleIsPublicCategoryWarning">Selected category is not public! Do you want to continue? You're question will not be visible to public users.</text>
     <text name="IncompatibleIsPublicQuizWarning">Selected category is not public! Do you want to continue? You're quiz will not be visible to public users.</text>
     <text name="Short answer question must have only 1 choice which should be correct!">Short answer question must have only 1 choice which should be correct!</text>
+    <text name="FillInTheBlank question must have at least 1 choice with 1 blank!">FillInTheBlank question must have at least 1 choice with 1 blank!</text>
+    <text name="FillInTheBlank question all choices must have at least 1 blank!">FillInTheBlank question all choices must have at least 1 blank!</text>
+    <text name="FillInTheBlank a choice cannot have repeated blank indexes!">FillInTheBlank a choice cannot have repeated blank indexes!</text>
+    <text name="FillInTheBlank a choice cannot have a blank index greater than it's lenght!">FillInTheBlank a choice cannot have a blank index greater than it's lenght!</text>
   </texts>
 </localizationDictionary>

@@ -18,7 +18,7 @@ namespace Azmoon.Admin.Application.Questions
                 case QuestionType.ShortAnswer:
                     return new ShortAnswerQuestionPolicy(question);
                 case QuestionType.FillInTheBlank:
-                    break;
+                    return new FillInTheBlankQuestionPolicy(question);
                 case QuestionType.Matching:
                     break;
                 default:

@@ -19,6 +19,8 @@
     <Compile Remove="Migrations\20200429131351_updated_quiz_entity.Designer.cs" />
     <Compile Remove="Migrations\20200429132039_updated_quiz_entity.cs" />
     <Compile Remove="Migrations\20200429132039_updated_quiz_entity.Designer.cs" />
+    <Compile Remove="Migrations\20200601084844_added Blanks.cs" />
+    <Compile Remove="Migrations\20200601084844_added Blanks.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
