@@ -18,6 +18,10 @@ namespace Azmoon.Persistence.EntityFrameworkCore.Configurations
             builder.Property(p => p.QuestionId)
                .IsRequired();
 
+            builder.HasOne(p => p.MatchSet)
+                .WithMany(p => p.Choices)
+                .HasForeignKey(p => p.MatchSetId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

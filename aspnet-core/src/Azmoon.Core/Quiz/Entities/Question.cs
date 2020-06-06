@@ -29,6 +29,10 @@ namespace Azmoon.Core.Quiz.Entities
 
         private List<Choice> _choices = new List<Choice>();
         public IReadOnlyList<Choice> Choices => _choices.AsReadOnly();
+
+        private List<MatchSet> _matchsets = new List<MatchSet>();
+        public IReadOnlyList<MatchSet> MatchSets => _matchsets.AsReadOnly();
+
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
         public bool? IsApproved { get; set; }
@@ -38,7 +42,6 @@ namespace Azmoon.Core.Quiz.Entities
             choice.IsPublic = IsPublic;
             _choices.Add(choice);
             return choice;
-
         }
 
         public Choice UpdateChoice(Choice choice)
@@ -66,6 +69,38 @@ namespace Azmoon.Core.Quiz.Entities
         public void ClearChoices()
         {
             _choices.Clear();
+        }
+
+        public MatchSet AddMatchSet(string value)
+        {
+            if(QuestionType!= QuestionType.Matching)
+                throw new Exception("Please first change the question type to Matching");
+            var _matchset = _matchsets.Find(m => m.Value.ToLower() == value.ToLower());
+            if (_matchset != null)
+                throw new Exception("Matchset value already exists!");
+            _matchset = new MatchSet(this, value); 
+            _matchsets.Add(_matchset);
+            return _matchset;
+        }
+
+
+        public MatchSet UpdateMatchSet(MatchSet matchSet)
+        {
+            var _matchset = _matchsets.Find(c => c.Id == matchSet.Id);
+            if (_matchset == null)
+                throw new Exception("MatchSet is not valid");
+
+            _matchset.Value = matchSet.Value;
+            _matchset.IsPublic = IsPublic;
+            _matchset.IsApproved = null;
+            return _matchset;
+        }
+
+        public void DeleteMatchSet(MatchSet matchSet)
+        {
+            if (!_matchsets.Contains(matchSet))
+                throw new Exception("MatchSet is not valid");
+            _matchsets.Remove(matchSet);
         }
 
         public int AllChoicesCount => Choices.Count;
