@@ -20,5 +20,6 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         public bool IsPublic { get; set; }
         public bool? IsApproved { get; set; }
         public List<BlankDto> Blanks { get; set; }
+        public MatchSetDto MatchSet { get; set; }
     }
 }

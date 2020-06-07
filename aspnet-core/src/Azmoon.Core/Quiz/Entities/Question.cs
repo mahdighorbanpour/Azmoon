@@ -36,9 +36,9 @@ namespace Azmoon.Core.Quiz.Entities
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
         public bool? IsApproved { get; set; }
-        public Choice AddChoice(string value, bool isCorrect, int? orderNo = null)
+        public Choice AddChoice(string value, bool isCorrect, int? orderNo = null, MatchSet matchSet = null)
         {
-            var choice = new Choice(Id, value, isCorrect, orderNo);
+            var choice = new Choice(Id, value, isCorrect, orderNo, matchSet);
             choice.IsPublic = IsPublic;
             _choices.Add(choice);
             return choice;

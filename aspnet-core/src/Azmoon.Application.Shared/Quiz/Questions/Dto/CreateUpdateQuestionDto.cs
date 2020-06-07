@@ -28,5 +28,7 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         public List<CreateUpdateChoiceDto> Choices { get; set; }
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
+
+        public List<MatchSetDto> MatchSets { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azmoon.Admin.Application.Questions
                 case QuestionType.FillInTheBlank:
                     return new FillInTheBlankQuestionPolicy(question);
                 case QuestionType.Matching:
-                    break;
+                    return new MatchingQuestionPolicy(question);
                 default:
                     break;
             }
