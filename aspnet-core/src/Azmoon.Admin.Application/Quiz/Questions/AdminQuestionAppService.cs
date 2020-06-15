@@ -23,16 +23,19 @@ namespace Azmoon.Admin.Application.Quiz.Questions
     public class AdminQuestionAppService : AdminCrudServiceWithHostApprovalBase<Question, QuestionDto, Guid, ListQuestionDto, PagedQuestionResultRequestDto, CreateUpdateQuestionDto, CreateUpdateQuestionDto>, IAdminQuestionAppService
     {
         private readonly IRepository<Choice, Guid> _choicesRepository;
+        private IRepository<MatchSet, Guid> _matchSetsRepository;
         private readonly IQuestionPolicyFactory _questionPlociyFacory;
 
         public AdminQuestionAppService(
             IRepository<Question, Guid> repository,
             IRepository<Choice, Guid> choicesRepository,
+            IRepository<MatchSet, Guid> matchSetsRepository,
             IQuestionPolicyFactory questionPlociyFacory
             ) : base(repository)
         {
             _choicesRepository = choicesRepository;
             _questionPlociyFacory = questionPlociyFacory;
+            _matchSetsRepository = matchSetsRepository;
         }
 
         protected override IQueryable<Question> CreateFilteredQuery(PagedQuestionResultRequestDto input)
@@ -54,8 +57,6 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             var entity = MapToEntity(input);
             try
             {
-                foreach (var choice in input.Choices)
-                    entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
 
                 var policy = _questionPlociyFacory.CreatePolicy(entity);
                 policy.CheckPolicies();
@@ -74,26 +75,15 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             CheckUpdatePermission();
             await AuthorizeIMayBePublicEntity(input.Id);
 
-            var entity = await GetEntityByIdAsync(input.Id);
+            var entity = await Repository.GetAll()
+                .Include(q => q.MatchSets)
+                .Include(q => q.Choices)
+                .ThenInclude(c => c.Blanks)
+                .SingleOrDefaultAsync(q => q.Id == input.Id);
 
             MapToEntity(input, entity);
             try
             {
-                // delete choices that are removed
-                var oldChoicesIds = (await GetChoicesForQuestion(input.Id)).Select(c => c.Id).ToList();
-                var newChoicesIds = input.Choices.Select(c => c.Id).ToList();
-                foreach (var choiceId in oldChoicesIds.Where(c => !newChoicesIds.Contains(c)))
-                    entity.DeleteChoice(entity.Choices.FirstOrDefault(c=>c.Id == choiceId));
-
-                // add or update choices
-                foreach (var choice in input.Choices)
-                {
-                    if (choice.Id == Guid.Empty)
-                        entity.AddChoice(choice.Value, choice.IsCorrect, choice.OrderNo);
-                    else
-                        entity.UpdateChoice(ObjectMapper.Map<Choice>(choice));
-                }
-
                 var policy = _questionPlociyFacory.CreatePolicy(entity);
                 policy.CheckPolicies();
 
@@ -115,10 +105,15 @@ namespace Azmoon.Admin.Application.Quiz.Questions
             if (choices.Count > 0)
             {
                 foreach (var choice in choices)
+                {
+                    while (choice.Blanks.Count > 0)
+                        choice.Blanks.RemoveAt(0);
                     await _choicesRepository.DeleteAsync(choice);
+                }
             }
 
             await Repository.DeleteAsync(input.Id);
+            await UnitOfWorkManager.Current.SaveChangesAsync();
         }
 
         public Task<List<DictionaryDto>> GetQuestionTypesDictionary()
@@ -147,12 +142,29 @@ namespace Azmoon.Admin.Application.Quiz.Questions
                     await _choicesRepository.UpdateAsync(choice);
                 }
             }
+            var matchSets = await GetMatchSetsForQuestion(id);
+            if (matchSets.Count > 0)
+            {
+                foreach (var matchSet in matchSets)
+                {
+                    matchSet.IsApproved = true;
+                    await _matchSetsRepository.UpdateAsync(matchSet);
+                }
+            }
         }
 
         private async Task<List<Choice>> GetChoicesForQuestion(Guid questionId)
         {
             return await _choicesRepository.GetAll()
-                .Where(c => c.QuestionId.Equals(questionId))
+                .Include(c=>c.Blanks)
+                .Where(c => c.QuestionId == questionId)
+                .ToListAsync();
+        }
+
+        private async Task<List<MatchSet>> GetMatchSetsForQuestion(Guid questionId)
+        {
+            return await _matchSetsRepository.GetAll()
+                .Where(c => c.QuestionId == questionId)
                 .ToListAsync();
         }
     }

@@ -10,7 +10,8 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         public string Description { get; set; }
         public string Hint { get; set; }
         public bool? RandomizeChoices { get; set; }
-        
+
         public List<ChoiceDto> Choices { get; set; }
+        public List<MatchSetDto> MatchSets { get; set; }
     }
 }

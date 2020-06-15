@@ -4,14 +4,16 @@ using Azmoon.Persistence.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Azmoon.Persistence.Migrations
 {
     [DbContext(typeof(AzmoonDbContext))]
-    partial class AzmoonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200601085027_added Blanks")]
+    partial class addedBlanks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1642,9 +1644,6 @@ namespace Azmoon.Persistence.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("MatchSetId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int?>("OrderNo")
                         .HasColumnType("int");
 
@@ -1661,41 +1660,9 @@ namespace Azmoon.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MatchSetId");
-
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Choices");
-                });
-
-            modelBuilder.Entity("Azmoon.Core.Quiz.Entities.MatchSet", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("IsApproved")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("MatchSets");
                 });
 
             modelBuilder.Entity("Azmoon.Core.Quiz.Entities.Question", b =>
@@ -2151,22 +2118,8 @@ namespace Azmoon.Persistence.Migrations
 
             modelBuilder.Entity("Azmoon.Core.Quiz.Entities.Choice", b =>
                 {
-                    b.HasOne("Azmoon.Core.Quiz.Entities.MatchSet", "MatchSet")
-                        .WithMany("Choices")
-                        .HasForeignKey("MatchSetId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("Azmoon.Core.Quiz.Entities.Question", null)
                         .WithMany("Choices")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Azmoon.Core.Quiz.Entities.MatchSet", b =>
-                {
-                    b.HasOne("Azmoon.Core.Quiz.Entities.Question", "Question")
-                        .WithMany("MatchSets")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -16,11 +16,11 @@ namespace Azmoon.Admin.Application.Questions
                 case QuestionType.Ordering:
                     return new OrderingQuestionPolicy(question);
                 case QuestionType.ShortAnswer:
-                    break;
+                    return new ShortAnswerQuestionPolicy(question);
                 case QuestionType.FillInTheBlank:
-                    break;
+                    return new FillInTheBlankQuestionPolicy(question);
                 case QuestionType.Matching:
-                    break;
+                    return new MatchingQuestionPolicy(question);
                 default:
                     break;
             }
