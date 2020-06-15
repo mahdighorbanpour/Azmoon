@@ -20,6 +20,7 @@ namespace Azmoon.Persistence.EntityFrameworkCore{
         /* Define a DbSet for each entity of the application */
         public DbSet<Category>  Categories { get; set; }
         public DbSet<Choice>  Choices { get; set; }
+        public DbSet<MatchSet> MatchSets { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<QuizQuestion> QuizQuestions { get; set; }

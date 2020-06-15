@@ -21,6 +21,8 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         public bool IsCorrect { get; set; }
         public int? OrderNo { get; set; }
         public List<BlankDto> Blanks { get; set; }
+
+        public MatchSetDto MatchSet { get; set; }
     }
 
 

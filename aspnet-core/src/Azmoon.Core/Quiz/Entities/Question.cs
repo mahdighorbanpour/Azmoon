@@ -30,15 +30,15 @@ namespace Azmoon.Core.Quiz.Entities
         private List<Choice> _choices = new List<Choice>();
         public IReadOnlyList<Choice> Choices => _choices.AsReadOnly();
 
-        private List<MatchSet> _matchsets = new List<MatchSet>();
-        public IReadOnlyList<MatchSet> MatchSets => _matchsets.AsReadOnly();
+        public List<MatchSet> MatchSets { get; set; } = new List<MatchSet>();//=> _matchsets;.AsReadOnly();
 
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
         public bool? IsApproved { get; set; }
-        public Choice AddChoice(string value, bool isCorrect, int? orderNo = null, MatchSet matchSet = null)
+        public Choice AddChoice(string value, bool isCorrect, int? orderNo = null, string matchSet = null)
         {
-            var choice = new Choice(Id, value, isCorrect, orderNo, matchSet);
+            var _matchset = GetMatchSetWithValue(matchSet);
+            var choice = new Choice(Id, value, isCorrect, orderNo, _matchset);
             choice.IsPublic = IsPublic;
             _choices.Add(choice);
             return choice;
@@ -56,6 +56,7 @@ namespace Azmoon.Core.Quiz.Entities
 
             _choice.IsPublic = IsPublic;
             _choice.IsApproved = null;
+            _choice.MatchSet = GetMatchSetWithValue(choice.MatchSet?.Value);
             return _choice;
         }
 
@@ -75,18 +76,20 @@ namespace Azmoon.Core.Quiz.Entities
         {
             if(QuestionType!= QuestionType.Matching)
                 throw new Exception("Please first change the question type to Matching");
-            var _matchset = _matchsets.Find(m => m.Value.ToLower() == value.ToLower());
+            var _matchset = MatchSets.Find(m => string.Compare(m.Value, value, StringComparison.InvariantCultureIgnoreCase) == 0);
             if (_matchset != null)
                 throw new Exception("Matchset value already exists!");
-            _matchset = new MatchSet(this, value); 
-            _matchsets.Add(_matchset);
+            _matchset = new MatchSet();
+            _matchset.Value = value;
+            _matchset.IsPublic = this.IsPublic;
+            _matchset.QuestionId = this.Id;
+            MatchSets.Add(_matchset);
             return _matchset;
         }
 
-
         public MatchSet UpdateMatchSet(MatchSet matchSet)
         {
-            var _matchset = _matchsets.Find(c => c.Id == matchSet.Id);
+            var _matchset = MatchSets.Find(c => c.Id == matchSet.Id);
             if (_matchset == null)
                 throw new Exception("MatchSet is not valid");
 
@@ -98,9 +101,14 @@ namespace Azmoon.Core.Quiz.Entities
 
         public void DeleteMatchSet(MatchSet matchSet)
         {
-            if (!_matchsets.Contains(matchSet))
+            if (!MatchSets.Contains(matchSet))
                 throw new Exception("MatchSet is not valid");
-            _matchsets.Remove(matchSet);
+            MatchSets.Remove(matchSet);
+        }
+
+        private MatchSet GetMatchSetWithValue(string value)
+        {
+            return MatchSets.FirstOrDefault(m => m.Value.Equals(value, StringComparison.OrdinalIgnoreCase));
         }
 
         public int AllChoicesCount => Choices.Count;

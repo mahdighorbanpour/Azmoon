@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Azmoon.Application.Shared.Quiz.Questions.Dto
 {
-    [AutoMapTo(typeof(Core.Quiz.Entities.Question))]
     public class CreateUpdateQuestionDto : EntityDto<Guid>
     {
         public int CategoryId { get; set; }
@@ -25,10 +24,10 @@ namespace Azmoon.Application.Shared.Quiz.Questions.Dto
         public int Marks { get; set; }
         public QuestionType QuestionType { get; set; }
         public string QuestionTypeString { get; set; }
-        public List<CreateUpdateChoiceDto> Choices { get; set; }
+        public List<CreateUpdateChoiceDto> Choices { get; set; } = new List<CreateUpdateChoiceDto>();
         public bool? RandomizeChoices { get; set; }
         public bool IsPublic { get; set; }
 
-        public List<MatchSetDto> MatchSets { get; set; }
+        public List<MatchSetDto> MatchSets { get; set; } = new List<MatchSetDto>();
     }
 }

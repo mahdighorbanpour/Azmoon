@@ -149,10 +149,68 @@ namespace Azmoon.Tests.Questions
         }
 
         [Fact]
+        public async Task CreateAsync_ShouldCreateMatching()
+        {
+            // Arrange
+            var questionDto = GetCreateUpdateQuestionDto_Matching();
+
+            // Act
+            var createdQuestion = await adminQuestionAppService.CreateAsync(questionDto);
+
+            // Assert
+            createdQuestion.QuestionType.ShouldBe(QuestionType.Matching);
+
+            createdQuestion.ChoicesCount.ShouldBe(2);
+            createdQuestion.Choices[0].Value.ShouldBe("Choice 1");
+            createdQuestion.MatchSets.Count.ShouldBe(2);
+            createdQuestion.MatchSets[0].Value.ShouldBe(questionDto.MatchSets[0].Value);
+            createdQuestion.MatchSets[1].Value.ShouldBe(questionDto.MatchSets[1].Value);
+            createdQuestion.Choices[0].MatchSet.Value.ShouldBe(questionDto.MatchSets[0].Value);
+            createdQuestion.Choices[1].MatchSet.Value.ShouldBe(questionDto.MatchSets[1].Value);
+        }
+
+
+        [Fact]
+        public async Task UpdateAsync_SomeNewMatchSets_ShouldDeleteAndAddChangedMatchSets()
+        {
+            // Arrange
+            var questionDto = GetCreateUpdateQuestionDto_Matching();
+            var createdQuestion = await adminQuestionAppService.CreateAsync(questionDto);
+
+            questionDto.Id = createdQuestion.Id;
+            questionDto.MatchSets[0].Id = createdQuestion.MatchSets[0].Id;
+            questionDto.MatchSets[0].QuestionId = createdQuestion.Id;
+            questionDto.MatchSets[0].Value = "New Set 1";
+            questionDto.Choices[0].MatchSet = questionDto.MatchSets[0];
+
+            questionDto.MatchSets.RemoveAt(1);
+            questionDto.MatchSets.Add(new MatchSetDto()
+            {
+                Value = "New Set 3"
+            });
+
+            questionDto.Choices[1].MatchSet = questionDto.MatchSets[1];
+            // Act
+            var updatedQuestion = await adminQuestionAppService.UpdateAsync(questionDto);
+
+            // Assert
+            updatedQuestion.ChoicesCount.ShouldBe(2);
+            updatedQuestion.MatchSets.Count.ShouldBe(2);
+            updatedQuestion.MatchSets[0].Id.ShouldBe(createdQuestion.MatchSets[0].Id);
+            updatedQuestion.MatchSets[1].Id.ShouldNotBe(createdQuestion.MatchSets[1].Id);
+
+            updatedQuestion.MatchSets[0].Value.ShouldBe("New Set 1");
+            updatedQuestion.Choices[0].MatchSet.Value.ShouldBe("New Set 1");
+
+            updatedQuestion.MatchSets[1].Value.ShouldBe("New Set 3");
+            updatedQuestion.Choices[1].MatchSet.Value.ShouldBe("New Set 3");
+        }
+
+        [Fact]
         public async Task CreateAsync_ShouldCreateFillInTheBlanks()
         {
             // Arrange
-            var questionDto = GetCreateUpdateQuestionDtoFillInTheBlank();
+            var questionDto = GetCreateUpdateQuestionDto_FillInTheBlank();
 
             // Act
             var createdQuestion = await adminQuestionAppService.CreateAsync(questionDto);
@@ -181,7 +239,7 @@ namespace Azmoon.Tests.Questions
         public async Task UpdateAsync_SomeNewChoices_ShouldDeleteAndAddChangedChoicesBlanks()
         {
             // Arrange
-            var questionDto = GetCreateUpdateQuestionDtoFillInTheBlank();
+            var questionDto = GetCreateUpdateQuestionDto_FillInTheBlank();
             var createdQuestion = await adminQuestionAppService.CreateAsync(questionDto);
 
             questionDto.Id = createdQuestion.Id;

@@ -68,7 +68,7 @@ namespace Azmoon.Tests.Questions
             return questionA;
         }
 
-        protected CreateUpdateQuestionDto GetCreateUpdateQuestionDtoFillInTheBlank()
+        protected CreateUpdateQuestionDto GetCreateUpdateQuestionDto_FillInTheBlank()
         {
             var questionDto = GetCreateUpdateQuestionDtoA();
 
@@ -77,6 +77,21 @@ namespace Azmoon.Tests.Questions
             questionDto.Choices[0].Blanks.Add(new BlankDto() { Index = 2, Answer = "b" });
             questionDto.Choices[1].Blanks.Add(new BlankDto() { Index = 3, Answer = "c" });
             questionDto.Choices[1].Blanks.Add(new BlankDto() { Index = 4, Answer = "d" });
+
+            return questionDto;
+        }
+        
+        protected CreateUpdateQuestionDto GetCreateUpdateQuestionDto_Matching()
+        {
+            var questionDto = GetCreateUpdateQuestionDtoA();
+
+            questionDto.QuestionType = QuestionType.Matching;
+            var set1 = new MatchSetDto() { Value = "Set 1" };
+            var set2 = new MatchSetDto() { Value = "Set 2" };
+            questionDto.MatchSets.Add(set1);
+            questionDto.MatchSets.Add(set2);
+            questionDto.Choices[0].MatchSet = set1;
+            questionDto.Choices[1].MatchSet = set2;
 
             return questionDto;
         }
