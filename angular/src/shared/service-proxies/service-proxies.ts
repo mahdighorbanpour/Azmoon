@@ -13,6 +13,7 @@ import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
 import * as moment from 'moment';
+import { QuestionType } from '@shared/dtos/questionType';
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
@@ -3944,13 +3945,126 @@ export interface ICategoryDtoPagedResultDto {
     items: CategoryDto[] | undefined;
 }
 
-export enum QuestionType {
-    _1 = 1,
-    _2 = 2,
-    _3 = 3,
-    _4 = 4,
-    _5 = 5,
-    _6 = 6,
+export class BlankDto implements IBlankDto {
+    choiceId: string;
+    answer: string | undefined;
+    index: number;
+    isPublic: boolean;
+    isApproved: boolean | undefined;
+    id: string;
+
+    constructor(data?: IBlankDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.choiceId = _data["choiceId"];
+            this.answer = _data["answer"];
+            this.index = _data["index"];
+            this.isPublic = _data["isPublic"];
+            this.isApproved = _data["isApproved"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): BlankDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new BlankDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["choiceId"] = this.choiceId;
+        data["answer"] = this.answer;
+        data["index"] = this.index;
+        data["isPublic"] = this.isPublic;
+        data["isApproved"] = this.isApproved;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): BlankDto {
+        const json = this.toJSON();
+        let result = new BlankDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IBlankDto {
+    choiceId: string;
+    answer: string | undefined;
+    index: number;
+    isPublic: boolean;
+    isApproved: boolean | undefined;
+    id: string;
+}
+
+export class MatchSetDto implements IMatchSetDto {
+    questionId: string;
+    value: string | undefined;
+    isPublic: boolean;
+    isApproved: boolean | undefined;
+    id: string;
+
+    constructor(data?: IMatchSetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.questionId = _data["questionId"];
+            this.value = _data["value"];
+            this.isPublic = _data["isPublic"];
+            this.isApproved = _data["isApproved"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): MatchSetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MatchSetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["questionId"] = this.questionId;
+        data["value"] = this.value;
+        data["isPublic"] = this.isPublic;
+        data["isApproved"] = this.isApproved;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): MatchSetDto {
+        const json = this.toJSON();
+        let result = new MatchSetDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMatchSetDto {
+    questionId: string;
+    value: string | undefined;
+    isPublic: boolean;
+    isApproved: boolean | undefined;
+    id: string;
 }
 
 export class CreateUpdateChoiceDto implements ICreateUpdateChoiceDto {
@@ -3958,6 +4072,8 @@ export class CreateUpdateChoiceDto implements ICreateUpdateChoiceDto {
     value: string;
     isCorrect: boolean;
     orderNo: number | undefined;
+    blanks: BlankDto[] | undefined;
+    matchSet: MatchSetDto;
     id: string;
 
     constructor(data?: ICreateUpdateChoiceDto) {
@@ -3975,6 +4091,12 @@ export class CreateUpdateChoiceDto implements ICreateUpdateChoiceDto {
             this.value = _data["value"];
             this.isCorrect = _data["isCorrect"];
             this.orderNo = _data["orderNo"];
+            if (Array.isArray(_data["blanks"])) {
+                this.blanks = [] as any;
+                for (let item of _data["blanks"])
+                    this.blanks.push(BlankDto.fromJS(item));
+            }
+            this.matchSet = _data["matchSet"] ? MatchSetDto.fromJS(_data["matchSet"]) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -3992,6 +4114,12 @@ export class CreateUpdateChoiceDto implements ICreateUpdateChoiceDto {
         data["value"] = this.value;
         data["isCorrect"] = this.isCorrect;
         data["orderNo"] = this.orderNo;
+        if (Array.isArray(this.blanks)) {
+            data["blanks"] = [];
+            for (let item of this.blanks)
+                data["blanks"].push(item.toJSON());
+        }
+        data["matchSet"] = this.matchSet ? this.matchSet.toJSON() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -4009,6 +4137,8 @@ export interface ICreateUpdateChoiceDto {
     value: string;
     isCorrect: boolean;
     orderNo: number | undefined;
+    blanks: BlankDto[] | undefined;
+    matchSet: MatchSetDto;
     id: string;
 }
 
@@ -4023,6 +4153,7 @@ export class CreateUpdateQuestionDto implements ICreateUpdateQuestionDto {
     choices: CreateUpdateChoiceDto[] | undefined;
     randomizeChoices: boolean | undefined;
     isPublic: boolean;
+    matchSets: MatchSetDto[] | undefined;
     id: string;
 
     constructor(data?: ICreateUpdateQuestionDto) {
@@ -4050,6 +4181,11 @@ export class CreateUpdateQuestionDto implements ICreateUpdateQuestionDto {
             }
             this.randomizeChoices = _data["randomizeChoices"];
             this.isPublic = _data["isPublic"];
+            if (Array.isArray(_data["matchSets"])) {
+                this.matchSets = [] as any;
+                for (let item of _data["matchSets"])
+                    this.matchSets.push(MatchSetDto.fromJS(item));
+            }
             this.id = _data["id"];
         }
     }
@@ -4077,6 +4213,11 @@ export class CreateUpdateQuestionDto implements ICreateUpdateQuestionDto {
         }
         data["randomizeChoices"] = this.randomizeChoices;
         data["isPublic"] = this.isPublic;
+        if (Array.isArray(this.matchSets)) {
+            data["matchSets"] = [];
+            for (let item of this.matchSets)
+                data["matchSets"].push(item.toJSON());
+        }
         data["id"] = this.id;
         return data; 
     }
@@ -4100,6 +4241,7 @@ export interface ICreateUpdateQuestionDto {
     choices: CreateUpdateChoiceDto[] | undefined;
     randomizeChoices: boolean | undefined;
     isPublic: boolean;
+    matchSets: MatchSetDto[] | undefined;
     id: string;
 }
 
@@ -4108,6 +4250,10 @@ export class ChoiceDto implements IChoiceDto {
     value: string | undefined;
     readonly isCorrect: boolean;
     orderNo: number | undefined;
+    isPublic: boolean;
+    isApproved: boolean | undefined;
+    blanks: BlankDto[] | undefined;
+    matchSet: MatchSetDto;
     id: string;
 
     constructor(data?: IChoiceDto) {
@@ -4125,6 +4271,14 @@ export class ChoiceDto implements IChoiceDto {
             this.value = _data["value"];
             (<any>this).isCorrect = _data["isCorrect"];
             this.orderNo = _data["orderNo"];
+            this.isPublic = _data["isPublic"];
+            this.isApproved = _data["isApproved"];
+            if (Array.isArray(_data["blanks"])) {
+                this.blanks = [] as any;
+                for (let item of _data["blanks"])
+                    this.blanks.push(BlankDto.fromJS(item));
+            }
+            this.matchSet = _data["matchSet"] ? MatchSetDto.fromJS(_data["matchSet"]) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -4142,6 +4296,14 @@ export class ChoiceDto implements IChoiceDto {
         data["value"] = this.value;
         data["isCorrect"] = this.isCorrect;
         data["orderNo"] = this.orderNo;
+        data["isPublic"] = this.isPublic;
+        data["isApproved"] = this.isApproved;
+        if (Array.isArray(this.blanks)) {
+            data["blanks"] = [];
+            for (let item of this.blanks)
+                data["blanks"].push(item.toJSON());
+        }
+        data["matchSet"] = this.matchSet ? this.matchSet.toJSON() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -4159,6 +4321,10 @@ export interface IChoiceDto {
     value: string | undefined;
     isCorrect: boolean;
     orderNo: number | undefined;
+    isPublic: boolean;
+    isApproved: boolean | undefined;
+    blanks: BlankDto[] | undefined;
+    matchSet: MatchSetDto;
     id: string;
 }
 
@@ -4167,6 +4333,7 @@ export class QuestionDto implements IQuestionDto {
     hint: string | undefined;
     randomizeChoices: boolean | undefined;
     choices: ChoiceDto[] | undefined;
+    matchSets: MatchSetDto[] | undefined;
     tenantId: number | undefined;
     title: string | undefined;
     marks: number;
@@ -4198,6 +4365,11 @@ export class QuestionDto implements IQuestionDto {
                 this.choices = [] as any;
                 for (let item of _data["choices"])
                     this.choices.push(ChoiceDto.fromJS(item));
+            }
+            if (Array.isArray(_data["matchSets"])) {
+                this.matchSets = [] as any;
+                for (let item of _data["matchSets"])
+                    this.matchSets.push(MatchSetDto.fromJS(item));
             }
             this.tenantId = _data["tenantId"];
             this.title = _data["title"];
@@ -4231,6 +4403,11 @@ export class QuestionDto implements IQuestionDto {
             for (let item of this.choices)
                 data["choices"].push(item.toJSON());
         }
+        if (Array.isArray(this.matchSets)) {
+            data["matchSets"] = [];
+            for (let item of this.matchSets)
+                data["matchSets"].push(item.toJSON());
+        }
         data["tenantId"] = this.tenantId;
         data["title"] = this.title;
         data["marks"] = this.marks;
@@ -4259,6 +4436,7 @@ export interface IQuestionDto {
     hint: string | undefined;
     randomizeChoices: boolean | undefined;
     choices: ChoiceDto[] | undefined;
+    matchSets: MatchSetDto[] | undefined;
     tenantId: number | undefined;
     title: string | undefined;
     marks: number;
