@@ -82,7 +82,10 @@
                   <span matPrefix *ngIf="choice.orderNo != undefined && entity.questionType == QuestionType.Ordering">
                     No.{{ choice.orderNo }} &nbsp;
                   </span>
-                  <input matInput name="Value" [placeholder]="'Value' | localize" [(ngModel)]="choice.value" required
+                  <button mat-icon-button matPrefix type="button" (click)="addBlank(choice, valueInput)" [title]="'AddBlank' | localize" *ngIf="entity.questionType == QuestionType.FillInTheBlank">
+                    <mat-icon>add_circle</mat-icon>
+                  </button>
+                  <input matInput name="Value" [placeholder]="'Value' | localize" [(ngModel)]="choice.value" required #valueInput
                     minlength="1" maxlength="500" />
                 </mat-form-field>
               </div>

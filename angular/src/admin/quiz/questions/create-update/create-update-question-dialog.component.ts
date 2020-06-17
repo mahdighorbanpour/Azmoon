@@ -10,8 +10,12 @@ import {
   DictionaryDto,
   CreateUpdateChoiceDto,
   ChoiceDto,
+  BlankDto,
 } from '@shared/service-proxies/service-proxies';
 import { QuestionType } from '@shared/dtos/questionType';
+
+const blankStartIndicator = '[(';
+const blankEndIndicator = ')]';
 
 @Component({
   templateUrl: 'create-update-question-dialog.component.html',
@@ -35,7 +39,7 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
   questionTypes: DictionaryDto[] = undefined;
   canAddNewChoice: boolean = true;
   canSetIsCorrect: boolean = true;
-  QuestionType = QuestionType; 
+  QuestionType = QuestionType;
 
   constructor(
     injector: Injector,
@@ -97,6 +101,9 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
     if (isPublicIssue && !confirm(this.l("IncompatibleIsPublicCategoryWarning"))) {
       return;
     }
+    if (this.entity.questionType == QuestionType.FillInTheBlank) {
+      this.checkBlanks();
+    }
     this.saving = true;
 
     let createOrUpdate = this.entity.id == undefined || this.entity.id == '' ?
@@ -120,7 +127,7 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
     let newChoice = new CreateUpdateChoiceDto();
     newChoice.questionId = this.entity.id;
     newChoice.value = " ";
-    
+
     this.entity.choices.push(newChoice);
     if (this.entity.questionType == QuestionType.Ordering) // Ordering
     {
@@ -131,6 +138,21 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
   removeChoice(choice: CreateUpdateChoiceDto) {
     let idx = this.entity.choices.findIndex(c => c == choice);
     this.entity.choices.splice(idx, 1);
+  }
+
+  addBlank(choice: CreateUpdateChoiceDto, input: any) {
+    if (choice.value == undefined) {
+      choice.value = '';
+    }
+    let position = input.selectionStart;
+    let before = choice.value.substr(0, position);
+    let after = choice.value.substr(position, choice.value.length - position);
+    choice.value = before + blankStartIndicator + blankEndIndicator + after;
+
+    // set new position of caret
+    setTimeout(() => {
+      this.setCaretPosition(input.id, position + blankStartIndicator.length);
+    }, 100);
   }
 
   questionTypeChanged() {
@@ -151,8 +173,42 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
         this.canAddNewChoice = false;
         this.canSetIsCorrect = false;
         break;
+      case QuestionType.FillInTheBlank:
+        this.canSetIsCorrect = false;
+        break;
 
     }
+  }
+
+  private checkBlanks() {
+    if (this.entity.questionType != QuestionType.FillInTheBlank || this.entity.choices.length == 0)
+      return;
+    this.entity.choices.forEach((choice) => {
+      choice.blanks = [];
+      let pos = 0;
+      let blankStartPos = choice.value.indexOf(blankStartIndicator, pos);
+      let blankEndPos = choice.value.indexOf(blankEndIndicator, pos);
+      while (blankStartPos != -1 && blankEndPos != -1) {
+        let blankValue = choice.value.substring((blankStartPos + blankStartIndicator.length), blankEndPos);
+        if (blankValue != undefined && blankValue.length > 0) {
+          let blank = new BlankDto();
+          blank.answer = blankValue;
+          blank.choiceId = choice.id;
+          blank.index = blankStartPos;
+          choice.blanks.push(blank);
+        }
+        else {
+          // let's remove not useful blank indicators
+          let before = choice.value.substring(0, blankStartPos);
+          let after = choice.value.substring(blankStartPos + blankStartIndicator.length + blankEndIndicator.length);
+          choice.value = before + after;
+          pos -= blankStartIndicator.length + blankEndIndicator.length;
+        }
+        pos = blankEndPos + 1;
+        blankStartPos = choice.value.indexOf(blankStartIndicator, pos);
+        blankEndPos = choice.value.indexOf(blankEndIndicator, pos);
+      }
+    })
   }
 
   private setOrderNo() {
@@ -170,6 +226,25 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
       return !(category.isPublic && category.isApproved);
     }
     return false;
+  }
+
+  setCaretPosition(elemId, caretPos) {
+    let elem: HTMLInputElement = <HTMLInputElement>document.getElementById(elemId);
+    if (elem != null) {
+      if (elem['createTextRange']) {
+        var range = elem['createTextRange']();
+        range.move('character', caretPos);
+        range.select();
+      }
+      else {
+        if (elem.selectionStart) {
+          elem.focus();
+          elem.setSelectionRange(caretPos, caretPos);
+        }
+        else
+          elem.focus();
+      }
+    }
   }
 
   close(result: any): void {
