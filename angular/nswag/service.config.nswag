@@ -45,7 +45,7 @@
       "extendedClasses": [],
       "extensionCode": null,
       "generateDefaultValues": true,
-      "excludedTypeNames": [],
+      "excludedTypeNames": ['QuestionType'],
       "excludedParameterNames": [],
       "handleReferences": false,
       "generateConstructorInterface": true,

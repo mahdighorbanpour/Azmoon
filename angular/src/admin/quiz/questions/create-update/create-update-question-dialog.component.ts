@@ -9,8 +9,14 @@ import {
   AdminCategoryServiceProxy,
   DictionaryDto,
   CreateUpdateChoiceDto,
-  QuestionType
+  ChoiceDto,
+  BlankDto,
+  MatchSetDto,
 } from '@shared/service-proxies/service-proxies';
+import { QuestionType } from '@shared/dtos/questionType';
+
+const blankStartIndicator = '[(';
+const blankEndIndicator = ')]';
 
 @Component({
   templateUrl: 'create-update-question-dialog.component.html',
@@ -32,6 +38,10 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
   dialogTitle: string = '';
   categories: DictionaryDto[] = undefined;
   questionTypes: DictionaryDto[] = undefined;
+  canAddNewChoice: boolean = true;
+  canSetIsCorrect: boolean = true;
+  hasMoreInputs: boolean = false;
+  QuestionType = QuestionType;
 
   constructor(
     injector: Injector,
@@ -52,7 +62,7 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
       this.dialogTitle = this.l("EditQuestion");
       this._service.get(this._id).subscribe((result: QuestionDto) => {
         this.entity = result;
-        console.log(this.entity)
+        this.questionTypeChanged();
       });
     }
 
@@ -93,6 +103,9 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
     if (isPublicIssue && !confirm(this.l("IncompatibleIsPublicCategoryWarning"))) {
       return;
     }
+    if (this.entity.questionType == QuestionType.FillInTheBlank) {
+      this.checkBlanks();
+    }
     this.saving = true;
 
     let createOrUpdate = this.entity.id == undefined || this.entity.id == '' ?
@@ -114,8 +127,11 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
     if (this.entity.choices == undefined)
       this.entity.choices = [];
     let newChoice = new CreateUpdateChoiceDto();
+    newChoice.questionId = this.entity.id;
+    newChoice.value = " ";
+
     this.entity.choices.push(newChoice);
-    if (this.entity.questionType == QuestionType._3) // Ordering
+    if (this.entity.questionType == QuestionType.Ordering) // Ordering
     {
       this.setOrderNo();
     }
@@ -126,12 +142,79 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
     this.entity.choices.splice(idx, 1);
   }
 
-  questionTypeChanged() {
-    if (this.entity.questionType == QuestionType._3) // Ordering
-    {
-      this.entity.randomizeChoices = true;
-      this.setOrderNo();
+  addBlank(choice: CreateUpdateChoiceDto, input: any) {
+    if (choice.value == undefined) {
+      choice.value = '';
     }
+    let position = input.selectionStart;
+    let before = choice.value.substr(0, position);
+    let after = choice.value.substr(position, choice.value.length - position);
+    choice.value = before + blankStartIndicator + blankEndIndicator + after;
+
+    // set new position of caret
+    setTimeout(() => {
+      this.setCaretPosition(input.id, position + blankStartIndicator.length);
+    }, 100);
+  }
+
+  questionTypeChanged() {
+    this.canAddNewChoice = true;
+    this.canSetIsCorrect = true;
+    this.hasMoreInputs = false;
+
+    switch (this.entity.questionType) {
+      case QuestionType.Ordering:
+        this.entity.randomizeChoices = true;
+        this.canSetIsCorrect = false;
+        this.setOrderNo();
+        break;
+      case QuestionType.ShortAnswer:
+        if (this.entity.choices == undefined || this.entity.choices.length == 0) {
+          this.addChoice();
+        }
+        this.entity.choices[0].isCorrect = true;
+        this.canAddNewChoice = false;
+        this.canSetIsCorrect = false;
+        break;
+      case QuestionType.FillInTheBlank:
+        this.canSetIsCorrect = false;
+        break;
+      case QuestionType.Matching:
+          this.canSetIsCorrect = false;
+          this.hasMoreInputs = true;
+          break;
+    }
+  }
+
+  private checkBlanks() {
+    if (this.entity.questionType != QuestionType.FillInTheBlank || this.entity.choices.length == 0)
+      return;
+    this.entity.choices.forEach((choice) => {
+      choice.blanks = [];
+      let pos = 0;
+      let blankStartPos = choice.value.indexOf(blankStartIndicator, pos);
+      let blankEndPos = choice.value.indexOf(blankEndIndicator, pos);
+      while (blankStartPos != -1 && blankEndPos != -1) {
+        let blankValue = choice.value.substring((blankStartPos + blankStartIndicator.length), blankEndPos);
+        if (blankValue != undefined && blankValue.length > 0) {
+          let blank = new BlankDto();
+          blank.answer = blankValue;
+          blank.choiceId = choice.id;
+          blank.index = blankStartPos;
+          choice.blanks.push(blank);
+        }
+        else {
+          // let's remove not useful blank indicators
+          let before = choice.value.substring(0, blankStartPos);
+          let after = choice.value.substring(blankStartPos + blankStartIndicator.length + blankEndIndicator.length);
+          choice.value = before + after;
+          pos -= blankStartIndicator.length + blankEndIndicator.length;
+        }
+        pos = blankEndPos + 1;
+        blankStartPos = choice.value.indexOf(blankStartIndicator, pos);
+        blankEndPos = choice.value.indexOf(blankEndIndicator, pos);
+      }
+    })
   }
 
   private setOrderNo() {
@@ -149,6 +232,44 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
       return !(category.isPublic && category.isApproved);
     }
     return false;
+  }
+
+  setCaretPosition(elemId, caretPos) {
+    let elem: HTMLInputElement = <HTMLInputElement>document.getElementById(elemId);
+    if (elem != null) {
+      if (elem['createTextRange']) {
+        var range = elem['createTextRange']();
+        range.move('character', caretPos);
+        range.select();
+      }
+      else {
+        if (elem.selectionStart) {
+          elem.focus();
+          elem.setSelectionRange(caretPos, caretPos);
+        }
+        else
+          elem.focus();
+      }
+    }
+  }
+
+  addMatchSet() {
+    if (this.entity.matchSets == undefined)
+      this.entity.matchSets = [];
+    let newMatchSet = new MatchSetDto();
+    newMatchSet.questionId = this.entity.id;
+    newMatchSet.value = " ";
+
+    this.entity.matchSets.push(newMatchSet);
+  }
+
+  removeMatchSet(choice: MatchSetDto) {
+    let idx = this.entity.matchSets.findIndex(c => c == choice);
+    this.entity.matchSets.splice(idx, 1);
+  }
+
+  compareFn(m1: MatchSetDto, m2: MatchSetDto): boolean {
+    return m1 && m2 ? m1.id === m2.id : m1 === m2;
   }
 
   close(result: any): void {

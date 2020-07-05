@@ -6,8 +6,9 @@ import {
     PagedListingComponentBase,
     PagedRequestDto
 } from 'shared/paged-listing-component-base';
-import { QuestionDto, AdminQuestionServiceProxy, DictionaryDto, AdminCategoryServiceProxy, ListQuestionDtoPagedResultDto, ListQuestionDto, QuestionType } from '@shared/service-proxies/service-proxies';
+import { QuestionDto, AdminQuestionServiceProxy, DictionaryDto, AdminCategoryServiceProxy, ListQuestionDtoPagedResultDto, ListQuestionDto } from '@shared/service-proxies/service-proxies';
 import { CreateOrUpdateQuestionDialogComponent } from './create-update/create-update-question-dialog.component';
+import { QuestionType } from '@shared/dtos/questionType';
 
 class PagedQuestionsRequestDto extends PagedRequestDto {
     filter: string;
