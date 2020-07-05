@@ -11,6 +11,7 @@ import {
   CreateUpdateChoiceDto,
   ChoiceDto,
   BlankDto,
+  MatchSetDto,
 } from '@shared/service-proxies/service-proxies';
 import { QuestionType } from '@shared/dtos/questionType';
 
@@ -39,6 +40,7 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
   questionTypes: DictionaryDto[] = undefined;
   canAddNewChoice: boolean = true;
   canSetIsCorrect: boolean = true;
+  hasMoreInputs: boolean = false;
   QuestionType = QuestionType;
 
   constructor(
@@ -158,6 +160,7 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
   questionTypeChanged() {
     this.canAddNewChoice = true;
     this.canSetIsCorrect = true;
+    this.hasMoreInputs = false;
 
     switch (this.entity.questionType) {
       case QuestionType.Ordering:
@@ -176,7 +179,10 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
       case QuestionType.FillInTheBlank:
         this.canSetIsCorrect = false;
         break;
-
+      case QuestionType.Matching:
+          this.canSetIsCorrect = false;
+          this.hasMoreInputs = true;
+          break;
     }
   }
 
@@ -245,6 +251,25 @@ export class CreateOrUpdateQuestionDialogComponent extends AppComponentBase
           elem.focus();
       }
     }
+  }
+
+  addMatchSet() {
+    if (this.entity.matchSets == undefined)
+      this.entity.matchSets = [];
+    let newMatchSet = new MatchSetDto();
+    newMatchSet.questionId = this.entity.id;
+    newMatchSet.value = " ";
+
+    this.entity.matchSets.push(newMatchSet);
+  }
+
+  removeMatchSet(choice: MatchSetDto) {
+    let idx = this.entity.matchSets.findIndex(c => c == choice);
+    this.entity.matchSets.splice(idx, 1);
+  }
+
+  compareFn(m1: MatchSetDto, m2: MatchSetDto): boolean {
+    return m1 && m2 ? m1.id === m2.id : m1 === m2;
   }
 
   close(result: any): void {

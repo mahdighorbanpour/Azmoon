@@ -68,6 +68,34 @@
           </div>
         </div>
       </mat-tab>
+      <!-- end of question details -->
+      <!-- start of match sets -->
+      <mat-tab [label]="'MatchSets' | localize" *ngIf="entity.questionType == QuestionType.Matching" [disabled]="!createQuestionForm.form.valid || entity.questionType == undefined">
+        <div class="row-fluid">
+          <div class="col-md-12">
+            <div class="mb-20 mt-10">
+              <button type="button" mat-mini-fab color="primary" (click)="addMatchSet()" [title]="'AddMatchSet' | localize">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div *ngFor="let matchset of entity.matchSets; let m = index" [ngModelGroup]="m" class="row">
+              <div class="col-11">
+                <mat-form-field>
+                  <input matInput  [placeholder]="'Value' | localize" [(ngModel)]="matchset.value" name="matchset.value" required
+                    minlength="1" maxlength="500" />
+                </mat-form-field>
+              </div>
+              <div class="col-1 mt-20">
+                <button mat-mini-fab color="primary" (click)="removeMatchSet(matchset)" [title]="'RemoveMatchSet' | localize">
+                  <mat-icon>remove</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <!-- end of match sets -->
+      <!-- start of choices -->
       <mat-tab [label]="'Choices' | localize" [disabled]="!createQuestionForm.form.valid || entity.questionType == undefined">
         <div class="row-fluid">
           <div class="col-md-12">
@@ -77,7 +105,7 @@
               </button>
             </div>
             <div *ngFor="let choice of entity.choices; let i = index" [ngModelGroup]="i" class="row">
-              <div [class]="canSetIsCorrect ? 'col-8' : 'col-11'">
+              <div [class]="canSetIsCorrect || hasMoreInputs ? 'col-8' : 'col-11'">
                 <mat-form-field>
                   <span matPrefix *ngIf="choice.orderNo != undefined && entity.questionType == QuestionType.Ordering">
                     No.{{ choice.orderNo }} &nbsp;
@@ -93,6 +121,14 @@
                 <mat-checkbox name="IsCorrect" [(ngModel)]="choice.isCorrect">
                   {{ "IsCorrect" | localize }}
                 </mat-checkbox>
+              </div>
+              <div class="checkbox-wrapper col-3" *ngIf="entity.questionType == QuestionType.Matching">
+                <mat-form-field>
+                  <mat-select [placeholder]="l('MatchSet')" [(value)]="choice.matchSet" name="choice{{i}}.matchSet" [compareWith]="compareFn"
+                    required>
+                    <mat-option *ngFor="let item of entity.matchSets" [value]="item">{{ item.value }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
               <div class="col-1 mt-20">
                 <button mat-mini-fab color="primary" (click)="removeChoice(choice)" [title]="'RemoveChoice' | localize">
