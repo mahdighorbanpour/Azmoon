@@ -184,5 +184,8 @@
     <text name="FillInTheBlank question all choices must have at least 1 blank!">FillInTheBlank question all choices must have at least 1 blank!</text>
     <text name="FillInTheBlank a choice cannot have repeated blank indexes!">FillInTheBlank a choice cannot have repeated blank indexes!</text>
     <text name="FillInTheBlank a choice cannot have a blank index greater than it's lenght!">FillInTheBlank a choice cannot have a blank index greater than it's lenght!</text>
+	<text name="MatchSets">MatchSets</text>
+	<text name="AddMatchSet">Add a MatchSet</text>
+	<text name="RemoveMatchSet">Remove MatchSet</text>
   </texts>
 </localizationDictionary>
